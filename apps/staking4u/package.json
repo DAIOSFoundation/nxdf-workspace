@@ -8,6 +8,9 @@
     "react": "*",
     "react-native": "*",
     "react-native-config": "*",
-    "react-native-svg": "*"
+    "react-native-svg": "*",
+    "styled-components": "*",
+    "react-native-router-flux": "*",
+    "react-native-gesture-handler": "*"
   }
 }

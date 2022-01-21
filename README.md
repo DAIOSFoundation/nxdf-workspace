@@ -33,3 +33,11 @@ android: `npx nx run-android staking4u`
 `npx nx g page main --project=artistella`
 ### add component
 `npx nx g component slideImage --project=artistella --directory=pages/main`
+
+
+
+### Staking4U
+
+#### If you got this error.
+[@RNC/AsyncStorage]: NativeModule: AsyncStorage is null  
+run `react-native link @react-native-community/async-storage`
