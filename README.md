@@ -4,7 +4,7 @@ node 16.13.1
 #### Run command in the root folder.
 `yarn install`
 
-##apps
+## apps
 ### run artistella
 `nx serve artistella`
 
