@@ -22,6 +22,7 @@
     "redux-actions": "*",
     "immer": "*",
     "react-native-splash-screen": "*",
-    "react-native-i18n": "*"
+    "react-native-i18n": "*",
+    "native-base": "*"
   }
 }
