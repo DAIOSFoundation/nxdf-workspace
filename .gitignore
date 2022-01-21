@@ -93,6 +93,6 @@ buck-out/
 
 ## Nested node_modules
 
-node_modules/
+**/node_modules
 
 apps/staking4u-e2e/artifacts
