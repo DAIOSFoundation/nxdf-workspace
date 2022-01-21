@@ -1,9 +1,7 @@
 node 16.13.1
 
 #### Please use yarn. don't use npm.
-
-
-## Run it in the loop folder.
+#### Run command in the root folder.
 `yarn install`
 
 ##apps
