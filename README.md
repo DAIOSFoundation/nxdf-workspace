@@ -10,7 +10,7 @@ node 16.13.1
 
 ### run sktaing4u
 ios: `nx run-ios staking4u`  
-android `nx run-android staking4u`
+android: `nx run-android staking4u`
 
 ### run soldrops
 `nx serve soldrops`
