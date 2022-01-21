@@ -12,7 +12,7 @@ node 16.13.1
 ios: `nx run-ios staking4u`  
 android `nx run-android staking4u`
 
-### run soldrps
+### run soldrops
 `nx serve soldrops`
 
 ### run nxdf-api
