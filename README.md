@@ -1,14 +1,30 @@
 node 16.13.1
 
-Please use yarn. don't use npm.
+#### Please use yarn. don't use npm.
 
-yarn install
 
-nx serve artistella
+## Run it in the loop folder.
+`yarn install`
 
-nx run-ios staking4u
-nx run-android staking4u
+##apps
+### run artistella
+`nx serve artistella`
 
-nx serve soldrops
+### run sktaing4u
+ios: `nx run-ios staking4u`  
+android `nx run-android staking4u`
 
-nx serve nxdf-api
+### run soldrps
+`nx serve soldrops`
+
+### run nxdf-api
+`nx serve nxdf-api`
+
+
+##libs
+###shared
+####assets
+####config
+####data
+####services
+####utils
