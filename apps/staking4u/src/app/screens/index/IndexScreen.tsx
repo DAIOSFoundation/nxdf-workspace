@@ -8,9 +8,9 @@ import {
 import {Text} from '../../components/styled/Text';
 import {ButtonRadius, ButtonBorderRadius} from '../../components/styled/Button';
 import {Image, ImageAbsolute} from '../../components/styled/Image';
-import startImage from '../../assets/index/start.png';
-import holdingImage from '../../assets/index/holding.png';
-import mainLogo from '../../assets/common/main_logo.png';
+const startImage = '../../assets/index/start.png';
+const holdingImage = '../../assets/index/holding.png';
+const mainLogo = '../../assets/common/main_logo.png';
 
 const IndexScreen = () => {
   return (
