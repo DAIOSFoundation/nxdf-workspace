@@ -6,17 +6,17 @@ node 16.13.1
 
 ## apps
 ### run artistella
-`npx nx serve artistella`
+`yarn start:artistella`
 
 ### run sktaing4u
-ios: `npx nx run-ios staking4u`  
-android: `npx nx run-android staking4u`
+ios: `yarn start:staking4u:ios`  
+android: `yarn start:staking4u:android`
 
 ### run soldrops
-`npx nx serve soldrops`
+`yarn start:soldrops`
 
 ### run nxdf-api
-`npx nx serve nxdf-api`
+`yarn start:nxdf-api`
 
 
 ## libs
