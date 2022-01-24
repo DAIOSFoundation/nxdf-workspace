@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import Main from "./main";
+import MainGrid from "./main/mainGrid";
+import MainPagination from "./main/mainPagination";
 
 const StyledPage = styled.div`
   .page {
@@ -15,6 +17,8 @@ export function Index() {
   return (
     <StyledPage>
       <Main />
+      <MainGrid />
+      <MainPagination />
     </StyledPage>
   );
 }

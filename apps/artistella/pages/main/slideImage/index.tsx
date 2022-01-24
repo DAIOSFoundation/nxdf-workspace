@@ -4,9 +4,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import TransImage from './transImage';
 
-/* eslint-disable-next-line */
-export interface SlideImageProps {}
-
 const StyledSlideImage = styled.div`
   color: pink;
 `;
@@ -57,7 +54,7 @@ const images=[
   }
 ];
 
-export function SlideImage(props: SlideImageProps) {
+export function Index() {
   const setting={
     dots:true,
     infinite: true,
@@ -79,4 +76,4 @@ export function SlideImage(props: SlideImageProps) {
   );
 }
 
-export default SlideImage;
+export default Index;

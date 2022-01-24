@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import SlideImage from './slideImage/slideImage';
+import Index from './slideImage';
 
 /* eslint-disable-next-line */
 export interface MainProps {}
@@ -14,7 +14,7 @@ export function Main(props: MainProps) {
   return (
     <StyledMain>
       <h1>Welcome to Main!</h1>
-      <SlideImage />
+      <Index />
     </StyledMain>
   );
 }
