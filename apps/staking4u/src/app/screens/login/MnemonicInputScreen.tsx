@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import * as authsActions from '../../store/modules/auths/actions';
 import * as registerActions from '../../store/modules/register/actions';
 import {
@@ -8,23 +8,28 @@ import {
   ViewBorderRadius,
 } from '../../components/styled/View';
 import TopBar from '../../components/bar/TopBar';
-import {Text} from '../../components/styled/Text';
+import { Text } from '../../components/styled/Text';
 import BottomButton from '../../components/buttons/BottomButton';
 
-// import {NBTextareaRadius} from '../../components/styled/Input';
+import { NBTextareaRadius } from '../../components/styled/Input';
 import I18n from 'react-native-i18n';
 
-import {Actions} from 'react-native-router-flux';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import {AESKey, mnemonicEncrypt, storeData} from '../../utils/functions';
+import { Actions } from 'react-native-router-flux';
+import {
+  shallowEqual,
+  useDispatch,
+  useSelector,
+  RootStateOrAny,
+} from 'react-redux';
+import { AESKey, mnemonicEncrypt, storeData } from '../../utils/functions';
 
 const MnemonicInputScreen = () => {
-  const {getMnemonicVerification, jwt} = useSelector(
-    (state) => ({
+  const { getMnemonicVerification, jwt } = useSelector(
+    (state: RootStateOrAny) => ({
       jwt: state.auths.jwt,
       getMnemonicVerification: state.register.getMnemonicVerification,
     }),
-    shallowEqual,
+    shallowEqual
   );
 
   const [mnemonic, setMnemonic] = useState();
@@ -82,28 +87,29 @@ const MnemonicInputScreen = () => {
             width={'100%'}
             bgDarkGray
             brLightGray
-            marginTop={30}>
-            {/*<NBTextareaRadius*/}
-            {/*  {...(getMnemonicVerification*/}
-            {/*    ? {brSuccess: true}*/}
-            {/*    : {brDanger: true})}*/}
-            {/*  paddingLeft={10}*/}
-            {/*  paddingRight={10}*/}
-            {/*  paddingTop={10}*/}
-            {/*  paddingBottom={10}*/}
-            {/*  ftWhite*/}
-            {/*  rowSpan={5}*/}
-            {/*  bordered*/}
-            {/*  onChangeText={onChangeText}*/}
-            {/*  value={mnemonic}*/}
-            {/*/>*/}
+            marginTop={30}
+          >
+            <NBTextareaRadius
+              {...(getMnemonicVerification
+                ? { brSuccess: true }
+                : { brDanger: true })}
+              paddingLeft={10}
+              paddingRight={10}
+              paddingTop={10}
+              paddingBottom={10}
+              ftWhite
+              rowSpan={5}
+              bordered
+              onChangeText={onChangeText}
+              value={mnemonic}
+            />
           </ViewBorderRadius>
         </View>
       </ScrollView>
       <BottomButton
         {...(getMnemonicVerification
-          ? {bgYellowTheme: true}
-          : {bgBlueGray: true})}
+          ? { bgYellowTheme: true }
+          : { bgBlueGray: true })}
         text={'Next'}
         onPress={onPressNext}
       />

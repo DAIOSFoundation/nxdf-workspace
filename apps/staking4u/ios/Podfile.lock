@@ -349,6 +349,8 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.12.1):
     - React-Core
+  - RNCClipboard (1.8.5):
+    - React-Core
   - RNGestureHandler (2.2.0):
     - React-Core
   - RNI18n (2.0.15):
@@ -422,6 +424,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../../../node_modules/react-native/ReactCommon`)
   - rn-fetch-blob (from `../../../node_modules/rn-fetch-blob`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-community/async-storage`)"
+  - "RNCClipboard (from `../../../node_modules/@react-native-clipboard/clipboard`)"
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
   - RNI18n (from `../../../node_modules/react-native-i18n`)
   - RNReanimated (from `../../../node_modules/react-native-reanimated`)
@@ -515,6 +518,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/rn-fetch-blob"
   RNCAsyncStorage:
     :path: "../../../node_modules/@react-native-community/async-storage"
+  RNCClipboard:
+    :path: "../../../node_modules/@react-native-clipboard/clipboard"
   RNGestureHandler:
     :path: "../../../node_modules/react-native-gesture-handler"
   RNI18n:
@@ -576,6 +581,7 @@ SPEC CHECKSUMS:
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
+  RNCClipboard: cc054ad1e8a33d2a74cd13e565588b4ca928d8fd
   RNGestureHandler: bf572f552ea324acd5b5464b8d30755b2d8c1de6
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNReanimated: 514a11da3a2bcc6c3dfd9de32b38e2b9bf101926

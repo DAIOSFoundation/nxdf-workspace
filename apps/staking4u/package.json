@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@react-native-clipboard/clipboard": "^1.8.5",
     "@react-native-community/async-storage": "*",
     "@testing-library/jest-native": "*",
     "@testing-library/react-native": "*",
@@ -23,6 +24,7 @@
     "redux-actions": "*",
     "redux-saga": "*",
     "rn-fetch-blob": "*",
-    "styled-components": "*"
+    "styled-components": "*",
+    "swr": "*"
   }
 }
