@@ -5,6 +5,8 @@
   "dependencies": {
     "@react-native-clipboard/clipboard": "^1.8.5",
     "@react-native-community/async-storage": "*",
+    "@react-native-firebase/app": "*",
+    "@react-native-firebase/messaging": "*",
     "@testing-library/jest-native": "*",
     "@testing-library/react-native": "*",
     "immer": "*",
@@ -12,8 +14,10 @@
     "react": "*",
     "react-native": "*",
     "react-native-config": "*",
+    "react-native-easy-toast": "*",
     "react-native-gesture-handler": "*",
     "react-native-i18n": "*",
+    "react-native-modal": "*",
     "react-native-reanimated": "^1.13.2",
     "react-native-router-flux": "*",
     "react-native-safe-area-context": "*",
@@ -25,6 +29,7 @@
     "redux-saga": "*",
     "rn-fetch-blob": "*",
     "styled-components": "*",
-    "swr": "*"
+    "swr": "*",
+    "react-native-push-notification": "*"
   }
 }

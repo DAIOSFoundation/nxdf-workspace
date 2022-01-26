@@ -164,12 +164,12 @@ const ScreenRouter = (props) => {
             hideTabBar
             hideNavBar
           /> */}
-          <Scene
+          {/* <Scene
             key="registerSuccessScreen"
             component={RegisterSuccessScreen}
             hideTabBar
             hideNavBar
-          />
+          /> */}
         </Scene>
       </Stack>
     </Router>

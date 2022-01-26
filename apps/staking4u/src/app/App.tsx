@@ -1,21 +1,25 @@
-/* eslint-disable jsx-a11y/accessible-emoji */
 import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, StatusBar } from 'react-native';
-
-// import {Router, Stack, Scene, Actions} from 'react-native-router-flux';
-import IndexScreen from './screens/index/IndexScreen';
-import configure from './store/configure';
+// Redux Configure
 import { Provider } from 'react-redux';
-const store = configure();
-
+import configure from './store/configure';
 // Internalization Config
-// eslint-disable-next-line import/first
 import { initLocale } from './config/i18n';
 // Global Screens
-// eslint-disable-next-line import/first
 import ScreenRouter from './screens/global/ScreenRouter';
-// eslint-disable-next-line import/first
+import ToastMessage from './screens/global/ToastMessage';
+import GlobalModal from './screens/global/GlobalModal';
+// import Loading from './src/screens/global/Loading';
+import AndroidBackHandle from './screens/global/AndroidBackHanlde';
+// import { SafeAreaView } from './src/components/styled/View';
+//import Push from './screens/global/Push';
 import SplashScreen from 'react-native-splash-screen';
+
+//import { SafeAreaView, StyleSheet, ScrollView, StatusBar } from 'react-native';
+
+// import {Router, Stack, Scene, Actions} from 'react-native-router-flux';
+//import IndexScreen from './screens/index/IndexScreen';
+
+const store = configure();
 
 const App = () => {
   // const [whatsNextYCoord, setWhatsNextYCoord] = useState<number>(0);
@@ -29,6 +33,10 @@ const App = () => {
   return (
     <Provider store={store}>
       <ScreenRouter />
+      <ToastMessage />
+      <GlobalModal />
+      <AndroidBackHandle />
+      {/* <Push /> */}
     </Provider>
   );
 };
