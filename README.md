@@ -37,3 +37,6 @@ android: `yarn start:staking4u:android`
 
 
 ### Staking4U
+`cd apps/staking4u/ios`  
+`pod cache clean all`  
+`rm -rf Pods`
