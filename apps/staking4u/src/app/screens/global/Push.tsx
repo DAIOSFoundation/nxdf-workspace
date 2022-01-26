@@ -9,6 +9,8 @@ const Push = () => {
   const [registerToken, setRegisterToken] = useState(null);
   const [fcmRegistered, setFcmRegistered] = useState(false);
 
+  console.log('Push');
+
   const onRegister = (token) => {
     setRegisterToken(token.token);
     setFcmRegistered(true);
