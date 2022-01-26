@@ -29,7 +29,7 @@ const GlobalModal = () => {
     scrollJustifyContent,
     bgColor,
   } = useSelector(
-    (state) => ({
+    (state: RootStateOrAny) => ({
       isVisible: state.modal.isVisible,
       isOneButton: state.modal.isOneButton,
       message: state.modal.message,
@@ -54,7 +54,8 @@ const GlobalModal = () => {
   };
 
   const defaultBgColor = bgColor || { bgPurpleWhite: true };
-  const leftButtonColor = leftButtonColor || { bgBlueGray: true };
+  //const leftButtonColor = leftButtonColor || { bgBlueGray: true };
+  const leftButtonColor = { bgBlueGray: true };
 
   const onPressCancel = () => {
     dispatch(modalActions.reset_modal_state());
