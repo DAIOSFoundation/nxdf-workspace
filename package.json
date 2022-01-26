@@ -48,7 +48,7 @@
     "rn-fetch-blob": "^0.12.0",
     "rxjs": "^7.0.0",
     "slick-carousel": "^1.8.1",
-    "styled-components": "5.3.3",
+    "styled-components": "^5.3.3",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
@@ -88,7 +88,7 @@
     "@typescript-eslint/eslint-plugin": "~5.3.0",
     "@typescript-eslint/parser": "~5.3.0",
     "babel-jest": "27.2.3",
-    "babel-plugin-styled-components": "1.10.7",
+    "babel-plugin-styled-components": "^2.0.2",
     "cypress": "^9.1.0",
     "detox": "19.4.1",
     "eslint": "8.2.0",
