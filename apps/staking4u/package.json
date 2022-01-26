@@ -30,6 +30,7 @@
     "rn-fetch-blob": "*",
     "styled-components": "*",
     "swr": "*",
-    "react-native-push-notification": "*"
+    "react-native-push-notification": "*",
+    "react-native-loading-spinner-overlay": "*"
   }
 }

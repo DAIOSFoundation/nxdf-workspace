@@ -34,7 +34,7 @@ const Push = () => {
 
   // only Android
   const notificationBackgroundListener = async () => {
-    await messaging().setBackgroundMessageHandler((message) => {
+    await messaging().setBackgroundMessageHandler((message): any => {
       const { title, body } = message.notification;
       notif.localNotif(title, body);
     });

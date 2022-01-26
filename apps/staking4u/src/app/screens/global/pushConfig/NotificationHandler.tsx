@@ -4,16 +4,16 @@ class NotificationHandler {
   onNotification(notification) {
     console.log('NotificationHandler:', notification);
 
-    if (typeof this._onNotification === 'function') {
-      this._onNotification(notification);
+    if (typeof this.onNotification === 'function') {
+      this.onNotification(notification); // _onNotification
     }
   }
 
   onRegister(token) {
     console.log('NotificationHandler:', token);
 
-    if (typeof this._onRegister === 'function') {
-      this._onRegister(token);
+    if (typeof this.onRegister === 'function') {
+      this.onRegister(token); // _onRegister
     }
   }
 
@@ -33,11 +33,11 @@ class NotificationHandler {
   }
 
   attachRegister(handler) {
-    this._onRegister = handler;
+    this.onRegister = handler; // _onRegister
   }
 
   attachNotification(handler) {
-    this._onNotification = handler;
+    this.onNotification = handler; // _onNotification
   }
 
   onRemoteFetch(noti) {
