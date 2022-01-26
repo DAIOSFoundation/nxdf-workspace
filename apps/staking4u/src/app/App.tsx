@@ -8,7 +8,7 @@ import { initLocale } from './config/i18n';
 import ScreenRouter from './screens/global/ScreenRouter';
 import ToastMessage from './screens/global/ToastMessage';
 import GlobalModal from './screens/global/GlobalModal';
-// import Loading from './src/screens/global/Loading';
+import Loading from './screens/global/Loading';
 import AndroidBackHandle from './screens/global/AndroidBackHanlde';
 // import { SafeAreaView } from './src/components/styled/View';
 //import Push from './screens/global/Push';
@@ -37,6 +37,7 @@ const App = () => {
       <GlobalModal />
       <AndroidBackHandle />
       {/* <Push /> */}
+      <Loading />
     </Provider>
   );
 };
