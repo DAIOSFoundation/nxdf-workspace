@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import MenuIn from './MenuIn';
 import Searchs from './SearchBar';
 import Wallet from './Wallet';
-import artisella from 'images/artistella-logo.png';
-import artisella2x from '../../images/artistella-logo@2x.png';
-import artisella3x from '../../images/artistella-logo@3x.png';
-import idicon from 'images/icon-id.png';
-import idicon2x from '../../images/icon-id@2x.png';
-import idicon3x from '../../images/icon-id@3x.png';
+const artisella = 'images/artistella-logo.png';
+const artisella2x = '../../images/artistella-logo@2x.png';
+const artisella3x = '../../images/artistella-logo@3x.png';
+const idicon = 'images/icon-id.png';
+const idicon2x = '../../images/icon-id@2x.png';
+const idicon3x = '../../images/icon-id@3x.png';
+
+import Link from 'next/link';
 
 const HeaderNav = styled.nav`
   margin: 0 auto;
@@ -88,9 +90,9 @@ function Banner(){
           <Menudiv>
             <Searchs />
             <TempDiv>
-            <MenuIn child="BROWSE"/>
-            <MenuIn child="SELL"/>
-            <MenuIn child="RAYDIUM"/>
+            <MenuIn child="browse"/>
+            <MenuIn child="sell"/>
+            <MenuIn child="raydium"/>
             <MenuImgDiv>
                 <MenuImg src='images/icon-id.png' srcSet='images/icon-id@2x.png, images/icon-id@3x.png'/>
             </MenuImgDiv>
