@@ -146,12 +146,12 @@ const ScreenRouter = (props) => {
             hideTabBar
             hideNavBar
           />
-          <Scene
+          {/* <Scene
             key="mnemonicConfirmationScreen"
             component={MnemonicConfirmationScreen}
             hideTabBar
             hideNavBar
-          />
+          /> */}
           {/* <Scene
             key="emailVerificationScreen"
             component={EmailVerificationScreen}
