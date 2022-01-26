@@ -1,4 +1,4 @@
-import {handleActions} from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import produce from 'immer';
 import * as AUTHS from './actions';
 
@@ -37,6 +37,7 @@ const auths = handleActions(
     },
     [AUTHS.POST_GENERATE_JWT_FAILED]: (state, action) => {
       console.log('POST_GENERATE_JWT_FAILED => ', action.payload);
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       return produce(state, (draft) => {});
     },
     [AUTHS.POST_LOGIN_SUCCESS]: (state, action) => {
@@ -64,7 +65,7 @@ const auths = handleActions(
       });
     },
   },
-  initialState,
+  initialState
 );
 
 export default auths;

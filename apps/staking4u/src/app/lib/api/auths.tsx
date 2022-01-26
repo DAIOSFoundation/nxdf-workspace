@@ -1,5 +1,5 @@
 import RNFetchBlob from 'rn-fetch-blob';
-import {headers} from '../../utils/request';
+import { headers } from '../../utils/request';
 import ROUTES from '../../routes';
 
 // 이메일 인증코드 전송
