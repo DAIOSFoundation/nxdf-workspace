@@ -1,5 +1,5 @@
-import {handleActions} from 'redux-actions';
-import produce, {createDraft, finishDraft} from 'immer';
+import { handleActions } from 'redux-actions';
+import produce, { createDraft, finishDraft } from 'immer';
 import * as REGISTER from './actions';
 
 const initialState = {
@@ -30,7 +30,9 @@ const register = handleActions(
     },
     [REGISTER.GET_MNEMONIC_VERIFICATION_FAILED]: (state, action) => {
       console.log('GET_MNEMONIC_VERIFICATION_FAILED => ', action.payload);
-      return produce(state, (draft) => {});
+      return produce(state, (draft) => {
+        ('');
+      }); // '' added
     },
     [REGISTER.RESET_MNEMONIC_VERIFICATION]: (state, action) => {
       console.log('RESET_MNEMONIC_VERIFICATION => ', action.payload);
@@ -39,7 +41,7 @@ const register = handleActions(
       });
     },
   },
-  initialState,
+  initialState
 );
 
 export default register;

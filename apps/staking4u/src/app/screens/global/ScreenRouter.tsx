@@ -40,14 +40,14 @@ import MnemonicInputScreen from '../login/MnemonicInputScreen';
 import TabWrapperBar from '../../components/bar/TabWrapperBar';
 import { Image } from '../../components/styled/Image';
 
-// import iconHomeNormal from '../../assets/tabBar/icon_home_normal.png';
-// import iconHomePressed from '../../assets/tabBar/icon_home_pressed.png';
-// import iconWalletNormal from '../../assets/tabBar/icon_wallet_normal.png';
-// import iconWalletPressed from '../../assets/tabBar/icon_wallet_pressed.png';
-// import iconInvestmentNormal from '../../assets/tabBar/icon_investment_normal.png';
-// import iconInvestmentPressed from '../../assets/tabBar/icon_investment_pressed.png';
-// import iconMyInfoNormal from '../../assets/tabBar/icon_my_info_normal.png';
-// import iconMyInfoPressed from '../../assets/tabBar/icon_my_info_pressed.png';
+import iconHomeNormal from '../../assets/tabBar/icon_home_normal.png';
+import iconHomePressed from '../../assets/tabBar/icon_home_pressed.png';
+import iconWalletNormal from '../../assets/tabBar/icon_wallet_normal.png';
+import iconWalletPressed from '../../assets/tabBar/icon_wallet_pressed.png';
+import iconInvestmentNormal from '../../assets/tabBar/icon_investment_normal.png';
+import iconInvestmentPressed from '../../assets/tabBar/icon_investment_pressed.png';
+import iconMyInfoNormal from '../../assets/tabBar/icon_my_info_normal.png';
+import iconMyInfoPressed from '../../assets/tabBar/icon_my_info_pressed.png';
 
 import { colors } from '../../components/styled/Common';
 import { getData } from '../../utils/functions';
@@ -94,16 +94,16 @@ const ScreenRouter = (props) => {
       [title, focused]
     );
 
-    // switch (title) {
-    //   case 'main':
-    //     return tabBarIconGenerator(iconHomePressed, iconHomeNormal);
-    //   case 'wallet':
-    //     return tabBarIconGenerator(iconWalletPressed, iconWalletNormal);
-    //   case 'investment':
-    //     return tabBarIconGenerator(iconInvestmentPressed, iconInvestmentNormal);
-    //   case 'myInfo':
-    //     return tabBarIconGenerator(iconMyInfoPressed, iconMyInfoNormal);
-    // }
+    switch (title) {
+      case 'main':
+        return tabBarIconGenerator(iconHomePressed, iconHomeNormal);
+      case 'wallet':
+        return tabBarIconGenerator(iconWalletPressed, iconWalletNormal);
+      case 'investment':
+        return tabBarIconGenerator(iconInvestmentPressed, iconInvestmentNormal);
+      case 'myInfo':
+        return tabBarIconGenerator(iconMyInfoPressed, iconMyInfoNormal);
+    }
   };
 
   return (
@@ -146,12 +146,12 @@ const ScreenRouter = (props) => {
             hideTabBar
             hideNavBar
           />
-          <Scene
+          {/* <Scene
             key="mnemonicConfirmationScreen"
             component={MnemonicConfirmationScreen}
             hideTabBar
             hideNavBar
-          />
+          /> */}
           {/* <Scene
             key="emailVerificationScreen"
             component={EmailVerificationScreen}
@@ -164,12 +164,12 @@ const ScreenRouter = (props) => {
             hideTabBar
             hideNavBar
           /> */}
-          <Scene
+          {/* <Scene
             key="registerSuccessScreen"
             component={RegisterSuccessScreen}
             hideTabBar
             hideNavBar
-          />
+          /> */}
         </Scene>
       </Stack>
     </Router>

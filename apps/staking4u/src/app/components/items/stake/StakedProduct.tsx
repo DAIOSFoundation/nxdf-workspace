@@ -1,10 +1,10 @@
 import React from 'react';
-import {shallowEqual, useSelector} from 'react-redux';
-import {View, ViewRow} from '../../styled/View';
-import {GestureButton} from '../../styled/GestureButton';
-import {Text} from '../../styled/Text';
-import {Image} from '../../styled/Image';
-import {convertNumberFormat} from '../../../utils/functions';
+import { shallowEqual, useSelector, RootStateOrAny } from 'react-redux';
+import { View, ViewRow } from '../../styled/View';
+import { GestureButton } from '../../styled/GestureButton';
+import { Text } from '../../styled/Text';
+import { Image } from '../../styled/Image';
+import { convertNumberFormat } from '../../../utils/functions';
 
 const StakedProduct = ({
   symbol,
@@ -14,11 +14,11 @@ const StakedProduct = ({
   reward,
   depositBalance,
 }) => {
-  const {tickers} = useSelector(
-    (state) => ({
+  const { tickers } = useSelector(
+    (state: RootStateOrAny) => ({
       tickers: state.ticker.tickers,
     }),
-    shallowEqual,
+    shallowEqual
   );
 
   return (
@@ -27,11 +27,13 @@ const StakedProduct = ({
       flexDirection={'column'}
       width={'94%'}
       alignSelf={'center'}
-      marginTop={5}>
+      marginTop={5}
+    >
       <ViewRow
         width={'100%'}
         justifyContent={'flex-start'}
-        alignItems={'center'}>
+        alignItems={'center'}
+      >
         <Image
           source={logo}
           resizeMode={'contain'}
@@ -48,7 +50,8 @@ const StakedProduct = ({
         width={'100%'}
         paddingTop={10}
         paddingBottom={10}
-        justifyContent={'space-between'}>
+        justifyContent={'space-between'}
+      >
         <View>
           <Text fontSize={13} ftLightGray marginBottom={3}>
             Total Amount
@@ -58,7 +61,7 @@ const StakedProduct = ({
           </Text>
           <Text fontSize={12} ftBlueGray>
             {`$${Number(
-              depositBalance * (tickers?.[symbol].close || 0),
+              depositBalance * (tickers?.[symbol].close || 0)
             ).toFixed(5)}`}
           </Text>
         </View>
@@ -73,7 +76,7 @@ const StakedProduct = ({
             {`$${convertNumberFormat(
               10,
               Number(Number(reward).toFixed(10)) *
-                (tickers?.[symbol].close || 0),
+                (tickers?.[symbol].close || 0)
             )}`}
           </Text>
         </View>
