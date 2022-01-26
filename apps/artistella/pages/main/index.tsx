@@ -1,20 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Index from './slideImage';
-
-/* eslint-disable-next-line */
-export interface MainProps {}
+import UpcomingSlide from './UpcomingSlide';
+import NewCollections from './NewCollectinos';
+import UpcomingLaunches from './UpcomingLaunches';
+import PopularCollections from './PopularCollections';
+import HowToUse from './HowToUse';
 
 const StyledMain = styled.div`
-  color: pink;
+  
 `;
 
-export function Main(props: MainProps) {
+export function Main() {
   return (
     <StyledMain>
-      <h1>Welcome to Main!</h1>
-      <Index />
+      <UpcomingSlide/>
+      <NewCollections/>
+      <UpcomingLaunches/>
+      <PopularCollections/>
+      <HowToUse/>
     </StyledMain>
   );
 }

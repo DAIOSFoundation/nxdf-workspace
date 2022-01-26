@@ -1,25 +1,9 @@
-import styled from 'styled-components';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import TransImage from './transImage';
+import {ImageSlider} from './style';
 
-const StyledSlideImage = styled.div`
-  color: pink;
-`;
-
-const ImageSlider = styled.div`
-  width: 100%;
-  height: 100%;
-
-  .slick-dots{
-    top: 55vh;
-    li button:before{
-      color: #fbac00;
-      font-size: 10px;
-    }
-  }
-`;
 
 const images=[
   {
@@ -54,7 +38,7 @@ const images=[
   }
 ];
 
-export function Index() {
+export function UpcomingSlide() {
   const setting={
     dots:true,
     infinite: true,
@@ -76,4 +60,4 @@ export function Index() {
   );
 }
 
-export default Index;
+export default UpcomingSlide;
