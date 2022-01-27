@@ -1,32 +1,21 @@
-import React from 'react';
-import Link from 'next/link';
-import { SubElm } from './subElm';
-import {GridDiv,TopDiv,GridTitle,MoreButton,Grid} from './style';
+import React from 'react'
+import {GridDiv,TopDiv,GridTitle,Grid} from './style'
+import {MoreEle} from './moreEle'
 
-function PopularCollections(){
- 
+function MoreGrid(){
+
   return(
     <GridDiv>
       <TopDiv>
-        <GridTitle>Popular Collections</GridTitle>
-        <MoreButton>
-          <Link href={`/more`}>
-            <a>More</a>
-          </Link>
-        </MoreButton>
+        <GridTitle>Collections</GridTitle>
       </TopDiv>
       <Grid>
-        { data.map((data,index) => 
-          <SubElm key={index} img={data.image} header={data.name} text={data.description}/>
+        { data.map((data) => 
+          <MoreEle img={data.image} header={data.name} text={data.description}/>
         )}
       </Grid>
     </GridDiv>
-  )
-}
-
-function MoreClick(e){
-  e.preventDefault();
-  return (window.location.assign("/collections/popular"))
+    )
 }
 
 const data=[
@@ -71,4 +60,5 @@ const data=[
       description: "Dolor consequat laboris duis duis in consectetur dolor ut Lorem duis ex laborum dolore."
   }
 ]
-export default PopularCollections;
+
+export default MoreGrid;
