@@ -1,10 +1,8 @@
 import { FC, useCallback } from "react";
 
 import styled from 'styled-components';
-import { SendSPLTransaction } from '../utils/sendTransaction';
 
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { SendSPLTransaction, useConnection, useWallet, WalletMultiButton } from "@nxdf/shared/services";
 
 const StyledPage = styled.div`
   .page {
@@ -45,7 +43,18 @@ export const Index: FC = ({}) => {
     });
 
     const decimals = 10**6;
-    await SendSPLTransaction(connection, publicKey, signTransaction, mintAddress, toAddresses, amounts, decimals);
+
+    const chunkSize = 10;
+    const toAddressesGroup = toAddresses.map((e, i) => {
+      return i % chunkSize === 0 ? toAddresses.slice(i, i + chunkSize) : null;
+    }).filter(e => { return e; });
+    const amountsGroup = amounts.map((e, i) => {
+      return i % chunkSize === 0 ? amounts.slice(i, i + chunkSize) : null;
+    }).filter(e => { return e; });
+
+    toAddressesGroup.map(async (group, index) => {
+      await SendSPLTransaction(connection, publicKey, signTransaction, mintAddress, toAddressesGroup[index], amountsGroup[index], decimals);
+    });
 
   }, [publicKey, connection, signTransaction]);
 

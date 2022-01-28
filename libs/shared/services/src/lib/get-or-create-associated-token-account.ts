@@ -1,10 +1,18 @@
 // getOrCreateAssociatedTokenAccount.ts
-import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token'
-import { SignerWalletAdapterProps } from '@solana/wallet-adapter-base'
-import { Connection, PublicKey, Commitment, Transaction } from '@solana/web3.js'
-import { createAssociatedTokenAccountInstruction } from './createAssociatedTokenAccountInstruction'
-import { getAccountInfo } from './getAccountInfo'
-import { getAssociatedTokenAddress } from './getAssociatedTokerAddress'
+import {
+  TOKEN_PROGRAM_ID,
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+} from '@solana/spl-token';
+import { SignerWalletAdapterProps } from '@solana/wallet-adapter-base';
+import {
+  Connection,
+  PublicKey,
+  Commitment,
+  Transaction,
+} from '@solana/web3.js';
+import { createAssociatedTokenAccountInstruction } from './create-associated-token-accountInstruction';
+import { getAccountInfo } from './get-account-info';
+import { getAssociatedTokenAddress } from './get-associated-toker-address';
 
 export async function getOrCreateAssociatedTokenAccount(
   connection: Connection,
@@ -23,19 +31,27 @@ export async function getOrCreateAssociatedTokenAccount(
     allowOwnerOffCurve,
     programId,
     associatedTokenProgramId
-  )
+  );
 
   // This is the optimal logic, considering TX fee, client-side computation, RPC roundtrips and guaranteed idempotent.
   // Sadly we can't do this atomically.
-  let account
+  let account;
   try {
-    account = await getAccountInfo(connection, associatedToken, commitment, programId)
+    account = await getAccountInfo(
+      connection,
+      associatedToken,
+      commitment,
+      programId
+    );
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     // TokenAccountNotFoundError can be possible if the associated address has already received some lamports,
     // becoming a system account. Assuming program derived addressing is safe, this is the only case for the
     // TokenInvalidAccountOwnerError in this code path.
-    if (error.message === 'TokenAccountNotFoundError' || error.message === 'TokenInvalidAccountOwnerError') {
+    if (
+      error.message === 'TokenAccountNotFoundError' ||
+      error.message === 'TokenInvalidAccountOwnerError'
+    ) {
       // As this isn't atomic, it's possible others can create associated accounts meanwhile.
       try {
         const transaction = new Transaction().add(
@@ -47,30 +63,39 @@ export async function getOrCreateAssociatedTokenAccount(
             programId,
             associatedTokenProgramId
           )
-        )
+        );
 
-        const blockHash = await connection.getRecentBlockhash()
-        transaction.feePayer = await payer
-        transaction.recentBlockhash = await blockHash.blockhash
-        const signed = await signTransaction(transaction)
+        const blockHash = await connection.getRecentBlockhash();
+        transaction.feePayer = await payer;
+        transaction.recentBlockhash = await blockHash.blockhash;
+        const signed = await signTransaction(transaction);
 
-        const signature = await connection.sendRawTransaction(signed.serialize())
+        const signature = await connection.sendRawTransaction(
+          signed.serialize()
+        );
 
-        await connection.confirmTransaction(signature)
+        await connection.confirmTransaction(signature);
       } catch (error: unknown) {
         // Ignore all errors; for now there is no API-compatible way to selectively ignore the expected
         // instruction error if the associated account exists already.
       }
 
       // Now this should always succeed
-      account = await getAccountInfo(connection, associatedToken, commitment, programId)
+      account = await getAccountInfo(
+        connection,
+        associatedToken,
+        commitment,
+        programId
+      );
     } else {
-      throw error
+      throw error;
     }
   }
 
-  if (!account.mint.equals(mint.toBuffer())) throw Error('TokenInvalidMintError')
-  if (!account.owner.equals(owner.toBuffer())) throw new Error('TokenInvalidOwnerError')
+  if (!account.mint.equals(mint.toBuffer()))
+    throw Error('TokenInvalidMintError');
+  if (!account.owner.equals(owner.toBuffer()))
+    throw new Error('TokenInvalidOwnerError');
 
-  return account
+  return account;
 }

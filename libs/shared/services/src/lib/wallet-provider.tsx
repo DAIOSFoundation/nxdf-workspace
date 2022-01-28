@@ -1,5 +1,5 @@
-import type { WalletProviderProps } from "@solana/wallet-adapter-react";
-import { WalletProvider } from "@solana/wallet-adapter-react";
+import type { WalletProviderProps } from '@solana/wallet-adapter-react';
+import { WalletProvider } from '@solana/wallet-adapter-react';
 
 import {
   LedgerWalletAdapter,
@@ -9,14 +9,14 @@ import {
   SolletExtensionWalletAdapter,
   SolletWalletAdapter,
   TorusWalletAdapter,
-} from '@solana/wallet-adapter-wallets'
-import { useMemo } from "react";
-import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
+} from '@solana/wallet-adapter-wallets';
+import { useMemo } from 'react';
+import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 
-import('@solana/wallet-adapter-react-ui/styles.css' as any) ;
+import('@solana/wallet-adapter-react-ui/styles.css' as any);
 
-export function ClientWalletProvider(
-  props: Omit<WalletProviderProps, "wallets">
+function ClientWalletProvider(
+  props: Omit<WalletProviderProps, 'wallets'>
 ): JSX.Element {
   const wallets = useMemo(
     () => [
