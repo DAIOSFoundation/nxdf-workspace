@@ -1,4 +1,4 @@
-import {all} from 'redux-saga/effects';
+import { all } from 'redux-saga/effects';
 import authsSagas from './auths/sagas';
 import userInSagas from './user/sagas';
 import registerSagas from './register/sagas';

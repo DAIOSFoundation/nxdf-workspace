@@ -1,6 +1,6 @@
-import {handleActions} from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import * as GLOBAL from './actions';
-import produce, {createDraft, finishDraft} from 'immer';
+import produce, { createDraft, finishDraft } from 'immer';
 
 const initialState = {
   toastMessage: null, // 토스트 메세지
@@ -40,7 +40,9 @@ const global = handleActions(
     },
     [GLOBAL.GET_ETH_KEYS_FAILED]: (state, action) => {
       console.log('GET_ETH_KEYS_FAILED => ', action.payload);
-      return produce(state, (draft) => {});
+      return produce(state, (draft) => {
+        ('');
+      });
     },
     [GLOBAL.GET_SOL_KEYS_SUCCESS]: (state, action) => {
       console.log('GET_SOL_KEYS_SUCCESS => ', action.payload);
@@ -51,7 +53,9 @@ const global = handleActions(
     },
     [GLOBAL.GET_SOL_KEYS_FAILED]: (state, action) => {
       console.log('GET_SOL_KEYS_FAILED => ', action.payload);
-      return produce(state, (draft) => {});
+      return produce(state, (draft) => {
+        ('');
+      });
     },
     [GLOBAL.CHANGE_ETH_NETWORK_MODE]: (state, action) => {
       console.log('CHANGE_ETH_NETWORK_MODE => ', action.payload);
@@ -60,7 +64,7 @@ const global = handleActions(
       });
     },
   },
-  initialState,
+  initialState
 );
 
 export default global;

@@ -1,10 +1,10 @@
-import {NativeModules} from 'react-native';
+import { NativeModules } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import env from 'react-native-config';
-import {stellar} from './cryptoCurrency';
-import {screenHeight, screenWidth} from '../components/styled/ScreenSize';
-import {erc20} from './cryptoCurrency';
+//import {stellar} from './cryptoCurrency';
+import { screenHeight, screenWidth } from '../components/styled/ScreenSize';
+import { cryptoCurrency } from './cryptoCurrency';
 
 // 값이 비어있는지 확인하는 함수
 export const isEmpty = (data) => {
@@ -83,7 +83,7 @@ export const AESKey = async (mnemonic) => {
 export const AESEncrypt = async (plainString, key) => {
   try {
     encryptDataIV(plainString, key, env.IV)
-      .then(({cipher, iv}) => {
+      .then(({ cipher, iv }) => {
         encryptIv = iv;
         encryptString = cipher;
 
@@ -93,7 +93,7 @@ export const AESEncrypt = async (plainString, key) => {
 
         storeData(
           'publicMnemonic',
-          mnemonicHalf(encryptionRegex(encryptString)),
+          mnemonicHalf(encryptionRegex(encryptString))
         );
       })
       .catch((error) => {
@@ -108,7 +108,7 @@ export const AESDecrypt = async (key) => {
   const iv = await getData('encryptIv');
   const cipher = decryptionRegex(await getData('mnemonic'));
   try {
-    const decryptString = await decryptData({cipher, iv}, key);
+    const decryptString = await decryptData({ cipher, iv }, key);
 
     console.log(`AESDecrypt 니모닉 복호화 스트링 ===> ${decryptString}`);
     return decryptString;
@@ -120,7 +120,7 @@ export const AESDecrypt = async (key) => {
 // SWR 리턴
 export const fetcher = (url, token) =>
   axios
-    .get(url, token && {headers: {Authorization: `Bearer ${token}`}})
+    .get(url, token && { headers: { Authorization: `Bearer ${token}` } })
     .then((res) => res.data);
 
 // 니모닉 절반 자르기
@@ -133,7 +133,7 @@ export const mnemonicHalf = (mnemonic) => {
 export const mnemonicEncrypt = async (plainString) => {
   try {
     return encryptDataIV(plainString, env.AES_KEY, env.IV)
-      .then(({cipher, iv}) => {
+      .then(({ cipher, iv }) => {
         encryptIv = iv;
         encryptString = cipher;
 
@@ -146,7 +146,7 @@ export const mnemonicEncrypt = async (plainString) => {
           /\/|\+/gi,
           function (matched) {
             return mapObj[matched];
-          },
+          }
         );
       })
       .catch((error) => {
@@ -207,6 +207,8 @@ export const shuffleArray = (array) => {
   return array;
 };
 
+const erc20 = cryptoCurrency.erc20;
+
 // 특정 ThemeToken 결과 값 반환
 export const findOneThemeToken = (key) => {
   for (let i = 0; i < erc20.ThemeToken.length; i++) {
@@ -215,7 +217,7 @@ export const findOneThemeToken = (key) => {
         name: erc20.ThemeToken[i].name,
         symbol: erc20.ThemeToken[i].symbol,
         mainNetContractAddress: erc20.ThemeToken[i].mainNetContractAddress,
-        testNetContractAddress: erc20.ThemeToken[i].testNetContractAddress,
+        //estNetContractAddress: erc20.ThemeToken[i].testNetContractAddress,
       };
     }
   }
@@ -233,7 +235,7 @@ export const calculateERC20GasFee = (gas) => {
 
 export function substringAddress(address, front, back = front) {
   return `${address.substring(0, front)}.....${address.substring(
-    address.length - back,
+    address.length - back
   )}`;
 }
 

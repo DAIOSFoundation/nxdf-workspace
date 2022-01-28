@@ -8,11 +8,24 @@ import {
 import {Text} from '../../components/styled/Text';
 import {ButtonRadius, ButtonBorderRadius} from '../../components/styled/Button';
 import {Image, ImageAbsolute} from '../../components/styled/Image';
+import {Linking} from "react-native";
 const startImage = '../../assets/index/start.png';
 const holdingImage = '../../assets/index/holding.png';
 const mainLogo = '../../assets/common/main_logo.png';
 
 const IndexScreen = () => {
+
+  const login = async () => {
+    // const url = 'slopewallet://wallet.slope/pay?returnSchemes=staking4u://login?slopePayReturn&slopePayParams={"type": "connect"}';
+    const url = 'slopewallet://wallet.slope/pay?returnSchemes=7374616b696e6734753a2f2f6c6f67696e3f736c6f706550617952657475726e&slopePayParams=7b2274797065223a2022636f6e6e656374227d';
+    // const url = 'slopewallet://wallet.slope/pay';
+    await Linking.openURL(url).then(supported => {
+      alert(supported);
+    }).catch(err => {
+      console.error(err);
+    });
+  };
+
   return (
     <SafeAreaView bgYellowTheme>
       <View flex={1}>
@@ -39,7 +52,7 @@ const IndexScreen = () => {
             marginBottom={10}
             marginLeft={'auto'}
             marginRight={'auto'}
-            onPress={Actions.GenerateMnemonic}>
+            onPress={login}>
             <Text ftFontNavy bold fontSize={16}>
               Create Mnemonic
             </Text>

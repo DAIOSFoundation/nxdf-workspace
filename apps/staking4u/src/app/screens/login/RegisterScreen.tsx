@@ -1,7 +1,12 @@
-import React, {useMemo, useState} from 'react';
+import React, { useMemo, useState } from 'react';
 // NPM Module
-import {Actions} from 'react-native-router-flux';
-import {useDispatch, useSelector, shallowEqual} from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+import {
+  useDispatch,
+  useSelector,
+  shallowEqual,
+  RootStateOrAny,
+} from 'react-redux';
 // Components
 import {
   SafeAreaView,
@@ -13,12 +18,12 @@ import {
 import TopBar from '../../components/bar/TopBar';
 import BottomButton from '../../components/buttons/BottomButton';
 import InputBorderRadius from '../../components/input/InputBorderRadius';
-import {ButtonBorderRadius} from '../../components/styled/Button';
-import {Text} from '../../components/styled/Text';
+import { ButtonBorderRadius } from '../../components/styled/Button';
+import { Text } from '../../components/styled/Text';
 // languages
 import I18n from '../../config/i18n';
 // utils
-import {regEmail} from '../../utils/regExp';
+import { regEmail } from '../../utils/regExp';
 // actions
 import * as authsActions from '../../store/modules/auths/actions';
 
@@ -28,14 +33,14 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('gee8196@gmail.com'); // 이메일
   const [verificationCode, setVerificationCode] = useState(''); // 인증코드
 
-  const {emailAuth} = useSelector(
-    (state) => ({emailAuth: state.auths.emailAuth}),
-    shallowEqual,
+  const { emailAuth } = useSelector(
+    (state: RootStateOrAny) => ({ emailAuth: state.auths.emailAuth }),
+    shallowEqual
   );
 
   // 상태값 변경
   const onChange = (event, state) => {
-    const {text} = event.nativeEvent;
+    const { text } = event.nativeEvent;
     const setState = {
       email: setEmail,
       verificationCode: setVerificationCode,
@@ -50,7 +55,7 @@ const RegisterScreen = () => {
 
   // 인증코드 전송 클릭
   const onPressCert = () => {
-    const params = {email};
+    const params = { email };
     dispatch(authsActions.post_email_auth(params));
   };
 
@@ -75,7 +80,8 @@ const RegisterScreen = () => {
           <ViewRow
             width={'100%'}
             marginTop={30}
-            justifyContent={'space-between'}>
+            justifyContent={'space-between'}
+          >
             <View width={'65%'}>
               <InputBorderRadius
                 ftWhite
@@ -83,7 +89,7 @@ const RegisterScreen = () => {
                 label={I18n.t('register.emailLabel')}
                 error={I18n.t('register.emailError')}
                 placeholder={I18n.t('register.emailPlaceholder')}
-                labelColor={{ftWhite: true}}
+                labelColor={{ ftWhite: true }}
                 isBottomLine={true}
                 value={email}
                 isValid={regEmail(email)}
@@ -96,7 +102,8 @@ const RegisterScreen = () => {
                 height={50}
                 paddingLeft={5}
                 paddingRight={5}
-                onPress={onPressCert}>
+                onPress={onPressCert}
+              >
                 <Text ftWhite>인증코드 전송</Text>
               </ButtonBorderRadius>
             </ViewAbsolute>
