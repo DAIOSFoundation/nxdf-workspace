@@ -31,6 +31,8 @@
     "styled-components": "*",
     "swr": "*",
     "react-native-push-notification": "*",
-    "react-native-loading-spinner-overlay": "*"
+    "react-native-loading-spinner-overlay": "*",
+    "@react-native-community/checkbox": "*",
+    "date-fns": "*"
   }
 }
