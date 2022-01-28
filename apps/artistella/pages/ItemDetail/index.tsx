@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import ItemHistory from './Detailcontent/itemHistoty'
+import ItemHistory from './detailContent/itemHistoty'
 import Activities from './activities/activities'
-import MoreCollection from './moreCollection/MoreCollection';
-import InfoList from './Detailcontent/infoList'
+import MoreCollection from './moreCollection/moreCollection';
+import InfoList from './detailContent/infoList'
 
 const DetailLayout=styled.div`
   width: 80%;

@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from "styled-components"
 import { EleDiv, GridImage, ImageHeadS, ImageSummary,Price, EleDivMore,MoreContDiv,MoreImgDiv } from "./style"
 
 

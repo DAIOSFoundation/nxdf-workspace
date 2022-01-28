@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { SubElm } from './subElm';
+import { SubElm } from './popularElement';
 import {GridDiv,TopDiv,GridTitle,MoreButton,Grid} from './style';
 
 function PopularCollections(){
@@ -10,7 +10,7 @@ function PopularCollections(){
       <TopDiv>
         <GridTitle>Popular Collections</GridTitle>
         <MoreButton>
-          <Link href={`/more`}>
+          <Link href={`/moreItem`}>
             <a>More</a>
           </Link>
         </MoreButton>
