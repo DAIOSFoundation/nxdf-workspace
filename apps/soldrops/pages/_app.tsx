@@ -1,20 +1,21 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 
-import dynamic from "next/dynamic";
-import { ConnectionProvider } from "@solana/wallet-adapter-react";
-import { clusterApiUrl } from "@solana/web3.js";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import dynamic from 'next/dynamic';
 
 import './styles.css';
+import {clusterApiUrl, ConnectionProvider, WalletAdapterNetwork } from '@nxdf/shared/services';
 
 // const SOLANA_NETWORK = WalletAdapterNetwork.Mainnet;
 const SOLANA_NETWORK = WalletAdapterNetwork.Devnet;
 const network = SOLANA_NETWORK;
 
 const WalletProvider = dynamic(
-  () => import("../contexts/ClientWalletProvider"),
+  async () => {
+    const { WalletProvider } = await import('@nxdf/shared/services');
+    return WalletProvider;
+  },
   {
     ssr: false,
   }
