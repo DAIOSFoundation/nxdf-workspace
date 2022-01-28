@@ -1,6 +1,6 @@
 import React from 'react'
 import {GridDiv,TopDiv,GridTitle,Grid} from './style'
-import {MoreEle} from './moreEle'
+import {MoreEle} from './moreElement'
 
 function MoreGrid(){
 

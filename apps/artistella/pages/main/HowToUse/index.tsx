@@ -1,5 +1,5 @@
 import React from 'react'
-import UseEle from './htuEle';
+import UseEle from './howtouseElement';
 import {UseDiv,UseTitle,UseGrid} from './style';
 
 function HowToUse(){

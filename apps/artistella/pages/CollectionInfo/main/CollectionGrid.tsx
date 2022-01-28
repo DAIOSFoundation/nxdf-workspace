@@ -1,5 +1,5 @@
 import React from 'react';
-import { SubElmB } from './CollectionEle';
+import { SubElmB } from './collectionElement';
 import {GridDiv,Grid,ShapeProps} from '../style';
 
 function BrowseGrid(props:ShapeProps) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import GridElm from './mainEle';
+import GridElm from './newElement';
 import {GridDiv,TopDiv,GridTitle,MoreButton,Grid} from './style';
 
 function NewCollectinos(){
@@ -9,7 +9,7 @@ function NewCollectinos(){
       <TopDiv>
         <GridTitle>New Collections</GridTitle>
         <MoreButton>
-          <Link href={`/more`}>
+          <Link href={`/moreItem`}>
             <a>More</a>
           </Link>
         </MoreButton>

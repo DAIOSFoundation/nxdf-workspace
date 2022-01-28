@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import BrowseGrid from './CollectionGrid';
+import BrowseGrid from './collectionGrid';
 import BoxViewPrssed from '../../../images/itemList/icon-boxview-pressed.png';
 import BoxViewPrssed2x from '../../../images/itemList/icon-boxview-pressed@2x.png';
 import BoxViewPrssed3x from '../../../images/itemList/icon-boxview-pressed@3x.png';

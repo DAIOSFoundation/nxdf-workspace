@@ -1,7 +1,7 @@
 import React from 'react';
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
-import { PagElm } from './pagElm';
+import { PagElm } from './upcomingElement';
 import {PagRayout,PageTitleDiv,PagTitle,PageSlider} from './style';
 
 

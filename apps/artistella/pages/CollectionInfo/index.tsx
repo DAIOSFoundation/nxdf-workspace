@@ -1,7 +1,7 @@
 import React from 'react';
-import CollectionBrowse from './Info/CollectionBrowse';
-import BrowseMain from './main/CollectionMain';
-import CollectionTop from './ColletionTop'
+import CollectionBrowse from './Info/collectionBrowse';
+import BrowseMain from './main/collectionMain';
+import CollectionTop from './colletionTop'
 
 
 function CollectionInfo(){

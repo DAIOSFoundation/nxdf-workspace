@@ -1,6 +1,6 @@
 import Slider from "react-slick";
 import styled from "styled-components";
-import { SubElmP } from "../Ele/moreEle";
+import { SubElmP } from "./moreElement";
 
 const SlideDiv=styled.div`
   background-color:#faf8f4;

@@ -1,4 +1,3 @@
-import styled from "styled-components"
 import {InfoDiv,Info,Number} from '../style'
 
 

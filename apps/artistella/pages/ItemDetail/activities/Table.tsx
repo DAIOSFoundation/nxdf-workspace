@@ -1,7 +1,7 @@
 //https://react-table.tanstack.com/docs/examples/pagination
 import React from 'react'
 import {DivTable,Option,Span,Select,Styles} from './style'
-import TablePagination from './TablePagination'
+import TablePagination from './tablePagination'
 import { useTable, usePagination } from 'react-table'
 
 
