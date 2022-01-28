@@ -3,11 +3,9 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 
 import dynamic from 'next/dynamic';
-import { ConnectionProvider } from '@solana/wallet-adapter-react';
-import { clusterApiUrl } from '@solana/web3.js';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 
 import './styles.css';
+import {clusterApiUrl, ConnectionProvider, WalletAdapterNetwork } from '@nxdf/shared/services';
 
 // const SOLANA_NETWORK = WalletAdapterNetwork.Mainnet;
 const SOLANA_NETWORK = WalletAdapterNetwork.Devnet;
