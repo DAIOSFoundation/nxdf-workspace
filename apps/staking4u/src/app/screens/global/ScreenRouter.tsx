@@ -12,7 +12,7 @@ import RegisterSuccessScreen from '../register/RegisterSuccessScreen';
 import MnemonicInputScreen from '../login/MnemonicInputScreen';
 
 import MainScreen from '../home/main/MainScreen';
-// import FlexibleDetailScreen from '../home/main/FlexibleDetailScreen';
+import FlexibleDetailScreen from '../home/main/FlexibleDetailScreen';
 // import FlexibleInputScreen from '../home/main/FlexibleInputScreen';
 // import StakingCompleteScreen from '../home/main/StakingCompleteScreen';
 // import ProductDetailScreen from '../home/main/ProductDetailScreen';
@@ -192,12 +192,12 @@ const ScreenRouter = (props) => {
             initial
           >
             <Scene key="mainScreen" component={MainScreen} />
-            {/* <Scene
+            <Scene
               hideNavBar
               hideTabBar
               key="flexibleDetailScreen"
               component={FlexibleDetailScreen}
-            /> */}
+            />
             {/* <Scene
               hideNavBar
               hideTabBar
