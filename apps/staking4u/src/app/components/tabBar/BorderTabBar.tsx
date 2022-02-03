@@ -1,8 +1,8 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 // Styled Components
-import {ViewRow} from '../../components/styled/View';
-import {Text} from '../../components/styled/Text';
-import {ButtonEdgeRadius} from '../../components/styled/Button';
+import { ViewRow } from '../styled/View';
+import { Text } from '../styled/Text';
+import { ButtonEdgeRadius } from '../styled/Button';
 // NPM Module
 
 const BorderTabBar = (props) => {
@@ -22,7 +22,8 @@ const BorderTabBar = (props) => {
           height={50}
           bgWhite={active(index)}
           justifyContent={'center'}
-          onPress={() => props.setIndex(index)}>
+          onPress={() => props.setIndex(index)}
+        >
           <Text bold ftBlack={active(index)} ftWhite={!active(index)}>
             {data}
           </Text>

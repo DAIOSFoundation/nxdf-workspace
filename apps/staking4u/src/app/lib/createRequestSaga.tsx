@@ -1,6 +1,6 @@
-import {call, put} from 'redux-saga/effects';
-import {startLoading, finishLoading} from '../store/modules/loading/actions';
-import {skipLoadingActionTypes} from '../utils/constants';
+import { call, put } from 'redux-saga/effects';
+import { startLoading, finishLoading } from '../store/modules/loading/actions';
+import { skipLoadingActionTypes } from '../utils/constants';
 
 export const createRequestActionTypes = (type) => {
   const SUCCESS = `${type}_SUCCESS`;
@@ -20,7 +20,7 @@ export default function createRequestSaga(type, request) {
 
     const response = yield call(request, action.payload);
     // response.statusCode : nest server / response.responseStatus : wallet
-    const statusCode = response.statusCode || response.responseStatus;
+    const statusCode: number = response.statusCode || response.responseStatus;
     if (statusCode >= 200 && statusCode < 300) {
       // 성공인 경우
       yield put({

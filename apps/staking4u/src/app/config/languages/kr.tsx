@@ -11,7 +11,7 @@ export default {
     passwordPlaceholder: '비밀번호를 입력해주세요.',
     accountRecovery: '아이디/비밀번호를 잊으셨나요?',
   },
-  toast: {closeApp: '뒤로 버튼을 한 번 더 누르시면 앱이 종료됩니다.'},
+  toast: { closeApp: '뒤로 버튼을 한 번 더 누르시면 앱이 종료됩니다.' },
   login: {
     inputMnemonic: '니모닉 입력',
     inputMnemonicPhrase:

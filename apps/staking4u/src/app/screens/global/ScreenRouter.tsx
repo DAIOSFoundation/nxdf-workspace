@@ -1,14 +1,14 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Router, Stack, Scene, Actions} from 'react-native-router-flux';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Router, Stack, Scene, Actions } from 'react-native-router-flux';
 
 import IndexScreen from '../index/IndexScreen';
-// import ServiceAgreementScreen from '../register/ServiceAgreementScreen';
-// import MnemonicGuideScreen from '../register/MnemonicGuideScreen';
-// import MnemonicGenerationScreen from '../register/MnemonicGenerationScreen';
-// import MnemonicConfirmationScreen from '../register/MnemonicConfirmationScreen';
-// import EmailVerificationScreen from '../register/EmailVerificationScreen';
-// import EmailSendingSuccessScreen from '../register/EmailSendingSuccessScreen';
-// import RegisterSuccessScreen from '../register/RegisterSuccessScreen';
+import ServiceAgreementScreen from '../register/ServiceAgreementScreen';
+import MnemonicGuideScreen from '../register/MnemonicGuideScreen';
+import MnemonicGenerationScreen from '../register/MnemonicGenerationScreen';
+import MnemonicConfirmationScreen from '../register/MnemonicConfirmationScreen';
+import EmailVerificationScreen from '../register/EmailVerificationScreen';
+import EmailSendingSuccessScreen from '../register/EmailSendingSuccessScreen';
+import RegisterSuccessScreen from '../register/RegisterSuccessScreen';
 import MnemonicInputScreen from '../login/MnemonicInputScreen';
 
 // import MainScreen from '../home/main/MainScreen';
@@ -38,19 +38,19 @@ import MnemonicInputScreen from '../login/MnemonicInputScreen';
 // import MyInfoScreen from '../home/myinfo/MyInfoScreen';
 
 import TabWrapperBar from '../../components/bar/TabWrapperBar';
-import {Image} from '../../components/styled/Image';
+import { Image } from '../../components/styled/Image';
 
-// import iconHomeNormal from '../../assets/tabBar/icon_home_normal.png';
-// import iconHomePressed from '../../assets/tabBar/icon_home_pressed.png';
-// import iconWalletNormal from '../../assets/tabBar/icon_wallet_normal.png';
-// import iconWalletPressed from '../../assets/tabBar/icon_wallet_pressed.png';
-// import iconInvestmentNormal from '../../assets/tabBar/icon_investment_normal.png';
-// import iconInvestmentPressed from '../../assets/tabBar/icon_investment_pressed.png';
-// import iconMyInfoNormal from '../../assets/tabBar/icon_my_info_normal.png';
-// import iconMyInfoPressed from '../../assets/tabBar/icon_my_info_pressed.png';
+import iconHomeNormal from '../../assets/tabBar/icon_home_normal.png';
+import iconHomePressed from '../../assets/tabBar/icon_home_pressed.png';
+import iconWalletNormal from '../../assets/tabBar/icon_wallet_normal.png';
+import iconWalletPressed from '../../assets/tabBar/icon_wallet_pressed.png';
+import iconInvestmentNormal from '../../assets/tabBar/icon_investment_normal.png';
+import iconInvestmentPressed from '../../assets/tabBar/icon_investment_pressed.png';
+import iconMyInfoNormal from '../../assets/tabBar/icon_my_info_normal.png';
+import iconMyInfoPressed from '../../assets/tabBar/icon_my_info_pressed.png';
 
-import {colors} from '../../components/styled/Common';
-import {getData} from '../../utils/functions';
+import { colors } from '../../components/styled/Common';
+import { getData } from '../../utils/functions';
 // import UnstakingCompleteScreen from '../home/investment/UnstakingCompleteScreen copy';
 // import HarvestCompleteScreen from '../home/investment/HarvestCompleteScreen';
 // import SolSendAmountScreen from '../home/wallet/send/SolSendAmountScreen';
@@ -78,7 +78,7 @@ const ScreenRouter = (props) => {
   }, []);
 
   // 탭 바 아이콘 설정
-  const tabBarIcon = ({title, focused}) => {
+  const tabBarIcon = ({ title, focused }) => {
     const iconSize = 25;
     const tabBarIconGenerator = useCallback(
       (pressedImg, normalImg) => (
@@ -91,25 +91,24 @@ const ScreenRouter = (props) => {
           />
         </TabWrapperBar>
       ),
-      [title, focused],
+      [title, focused]
     );
 
-    // switch (title) {
-    //   case 'main':
-    //     return tabBarIconGenerator(iconHomePressed, iconHomeNormal);
-    //   case 'wallet':
-    //     return tabBarIconGenerator(iconWalletPressed, iconWalletNormal);
-    //   case 'investment':
-    //     return tabBarIconGenerator(iconInvestmentPressed, iconInvestmentNormal);
-    //   case 'myInfo':
-    //     return tabBarIconGenerator(iconMyInfoPressed, iconMyInfoNormal);
-    // }
+    switch (title) {
+      case 'main':
+        return tabBarIconGenerator(iconHomePressed, iconHomeNormal);
+      case 'wallet':
+        return tabBarIconGenerator(iconWalletPressed, iconWalletNormal);
+      case 'investment':
+        return tabBarIconGenerator(iconInvestmentPressed, iconInvestmentNormal);
+      case 'myInfo':
+        return tabBarIconGenerator(iconMyInfoPressed, iconMyInfoNormal);
+    }
   };
 
   return (
     <Router>
       <Stack hideNavBar key="root">
-
         <Scene key={'Index'}>
           <Scene
             key="indexScreen"
@@ -128,6 +127,50 @@ const ScreenRouter = (props) => {
           />
         </Scene>
 
+        <Scene key={'GenerateMnemonic'}>
+          <Scene
+            key="serviceAgreementScreen"
+            component={ServiceAgreementScreen}
+            hideTabBar
+            hideNavBar
+          />
+          <Scene
+            key="mnemonicGuideScreen"
+            component={MnemonicGuideScreen}
+            hideTabBar
+            hideNavBar
+          />
+          <Scene
+            key="mnemonicGenerationScreen"
+            component={MnemonicGenerationScreen}
+            hideTabBar
+            hideNavBar
+          />
+          {/* <Scene
+            key="mnemonicConfirmationScreen"
+            component={MnemonicConfirmationScreen}
+            hideTabBar
+            hideNavBar
+          /> */}
+          {/* <Scene
+            key="emailVerificationScreen"
+            component={EmailVerificationScreen}
+            hideTabBar
+            hideNavBar
+          /> */}
+          {/* <Scene
+            key="emailSendingSuccessScreen"
+            component={EmailSendingSuccessScreen}
+            hideTabBar
+            hideNavBar
+          /> */}
+          {/* <Scene
+            key="registerSuccessScreen"
+            component={RegisterSuccessScreen}
+            hideTabBar
+            hideNavBar
+          /> */}
+        </Scene>
       </Stack>
     </Router>
   );

@@ -2,7 +2,7 @@ const upbitAPI = 'https://api.upbit.com';
 const bithumbAPI = 'https://api.bithumb.com';
 const cctxAPI = 'https://ccxt.daios.net';
 
-module.exports = {
+export const cryptoCurrency = {
   upbit: {
     ticker: {
       KRW_XLM: `${upbitAPI}/v1/ticker?markets=KRW-XLM`,
@@ -41,3 +41,5 @@ module.exports = {
     },
   },
 };
+
+export default cryptoCurrency;

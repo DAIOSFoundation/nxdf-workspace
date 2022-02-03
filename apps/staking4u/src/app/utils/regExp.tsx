@@ -1,6 +1,6 @@
 // 이름
 export const regName = (name) => {
-  const reg = /^[가-힣|a-z|A-Z|\*]{2,20}$/;
+  const reg = /^[가-힣|a-z|A-Z|*]{2,20}$/;
   return reg.test(name);
 };
 
@@ -32,7 +32,7 @@ export const regEmail = (email) => {
 // 이메일 정규식 (프로필 수정에서 사용 : 하나의 인풋에서 사용하는 경우)
 export const regEmailInEdit = (email) => {
   const reg =
-    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   return reg.test(email);
 };
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import Line from '../../../components/line/Line';
-import {View, ViewRow} from '../../styled/View';
-import {GestureButton} from '../../styled/GestureButton';
-import {Text} from '../../styled/Text';
-import {Image} from '../../styled/Image';
+import Line from '../../line/Line';
+import { View, ViewRow } from '../../styled/View';
+import { GestureButton } from '../../styled/GestureButton';
+import { Text } from '../../styled/Text';
+import { Image } from '../../styled/Image';
 import icon_next from '../../../assets/wallet/icon_next.png';
 
 const Coin = (props) => {
@@ -15,7 +15,8 @@ const Coin = (props) => {
           width={'94%'}
           height={70}
           justifyContent={'space-between'}
-          alignItems={'center'}>
+          alignItems={'center'}
+        >
           <ViewRow alignItems={'center'}>
             <View width={25} height={25} marginRight={10}>
               <Image source={props.logo} />

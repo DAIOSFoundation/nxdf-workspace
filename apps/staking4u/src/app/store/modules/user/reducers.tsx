@@ -1,5 +1,5 @@
-import {handleActions} from 'redux-actions';
-import produce, {createDraft, finishDraft} from 'immer';
+import { handleActions } from 'redux-actions';
+import produce, { createDraft, finishDraft } from 'immer';
 import * as USER from './actions';
 
 const initialState = {
@@ -23,10 +23,12 @@ const user = handleActions(
     },
     [USER.GET_USER_BY_PUBLIC_MNEMONIC_FAILED]: (state, action) => {
       console.log('GET_USER_BY_PUBLIC_MNEMONIC_FAILED =>', action.payload);
-      return produce(state, (draft) => {});
+      return produce(state, (draft) => {
+        ('');
+      });
     },
   },
-  initialState,
+  initialState
 );
 
 export default user;
