@@ -92,19 +92,70 @@ export const Img=styled.img`
     height:22px;
   `
 //wallet
-export const WalletDiv=styled.div`
-  .wallet-adapter-button-trigger {
-      background-color: white;
-      color:black;
-      border-radius: 6px;
-      border: solid 1px #252220;
-      font-weight:100;
-      line-height:1.2;
-      justify-content : center;
-      width:150px;
-  }
-  .wallet-adapter-button-trigger:hover{
-    color:white;
-  }
+export const WalletD=styled.div`
+    width: 90%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10px;
+    &:hover{
+        cursor:pointer;
+    }
 `
 
+export const Icon_wallet=styled.div`
+    width: 30px;
+    height: 30px;
+    margin-right: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+export const ConnectDiv=styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media(max-width:1300px ){
+        display: none;
+    }
+    span {
+        width: auto;
+        font-size: 0.9rem;
+        }
+`
+
+export const ImgWallet = styled.img`
+    width: 20px;
+    height: 20px;
+    @media(max-width:1300px ){
+
+        width: 30px;
+        height: 30px;
+    }
+`
+
+export const Walletdiv = styled.div`
+    width: 170px;
+    display: flex;
+    align-items: center;
+    justify-content : center;
+    border-radius: 6px;
+    border: solid 1px #252220;
+    background-color: #fff;
+    padding: 5px;
+    margin-left: 5px;
+
+    @media(max-width:1300px){
+        border: none;
+    }
+`
+export const Div = styled.div`
+    width: 100%;
+`
+export const EmptyDiv = styled.div`
+    width: 0%;
+`
