@@ -1,19 +1,19 @@
 import React from 'react';
-import {useSelector, shallowEqual} from 'react-redux';
+import { useSelector, shallowEqual, RootStateOrAny } from 'react-redux';
 import Line from '../../line/Line';
-import {View, ViewBorderRadius, ViewRow} from '../../styled/View';
-import {GestureButton} from '../../styled/GestureButton';
-import {Text} from '../../styled/Text';
-import {Image} from '../../styled/Image';
-import {convertPrice} from '../../../utils/price';
+import { View, ViewBorderRadius, ViewRow } from '../../styled/View';
+import { GestureButton } from '../../styled/GestureButton';
+import { Text } from '../../styled/Text';
+import { Image } from '../../styled/Image';
+import { convertPrice } from '../../../utils/price';
 
-const Product = ({name, symbol, annualInteresetRate, logo, onPress}) => {
-  const {tickers, usdExchangeRate} = useSelector(
-    (state) => ({
+const Product = ({ name, symbol, annualInteresetRate, logo, onPress }) => {
+  const { tickers, usdExchangeRate } = useSelector(
+    (state: RootStateOrAny) => ({
       tickers: state.ticker.tickers,
       usdExchangeRate: state.ticker.usdExchangeRate,
     }),
-    shallowEqual,
+    shallowEqual
   );
 
   return (
@@ -41,7 +41,8 @@ const Product = ({name, symbol, annualInteresetRate, logo, onPress}) => {
             flex={1}
             alignItems={'flex-end'}
             justifyContent={'center'}
-            paddingRight={20}>
+            paddingRight={20}
+          >
             <Text ftLightWhite fontSize={14}>
               {tickers && tickers[symbol]
                 ? tickers[symbol].symbol !== 'ORBS/KRW' // TODO 하드코딩 이 부분 ORBS/KRW가 아닌 경우(환율 계산)에 대한 것 추후 수정 필요
@@ -54,18 +55,21 @@ const Product = ({name, symbol, annualInteresetRate, logo, onPress}) => {
             flex={2}
             justifyContent={'center'}
             alignItems={'flex-end'}
-            paddingRight={20}>
+            paddingRight={20}
+          >
             <ViewBorderRadius
               bgMint
               width={80}
               paddingTop={7}
               paddingBottom={7}
               paddingRight={10}
-              paddingLeft={10}>
+              paddingLeft={10}
+            >
               <Text
                 textAlign={'center'}
                 ftLightWhite
-                fontSize={13}>{`${annualInteresetRate}%`}</Text>
+                fontSize={13}
+              >{`${annualInteresetRate}%`}</Text>
             </ViewBorderRadius>
           </View>
         </ViewRow>
