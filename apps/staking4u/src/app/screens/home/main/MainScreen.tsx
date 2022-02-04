@@ -51,48 +51,36 @@ const MainScreen = () => {
 
   const renderListHeader = () => {
     return (
-      <>
-        <ViewRow flex={1} marginBottom={10} justifyContent={'space-between'}>
-          <ViewRow flex={2.5} alignItems={'center'} paddingLeft={10}>
-            <Text fontSize={13} ftBlueGray bold>
-              Product
-            </Text>
-            <Image source={iconDownGray} width={10} height={8} marginLeft={5} />
-          </ViewRow>
-          <ViewRow
-            flex={1}
-            justifyContent={'flex-end'}
-            alignItems={'center'}
-            paddingRight={20}
-          >
-            <Image
-              source={iconDownGray}
-              width={10}
-              height={8}
-              marginRight={5}
-            />
-            <Text fontSize={13} ftBlueGray bold>
-              Price
-            </Text>
-          </ViewRow>
-          <ViewRow
-            flex={2}
-            justifyContent={'flex-end'}
-            alignItems={'center'}
-            paddingRight={20}
-          >
-            <Image
-              source={iconDownGray}
-              width={10}
-              height={8}
-              marginRight={5}
-            />
-            <Text fontSize={13} ftBlueGray bold>
-              APR
-            </Text>
-          </ViewRow>
+      <ViewRow flex={1} marginBottom={10} justifyContent={'space-between'}>
+        <ViewRow flex={2.5} alignItems={'center'} paddingLeft={10}>
+          <Text fontSize={13} ftBlueGray bold>
+            Product
+          </Text>
+          <Image source={iconDownGray} width={10} height={8} marginLeft={5} />
         </ViewRow>
-      </>
+        <ViewRow
+          flex={1}
+          justifyContent={'flex-end'}
+          alignItems={'center'}
+          paddingRight={20}
+        >
+          <Image source={iconDownGray} width={10} height={8} marginRight={5} />
+          <Text fontSize={13} ftBlueGray bold>
+            Price
+          </Text>
+        </ViewRow>
+        <ViewRow
+          flex={2}
+          justifyContent={'flex-end'}
+          alignItems={'center'}
+          paddingRight={20}
+        >
+          <Image source={iconDownGray} width={10} height={8} marginRight={5} />
+          <Text fontSize={13} ftBlueGray bold>
+            APR
+          </Text>
+        </ViewRow>
+      </ViewRow>
     );
   };
 

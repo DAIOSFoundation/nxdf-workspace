@@ -1,6 +1,11 @@
-import React, {useRef, useState, useEffect, useCallback} from 'react';
-import {useSelector, useDispatch, shallowEqual} from 'react-redux';
-import {Actions} from 'react-native-router-flux';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import {
+  useSelector,
+  useDispatch,
+  shallowEqual,
+  RootStateOrAny,
+} from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import * as modalActions from '../../../store/modules/modal/actions';
 import * as walletActions from '../../../store/modules/wallet/actions';
 import * as stakeRayActions from '../../../store/modules/stake/ray/actions';
@@ -11,7 +16,7 @@ import {
   ScrollView,
   ViewRowBorderRadius,
 } from '../../../components/styled/View';
-import {Text} from '../../../components/styled/Text';
+import { Text } from '../../../components/styled/Text';
 import Topbar from '../../../components/bar/TopBar';
 import Line from '../../../components/line/Line';
 import {
@@ -21,45 +26,55 @@ import {
 } from '../../../components/styled/Button';
 import CheckBox from '@react-native-community/checkbox';
 import InputBorderWith from '../../../components/input/InputBorderWith';
-import {colors} from '../../../components/styled/Common';
-import {ERC20_TOKENS, SOL_TOKENS} from '../../../utils/constants';
+import { colors } from '../../../components/styled/Common';
+import { ERC20_TOKENS, SOL_TOKENS } from '../../../utils/constants';
 
-const FlexibleInputScreen = ({item}) => {
+const FlexibleInputScreen = ({ item }) => {
   const dispatch = useDispatch();
   const maxAmount = useRef(0);
   const [amount, setAmount] = useState('');
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
-  const {
-    tickers,
-    usdExchangeRate,
-    ethPublic,
-    ethSecret,
-    solPublic,
-    solSecret,
-    ethNetworkMode,
-    solNetworkMode,
-    erc20Tokens,
-    solTokens,
-    stakingRayInfo,
-    message,
-  } = useSelector(
-    (state) => ({
-      tickers: state.ticker.tickers,
-      usdExchangeRate: state.ticker.usdExchangeRate,
-      ethPublic: state.global.ethPublic,
-      ethSecret: state.global.ethSecret,
-      solPublic: state.global.solPublic,
-      solSecret: state.global.solSecret,
-      ethNetworkMode: state.global.ethNetworkMode,
-      solNetworkMode: state.global.solNetworkMode,
-      erc20Tokens: state.wallet.erc20Tokens,
-      solTokens: state.wallet.solTokens,
-      stakingRayInfo: state.stakeRay.stakingRayInfo,
-      message: state.stakeRay.message,
-    }),
-    shallowEqual,
-  );
+  const ethPublic = '';
+  const solPublic = '';
+  const solSecret = '';
+  const ethNetworkMode = '';
+  const solNetworkMode = '';
+  const erc20Tokens = [];
+  const solTokens = [];
+  const stakingRayInfo = '';
+  const message = 'ray staking success';
+
+  // const {
+  //   tickers,
+  //   usdExchangeRate,
+  //   ethPublic,
+  //   ethSecret,
+  //   solPublic,
+  //   solSecret,
+  //   ethNetworkMode,
+  //   solNetworkMode,
+  //   erc20Tokens,
+  //   solTokens,
+  //   stakingRayInfo,
+  //   message,
+  // } = useSelector(
+  //   (state: RootStateOrAny) => ({
+  //     tickers: state.ticker.tickers,
+  //     usdExchangeRate: state.ticker.usdExchangeRate,
+  //     ethPublic: state.global.ethPublic,
+  //     ethSecret: state.global.ethSecret,
+  //     solPublic: state.global.solPublic,
+  //     solSecret: state.global.solSecret,
+  //     ethNetworkMode: state.global.ethNetworkMode,
+  //     solNetworkMode: state.global.solNetworkMode,
+  //     erc20Tokens: state.wallet.erc20Tokens,
+  //     solTokens: state.wallet.solTokens,
+  //     stakingRayInfo: state.stakeRay.stakingRayInfo,
+  //     message: state.stakeRay.message,
+  //   }),
+  //   shallowEqual
+  // );
 
   useEffect(() => {
     const params = {
@@ -102,8 +117,8 @@ const FlexibleInputScreen = ({item}) => {
     } else if (message === 'ray staking failure') {
       dispatch(
         modalActions.change_modal_message(
-          'A problem occurred during the staking process. Contact to manager',
-        ),
+          'A problem occurred during the staking process. Contact to manager'
+        )
       );
       dispatch(modalActions.change_modal_one_button(true));
     }
@@ -111,14 +126,19 @@ const FlexibleInputScreen = ({item}) => {
 
   const renderBalance = useCallback(() => {
     if (ERC20_TOKENS.includes(item.symbol)) {
-      maxAmount.current = erc20Tokens?.[item.symbol].balance;
+      maxAmount.current = 1;
+      //maxAmount.current = erc20Tokens?.[item.symbol].balance;
       return erc20Tokens
         ? `Balance : ${erc20Tokens?.[item.symbol].balance} ${item.symbol}`
         : `Balance : 0 ${item.symbol}`;
     } else if (SOL_TOKENS.includes(item.symbol)) {
-      maxAmount.current = solTokens?.[item.symbol].amount;
+      maxAmount.current = 1;
+      //maxAmount.current = solTokens?.[item.symbol].amount;
+      // return solTokens
+      //   ? `Balance : ${solTokens?.[item.symbol].amount} ${item.symbol}`
+      //   : `Balance : 0 ${item.symbol}`;
       return solTokens
-        ? `Balance : ${solTokens?.[item.symbol].amount} ${item.symbol}`
+        ? `Balance : 1 ${item.symbol}`
         : `Balance : 0 ${item.symbol}`;
     }
   }, [erc20Tokens, solTokens]);
@@ -152,8 +172,8 @@ const FlexibleInputScreen = ({item}) => {
       if (Number(amount) > maxAmount.current) {
         dispatch(
           modalActions.change_modal_message(
-            'There are not enough assets in your balance.',
-          ),
+            'There are not enough assets in your balance.'
+          )
         );
         dispatch(modalActions.change_modal_one_button(true));
       } else {
@@ -162,8 +182,8 @@ const FlexibleInputScreen = ({item}) => {
     } else {
       dispatch(
         modalActions.change_modal_message(
-          'Please enter amount or check agreement of notices.',
-        ),
+          'Please enter amount or check agreement of notices.'
+        )
       );
       dispatch(modalActions.change_modal_one_button(true));
     }
@@ -179,7 +199,8 @@ const FlexibleInputScreen = ({item}) => {
             alignItems={'center'}
             justifyContent={'space-between'}
             marginBottom={10}
-            alignSelf={'center'}>
+            alignSelf={'center'}
+          >
             <Text fontSize={15} ftWhite>
               {stakingRayInfo.length > 0 &&
               stakingRayInfo[0].depositBalance !== '0'
@@ -199,7 +220,8 @@ const FlexibleInputScreen = ({item}) => {
                 : '0'
             }
             isOnlyNumber
-            onChangeText={(text) => setAmount(text)}>
+            onChangeText={(text) => setAmount(text)}
+          >
             <ButtonBorderRadius
               alignSelf={'center'}
               onPress={onPressMax}
@@ -211,7 +233,8 @@ const FlexibleInputScreen = ({item}) => {
               paddingTop={5}
               paddingBottom={5}
               bgWhite
-              activeOpacity={0.8}>
+              activeOpacity={0.8}
+            >
               <Text ftFontNavy fontSize={13} bold>
                 MAX
               </Text>
@@ -227,7 +250,8 @@ const FlexibleInputScreen = ({item}) => {
             borderRadius={6}
             marginTop={20}
             paddingTop={10}
-            paddingBottom={10}>
+            paddingBottom={10}
+          >
             <Text ftBlueGray fontSize={13} paddingLeft={15}>
               Existing Deposit
             </Text>
@@ -249,7 +273,8 @@ const FlexibleInputScreen = ({item}) => {
             flewWrap={'wrap'}
             justifyContent={'space-between'}
             alignItems={'center'}
-            marginBottom={8}>
+            marginBottom={8}
+          >
             <Text width={'50%'} fontSize={14} ftBlueGray>
               Product Type
             </Text>
@@ -258,7 +283,8 @@ const FlexibleInputScreen = ({item}) => {
               fontSize={14}
               ftWhite
               bold
-              textAlign={'right'}>{`${item.name} Flexible Staking`}</Text>
+              textAlign={'right'}
+            >{`${item.name} Flexible Staking`}</Text>
           </ViewRow>
           <ViewRow marginBottom={8}>
             <Text fontSize={14} ftBlueGray width={'60%'}>
@@ -296,7 +322,8 @@ const FlexibleInputScreen = ({item}) => {
         alignSelf={'center'}
         marginTop={20}
         marginBottom={20}
-        paddingBottom={30}>
+        paddingBottom={30}
+      >
         <Text ftYellowTheme bold fontSize={15} marginBottom={10}>
           Notice
         </Text>
@@ -415,9 +442,10 @@ const FlexibleInputScreen = ({item}) => {
         marginBottom={20}
         onPress={onPressToggle}
         activeOpacity={1}
-        bgDeepBlue>
+        bgDeepBlue
+      >
         <CheckBox
-          tintColors={{true: colors.YellowTheme, false: colors.NavyTheme}}
+          tintColors={{ true: colors.YellowTheme, false: colors.NavyTheme }}
           onValueChange={(newValue) => setToggleCheckBox(newValue)}
           value={toggleCheckBox}
         />
@@ -435,7 +463,8 @@ const FlexibleInputScreen = ({item}) => {
           marginBottom={20}
           marginLeft={'auto'}
           marginRight={'auto'}
-          onPress={onPressStart}>
+          onPress={onPressStart}
+        >
           <Text ftNavyTheme bold fontSize={16}>
             Stake Now
           </Text>
