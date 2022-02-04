@@ -13,8 +13,8 @@ import MnemonicInputScreen from '../login/MnemonicInputScreen';
 
 import MainScreen from '../home/main/MainScreen';
 import FlexibleDetailScreen from '../home/main/FlexibleDetailScreen';
-// import FlexibleInputScreen from '../home/main/FlexibleInputScreen';
-// import StakingCompleteScreen from '../home/main/StakingCompleteScreen';
+import FlexibleInputScreen from '../home/main/FlexibleInputScreen';
+import StakingCompleteScreen from '../home/main/StakingCompleteScreen';
 // import ProductDetailScreen from '../home/main/ProductDetailScreen';
 // import ProductOperationHistory from '../home/main/ProductOperationHistory';
 // import FixedStakingScreen from '../home/main/FixedStakingScreen';
@@ -198,18 +198,18 @@ const ScreenRouter = (props) => {
               key="flexibleDetailScreen"
               component={FlexibleDetailScreen}
             />
-            {/* <Scene
+            <Scene
               hideNavBar
               hideTabBar
               key="flexibleInputScreen"
               component={FlexibleInputScreen}
-            /> */}
-            {/* <Scene
+            />
+            <Scene
               hideNavBar
               hideTabBar
               key="stakingCompleteScreen"
               component={StakingCompleteScreen}
-            /> */}
+            />
           </Scene>
           {/* 지갑 */}
           <Scene hideNavBar key={'Wallet'} title={'wallet'} icon={tabBarIcon}>

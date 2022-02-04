@@ -1,36 +1,40 @@
-import {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import useSWR from 'swr';
 import * as tickerActions from '../store/modules/ticker/actions';
 import routes from '../routes';
-import {fetcher} from '../utils/functions';
-import {BINANCE_SYMBOLS, UPBIT_SYMBOLS, FTX_SYMBOLS} from '../utils/constants';
+import { fetcher } from '../utils/functions';
+import {
+  BINANCE_SYMBOLS,
+  UPBIT_SYMBOLS,
+  FTX_SYMBOLS,
+} from '../utils/constants';
 
 const useFetchTickers = () => {
   const dispatch = useDispatch();
 
-  const {data: bTickers, error: bTickersError} = useSWR(
-    routes.TICKER.GET_TICKERS('binance', BINANCE_SYMBOLS),
+  const { data: bTickers, error: bTickersError } = useSWR(
+    routes.TICKER.GET_TICKERS('binance', BINANCE_SYMBOLS), // key
     fetcher,
     {
-      refreshInterval: 5000,
-    },
+      refreshInterval: 5000, // 자동 갱신
+    }
   );
 
-  const {data: uTickers, error: uTickersError} = useSWR(
+  const { data: uTickers, error: uTickersError } = useSWR(
     routes.TICKER.GET_TICKERS('upbit', UPBIT_SYMBOLS),
     fetcher,
     {
       refreshInterval: 5000,
-    },
+    }
   );
 
-  const {data: fTickers, error: fTickersError} = useSWR(
+  const { data: fTickers, error: fTickersError } = useSWR(
     routes.TICKER.GET_TICKERS('ftx', FTX_SYMBOLS),
     fetcher,
     {
       refreshInterval: 5000,
-    },
+    }
   );
 
   useEffect(() => {
