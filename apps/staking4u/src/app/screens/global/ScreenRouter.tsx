@@ -21,13 +21,13 @@ import StakingCompleteScreen from '../home/main/StakingCompleteScreen';
 // import AutonomousDetailScreen from '../home/main/AutonomousDetailScreen';
 
 import WalletScreen from '../home/wallet/WalletScreen';
-// import WalletDetailScreen from '../home/wallet/WalletDetailScreen';
-// import ReceiveScreen from '../home/wallet/receive/ReceiveScreen';
-// import SendAddressScreen from '../home/wallet/send/SendAddressScreen';
-// import EthSendAmountScreen from '../home/wallet/send/EthSendAmountScreen';
-// import QRCodeScannerScreen from '../qr/QRCodeScannerScreen';
-// import SendRequestSuccessScreen from '../home/wallet/send/SendRequestSuccessScreen';
-// import SendRequestFailedScreen from '../home/wallet/send/SendRequestFailedScreen';
+import WalletDetailScreen from '../home/wallet/WalletDetailScreen';
+import ReceiveScreen from '../home/wallet/receive/ReceiveScreen';
+import SendAddressScreen from '../home/wallet/send/SendAddressScreen';
+import EthSendAmountScreen from '../home/wallet/send/EthSendAmountScreen';
+//import QRCodeScannerScreen from '../qr/QRCodeScannerScreen';
+import SendRequestSuccessScreen from '../home/wallet/send/SendRequestSuccessScreen';
+import SendRequestFailedScreen from '../home/wallet/send/SendRequestFailedScreen';
 
 import InvestmentScreen from '../home/investment/InvestmentScreen';
 // import InvestmentInfoScreen from '../home/investment/InvestmentInfoScreen';
@@ -53,7 +53,7 @@ import { colors } from '../../components/styled/Common';
 import { getData } from '../../utils/functions';
 // import UnstakingCompleteScreen from '../home/investment/UnstakingCompleteScreen copy';
 // import HarvestCompleteScreen from '../home/investment/HarvestCompleteScreen';
-// import SolSendAmountScreen from '../home/wallet/send/SolSendAmountScreen';
+import SolSendAmountScreen from '../home/wallet/send/SolSendAmountScreen';
 // import TermsOfServiceScreen from './TermsOfServiceScreen';
 // import PrivacyScreen from './PrivacyScreen';
 
@@ -61,21 +61,21 @@ import { getData } from '../../utils/functions';
 const ScreenRouter = (props) => {
   const [jwt, setJWT] = useState(false);
 
-  useEffect(() => {
-    async function getStorage() {
-      if (await getData('jwt')) {
-        setJWT(true);
-      } else if ((await getData('isValidAuth')) === 'false') {
-        Actions.GenerateMnemonic();
-        Actions.emailSendingSuccessScreen();
-      } else if ((await getData('isValidAuth')) === 'true') {
-        Actions.GenerateMnemonic();
-        Actions.registerSuccessScreen();
-      }
-    }
+  // useEffect(() => {
+  //   async function getStorage() {
+  //     if (await getData('jwt')) {
+  //       setJWT(true);
+  //     } else if ((await getData('isValidAuth')) === 'false') {
+  //       Actions.GenerateMnemonic();
+  //       Actions.emailSendingSuccessScreen();
+  //     } else if ((await getData('isValidAuth')) === 'true') {
+  //       Actions.GenerateMnemonic();
+  //       Actions.registerSuccessScreen();
+  //     }
+  //   }
 
-    getStorage();
-  }, []);
+  //   getStorage();
+  // }, []);
 
   // 탭 바 아이콘 설정
   const tabBarIcon = ({ title, focused }) => {
@@ -214,27 +214,27 @@ const ScreenRouter = (props) => {
           {/* 지갑 */}
           <Scene hideNavBar key={'Wallet'} title={'wallet'} icon={tabBarIcon}>
             <Scene key="walletScreen" component={WalletScreen} />
-            {/* <Scene
+            <Scene
               hideTabBar
               key="walletDetailScreen"
               component={WalletDetailScreen}
-            /> */}
-            {/* <Scene key={'receiveScreen'} component={ReceiveScreen} hideTabBar /> */}
-            {/* <Scene
+            />
+            <Scene key={'receiveScreen'} component={ReceiveScreen} hideTabBar />
+            <Scene
               key={'sendAddressScreen'}
               component={SendAddressScreen}
               hideTabBar
-            /> */}
-            {/* <Scene
+            />
+            <Scene
               key={'ethSendAmountScreen'}
               component={EthSendAmountScreen}
               hideTabBar
-            /> */}
-            {/* <Scene
+            />
+            <Scene
               key={'solSendAmountScreen'}
               component={SolSendAmountScreen}
               hideTabBar
-            /> */}
+            />
           </Scene>
           {/* 투자내역 */}
           <Scene
@@ -278,6 +278,24 @@ const ScreenRouter = (props) => {
             <Scene hideNavBar key="myInfoScreen" component={MyInfoScreen} />
           </Scene>
         </Scene>
+
+        {/* <Scene
+          key={'qRCodeScannerScreen'}
+          hideNavBar
+          component={QRCodeScannerScreen}
+        /> */}
+        <Scene
+          key={'sendRequestSuccessScreen'}
+          hideTabBar
+          component={SendRequestSuccessScreen}
+        />
+        <Scene
+          key={'sendRequestFailedScreen'}
+          hideTabBar
+          component={SendRequestFailedScreen}
+        />
+        {/* <Scene key={'termsOfServiceScreen'} component={TermsOfServiceScreen} /> */}
+        {/* <Scene key={'privacyScreen'} component={PrivacyScreen} /> */}
       </Stack>
     </Router>
   );

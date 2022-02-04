@@ -124,7 +124,7 @@ export const fetcher = (url, token) =>
     .then((res) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       res.data;
-      console.log('/store/utils/functions SWR fetcher' + res.data);
+      // console.log('/store/utils/functions SWR fetcher' + res.data);
     });
 
 // 니모닉 절반 자르기
