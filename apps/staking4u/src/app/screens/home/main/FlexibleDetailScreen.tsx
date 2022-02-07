@@ -1,11 +1,6 @@
 import React, { useCallback } from 'react';
 import { Linking } from 'react-native';
-import {
-  useSelector,
-  shallowEqual,
-  useDispatch,
-  RootStateOrAny,
-} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import * as modalActions from '../../../store/modules/modal/actions';
 import Topbar from '../../../components/bar/TopBar';
@@ -24,8 +19,14 @@ import { GestureButtonBorderRadius } from '../../../components/styled/GestureBut
 import { ButtonRadius } from '../../../components/styled/Button';
 import iconInfo from '../../../assets/main/icon_coin_info.png';
 
+const tickers = {
+  AAVE: { info: { priceChangePercent: 1.2 } },
+  ORBS: { info: { signed_change_rate: 0.1 } },
+  SOL: { info: { priceChangePercent: -3.14 } },
+  RAY: { info: { priceChangePercent: 2.23 } },
+};
+
 const FlexibleDetailScreen = ({ item }) => {
-  const tickers = [];
   const dispatch = useDispatch();
 
   // TODO 추후 상품이 정해지면 리팩토링 필요
@@ -33,8 +34,7 @@ const FlexibleDetailScreen = ({ item }) => {
   const renderFluctateRate = useCallback(
     (tickers) => {
       if (item.symbol === 'ORBS') {
-        //const rate = tickers[item.symbol].info.signed_change_rate || 0;
-        const rate = 1.1;
+        const rate = tickers[item.symbol].info.signed_change_rate || 0;
         if (rate > 0) {
           return <Text ftMint>{`+${(rate * 100).toFixed(2)}%`}</Text>;
         } else if (rate < 0) {
@@ -43,7 +43,7 @@ const FlexibleDetailScreen = ({ item }) => {
           return <Text ftLightGray>0.00%</Text>;
         }
       } else {
-        const percent = 1;
+        const percent = tickers[item.symbol].info.priceChangePercent || 0;
         if (percent > 0) {
           return <Text ftMint>{`+${Number(percent).toFixed(2)}%`}</Text>;
         } else if (percent < 0) {

@@ -1,22 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Actions } from 'react-native-router-flux';
-import { useDispatch } from 'react-redux';
 import { FlatList } from 'react-native';
-import * as authsActions from '../../../store/modules/auths/actions';
-import * as globalActions from '../../../store/modules/global/actions';
 import Product from '../../../components/items/stake/Products';
 import { SafeAreaView, View, ViewRow } from '../../../components/styled/View';
 import { Text } from '../../../components/styled/Text';
 import { Image } from '../../../components/styled/Image';
-import { AESDecrypt, getData } from '../../../utils/functions';
 import { products } from '../../../utils/dummy';
 import iconDownGray from '../../../assets/main/icon_down_gray.png';
-import { useFetchTickers } from '../../../hooks';
-import useFetchExchangeRate from '../../../hooks/useFetchExchangeRate';
 
 const MainScreen = () => {
-  const dispatch = useDispatch();
-
   const renderListHeader = () => {
     return (
       <ViewRow flex={1} marginBottom={10} justifyContent={'space-between'}>
