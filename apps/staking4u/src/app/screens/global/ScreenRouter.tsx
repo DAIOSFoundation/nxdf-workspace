@@ -30,9 +30,9 @@ import SendRequestSuccessScreen from '../home/wallet/send/SendRequestSuccessScre
 import SendRequestFailedScreen from '../home/wallet/send/SendRequestFailedScreen';
 
 import InvestmentScreen from '../home/investment/InvestmentScreen';
-// import InvestmentInfoScreen from '../home/investment/InvestmentInfoScreen';
+import InvestmentInfoScreen from '../home/investment/InvestmentInfoScreen';
 import InvestmentHistoryScreen from '../home/investment/InvestmentHistoryScreen';
-// import FlexibleDetailInfoScreen from '../home/investment/FlexibleDetailInfoScreen';
+import FlexibleDetailInfoScreen from '../home/investment/FlexibleDetailInfoScreen';
 import InvestmentHistoryDetailScreen from '../home/investment/InvestmentHistoryDetailScreen';
 
 import MyInfoScreen from '../home/myinfo/MyInfoScreen';
@@ -51,8 +51,8 @@ import iconMyInfoPressed from '../../assets/tabBar/icon_my_info_pressed.png';
 
 import { colors } from '../../components/styled/Common';
 import { getData } from '../../utils/functions';
-// import UnstakingCompleteScreen from '../home/investment/UnstakingCompleteScreen copy';
-// import HarvestCompleteScreen from '../home/investment/HarvestCompleteScreen';
+import UnstakingCompleteScreen from '../home/investment/UnstakingCompleteScreen';
+import HarvestCompleteScreen from '../home/investment/HarvestCompleteScreen';
 import SolSendAmountScreen from '../home/wallet/send/SolSendAmountScreen';
 // import TermsOfServiceScreen from './TermsOfServiceScreen';
 // import PrivacyScreen from './PrivacyScreen';
@@ -162,29 +162,29 @@ const ScreenRouter = (props) => {
             icon={tabBarIcon}
           >
             <Scene key="investmentScreen" component={InvestmentScreen} />
-            {/* <Scene
+            <Scene
               key="investmentInfoScreen"
               component={InvestmentInfoScreen}
-            /> */}
+            />
             <Scene
               key="investmentHistoryScreen"
               component={InvestmentHistoryScreen}
             />
-            {/* <Scene
+            <Scene
               hideTabBar
               key="flexibleDetailInfoScreen"
               component={FlexibleDetailInfoScreen}
-            /> */}
-            {/* <Scene
+            />
+            <Scene
               hideTabBar
               key="unstakingCompleteScreen"
               component={UnstakingCompleteScreen}
-            /> */}
-            {/* <Scene
+            />
+            <Scene
               hideTabBar
               key="harvestCompleteScreen"
               component={HarvestCompleteScreen}
-            /> */}
+            />
             <Scene
               hideTabBar
               key="investmentHistoryDetailScreen"

@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import {Linking} from 'react-native';
-import {useDispatch, shallowEqual, useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { Linking } from 'react-native';
+import { useDispatch, shallowEqual, useSelector } from 'react-redux';
 import * as stakeRayActions from '../../../store/modules/stake/ray/actions';
 import * as modalActions from '../../../store/modules/modal/actions';
 import Topbar from '../../../components/bar/TopBar';
@@ -12,68 +12,69 @@ import {
   ViewAbsolute,
   ViewBorderRadius,
 } from '../../../components/styled/View';
-import {Text} from '../../../components/styled/Text';
-import {Image} from '../../../components/styled/Image';
+import { Text } from '../../../components/styled/Text';
+import { Image } from '../../../components/styled/Image';
 import {
   Button,
   ButtonRadius,
   ButtonBorderRadius,
 } from '../../../components/styled/Button';
-import {GestureButtonBorderRadius} from '../../../components/styled/GestureButton';
+import { GestureButtonBorderRadius } from '../../../components/styled/GestureButton';
 import dollarIcon from '../../../assets/common/dollar.png';
 import iconInfo from '../../../assets/main/icon_coin_info.png';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 
-const FlexibleDetailInfoScreen = ({item}) => {
+const FlexibleDetailInfoScreen = ({ item }) => {
   const dispatch = useDispatch();
+  const [message, setMessage] = useState('');
 
-  const {
-    tickers,
-    usdExchangeRate,
-    ethPublic,
-    ethSecret,
-    solPublic,
-    solSecret,
-    ethNetworkMode,
-    solNetworkMode,
-    erc20Tokens,
-    solTokens,
-    stakingRayInfo,
-    message,
-  } = useSelector(
-    (state) => ({
-      tickers: state.ticker.tickers,
-      usdExchangeRate: state.ticker.usdExchangeRate,
-      ethPublic: state.global.ethPublic,
-      ethSecret: state.global.ethSecret,
-      solPublic: state.global.solPublic,
-      solSecret: state.global.solSecret,
-      ethNetworkMode: state.global.ethNetworkMode,
-      solNetworkMode: state.global.solNetworkMode,
-      erc20Tokens: state.wallet.erc20Tokens,
-      solTokens: state.wallet.solTokens,
-      stakingRayInfo: state.stakeRay.stakingRayInfo,
-      message: state.stakeRay.message,
-    }),
-    shallowEqual,
-  );
+  // const {
+  //   tickers,
+  //   usdExchangeRate,
+  //   ethPublic,
+  //   ethSecret,
+  //   solPublic,
+  //   solSecret,
+  //   ethNetworkMode,
+  //   solNetworkMode,
+  //   erc20Tokens,
+  //   solTokens,
+  //   stakingRayInfo,
+  //   message,
+  // } = useSelector(
+  //   (state) => ({
+  //     tickers: state.ticker.tickers,
+  //     usdExchangeRate: state.ticker.usdExchangeRate,
+  //     ethPublic: state.global.ethPublic,
+  //     ethSecret: state.global.ethSecret,
+  //     solPublic: state.global.solPublic,
+  //     solSecret: state.global.solSecret,
+  //     ethNetworkMode: state.global.ethNetworkMode,
+  //     solNetworkMode: state.global.solNetworkMode,
+  //     erc20Tokens: state.wallet.erc20Tokens,
+  //     solTokens: state.wallet.solTokens,
+  //     stakingRayInfo: state.stakeRay.stakingRayInfo,
+  //     message: state.stakeRay.message,
+  //   }),
+  //   shallowEqual,
+  // );
 
-  useEffect(() => {
-    const params = {
-      networkMode: solNetworkMode,
-      solPublic,
-    };
-    dispatch(stakeRayActions.get_ray_staking_account_info(params));
-  }, []);
+  // useEffect(() => {
+  //   const params = {
+  //     networkMode: solNetworkMode,
+  //     solPublic,
+  //   };
+  //   dispatch(stakeRayActions.get_ray_staking_account_info(params));
+  // }, []);
 
   const onPressCoinInfo = () => {
     Linking.openURL(
-      `https://coinmarketcap.com/en/currencies/${item.name.toLowerCase()}`,
+      `https://coinmarketcap.com/en/currencies/${item.name.toLowerCase()}`
     );
   };
   const onPressFCAS = () => {
     Linking.openURL(
-      `https://coinmarketcap.com/en/currencies/${item.name.toLowerCase()}/ratings/`,
+      `https://coinmarketcap.com/en/currencies/${item.name.toLowerCase()}/ratings/`
     );
   };
 
@@ -98,21 +99,23 @@ const FlexibleDetailInfoScreen = ({item}) => {
   };
 
   const onPressHarvestOK = () => {
-    const body = {
-      networkMode: solNetworkMode,
-      solSecret,
-      publicKey: stakingRayInfo[0].publicKey,
-    };
-    dispatch(stakeRayActions.post_ray_harvest(body));
+    // const body = {
+    //   networkMode: solNetworkMode,
+    //   solSecret,
+    //   publicKey: stakingRayInfo[0].publicKey,
+    // };
+    // dispatch(stakeRayActions.post_ray_harvest(body));
+    setMessage('ray unstake success');
   };
 
   const onPressUnstakeOK = () => {
-    const body = {
-      networkMode: solNetworkMode,
-      solSecret,
-      amount: item.depositBalance,
-    };
-    dispatch(stakeRayActions.post_ray_unstaking(body));
+    // const body = {
+    //   networkMode: solNetworkMode,
+    //   solSecret,
+    //   amount: item.depositBalance,
+    // };
+    // dispatch(stakeRayActions.post_ray_unstaking(body));
+    setMessage('ray harvest success');
   };
 
   const onPressUnstake = () => {
@@ -124,8 +127,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
   const onPressHarvest = () => {
     dispatch(
       modalActions.change_modal_message(
-        `Do you want to harvest ${item.reward} ${item.symbol}?`,
-      ),
+        `Do you want to harvest ${item.reward} ${item.symbol}?`
+      )
     );
     dispatch(modalActions.change_modal_one_button(false));
     dispatch(modalActions.change_modal_on_press_ok(onPressHarvestOK));
@@ -150,7 +153,7 @@ const FlexibleDetailInfoScreen = ({item}) => {
 
   const onPressAdditionalStake = () => {
     Actions.reset('tabBar'); // TODO 라우팅 이동에 대해서 고민해보기
-    Actions.flexibleInputScreen({item});
+    Actions.flexibleInputScreen({ item });
   };
 
   return (
@@ -160,13 +163,15 @@ const FlexibleDetailInfoScreen = ({item}) => {
         alignSelf={'center'}
         paddingTop={25}
         paddingBottom={25}
-        width={'90%'}>
+        width={'90%'}
+      >
         <ViewRow width={'100%'} alignItems={'center'}>
           <Image source={item.logo} width={20} height={20} marginRight={10} />
           <Text
             bold
             ftWhite
-            fontSize={18}>{`${item.symbol} Flexible Staking`}</Text>
+            fontSize={18}
+          >{`${item.symbol} Flexible Staking`}</Text>
         </ViewRow>
       </View>
       <Line width={'100%'} height={3} />
@@ -175,7 +180,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
         justifyContent={'space-around'}
         alignItems={'center'}
         paddingTop={15}
-        paddingBottom={15}>
+        paddingBottom={15}
+      >
         <View width={'100%'} justifyContent={'center'} alignItems={'center'}>
           <Text ftYellowTheme marginBottom={5}>
             Staking Amount
@@ -188,7 +194,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
             width={24}
             height={24}
             alignItems={'center'}
-            justifyContent={'center'}>
+            justifyContent={'center'}
+          >
             <Image source={dollarIcon} width={18} height={18} />
           </ViewAbsolute>
         </View>
@@ -205,7 +212,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
           paddingTop={10}
           paddingBottom={10}
           borderRadius={6}
-          style={{backgroundColor: 'rgba(255, 215, 67, 0.15)'}}>
+          style={{ backgroundColor: 'rgba(255, 215, 67, 0.15)' }}
+        >
           <Text ftYellowTheme bold fontSize={15}>
             Harvest
           </Text>
@@ -220,7 +228,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
           justifyContent={'space-around'}
           alignItems={'center'}
           marginTop={20}
-          marginBottom={20}>
+          marginBottom={20}
+        >
           <GestureButtonBorderRadius
             width={170}
             height={70}
@@ -233,7 +242,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
             paddingBottom={15}
             paddingRight={40}
             activeOpacity={1}
-            style={{overflow: 'hidden'}}>
+            style={{ overflow: 'hidden' }}
+          >
             <ViewBorderRadius
               bgLightPurple
               borderRadius={20}
@@ -241,7 +251,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
               height={40}
               justifyContent={'center'}
               alignItems={'center'}
-              marginRight={10}>
+              marginRight={10}
+            >
               <Image source={iconInfo} width={20} height={20} />
             </ViewBorderRadius>
             <View>
@@ -278,7 +289,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
             paddingBottom={15}
             paddingRight={40}
             activeOpacity={1}
-            style={{overflow: 'hidden'}}>
+            style={{ overflow: 'hidden' }}
+          >
             <ViewBorderRadius
               bgLightPurple
               borderRadius={20}
@@ -286,7 +298,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
               height={40}
               justifyContent={'center'}
               alignItems={'center'}
-              marginRight={10}>
+              marginRight={10}
+            >
               <Text fontSize={22} bold ftWhite>
                 {renderFCAS(item.symbol)}
               </Text>
@@ -321,7 +334,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
             flewWrap={'wrap'}
             justifyContent={'space-between'}
             alignItems={'center'}
-            marginBottom={8}>
+            marginBottom={8}
+          >
             <Text width={'50%'} fontSize={14} ftBlueGray>
               Product Type
             </Text>
@@ -330,7 +344,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
               fontSize={14}
               ftWhite
               bold
-              textAlign={'right'}>{`${item.symbol} Flexible Staking`}</Text>
+              textAlign={'right'}
+            >{`${item.symbol} Flexible Staking`}</Text>
           </ViewRow>
           <ViewRow marginBottom={8}>
             <Text fontSize={14} ftBlueGray width={'60%'}>
@@ -366,7 +381,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
           paddingBottom={10}
           marginTop={20}
           marginBottom={20}
-          onPress={onPressUnstake}>
+          onPress={onPressUnstake}
+        >
           <Text ftNavyTheme bold fontSize={15}>
             Redeem
           </Text>
@@ -378,7 +394,8 @@ const FlexibleDetailInfoScreen = ({item}) => {
           paddingBottom={10}
           marginTop={20}
           marginBottom={20}
-          onPress={onPressAdditionalStake}>
+          onPress={onPressAdditionalStake}
+        >
           <Text ftNavyTheme bold fontSize={15}>
             Additional Stake
           </Text>
