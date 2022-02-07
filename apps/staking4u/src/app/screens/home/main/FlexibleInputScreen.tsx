@@ -43,7 +43,9 @@ const FlexibleInputScreen = ({ item }) => {
   const erc20Tokens = [];
   const solTokens = [];
   const stakingRayInfo = '';
-  const message = 'ray staking success';
+  const [message, setMessage] = useState('');
+
+  const depositBalance = 100;
 
   useEffect(() => {
     if (message === 'ray staking success') {
@@ -93,7 +95,8 @@ const FlexibleInputScreen = ({ item }) => {
           solSecret,
           amount,
         };
-        dispatch(stakeRayActions.post_ray_staking(body));
+        //dispatch(stakeRayActions.post_ray_staking(body));
+        setMessage('ray staking success');
         break;
       }
       default: {
@@ -102,6 +105,8 @@ const FlexibleInputScreen = ({ item }) => {
   };
 
   const onPressStart = () => {
+    setAmount('0.1'); // input not working
+
     if (amount && toggleCheckBox) {
       if (Number(amount) > maxAmount.current) {
         dispatch(
@@ -136,8 +141,7 @@ const FlexibleInputScreen = ({ item }) => {
             alignSelf={'center'}
           >
             <Text fontSize={15} ftWhite>
-              {stakingRayInfo.length > 0 &&
-              stakingRayInfo[0].depositBalance !== '0'
+              {stakingRayInfo.length > 0 && depositBalance !== '0'
                 ? 'Additional Staking Amount'
                 : 'Staking Amount'}
             </Text>
@@ -145,7 +149,7 @@ const FlexibleInputScreen = ({ item }) => {
               {renderBalance()}
             </Text>
           </ViewRow>
-          <InputBorderWith
+          <InputBorderWith // Not working
             width={'96%'}
             value={amount}
             placeholder={
@@ -175,8 +179,7 @@ const FlexibleInputScreen = ({ item }) => {
             </ButtonBorderRadius>
           </InputBorderWith>
         </View>
-        {stakingRayInfo.length > 0 &&
-        stakingRayInfo[0].depositBalance !== '0' ? (
+        {stakingRayInfo.length > 0 && depositBalance !== '0' ? (
           <ViewRowBorderRadius
             justifyContent={'space-between'}
             width={'94%'}
@@ -190,7 +193,7 @@ const FlexibleInputScreen = ({ item }) => {
               Existing Deposit
             </Text>
             <Text ftBlueGray fontSize={13} paddingRight={15}>
-              {`${stakingRayInfo[0].depositBalance} ${item.symbol}`}
+              {`${depositBalance} ${item.symbol}`}
             </Text>
           </ViewRowBorderRadius>
         ) : (
@@ -383,11 +386,11 @@ const FlexibleInputScreen = ({ item }) => {
           onValueChange={(newValue) => setToggleCheckBox(newValue)}
           value={toggleCheckBox}
         />
-        <Text fontSize={13} ftWhite paddingLeft={5}>
+        <Text fontSize={13} ftWhite paddingLeft={13}>
           I have read and agree to all notices
         </Text>
       </Button>
-      <View flex={1} justifyContent={'flex-end'}>
+      <View flex={1.5} justifyContent={'flex-end'}>
         <ButtonRadius
           bgYellowTheme
           width={'94%'}
