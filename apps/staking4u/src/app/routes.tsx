@@ -1,5 +1,5 @@
 import env from 'react-native-config';
-import {findOneThemeToken} from './utils/functions';
+import { findOneThemeToken } from './utils/functions';
 
 const serverURL = env.SERVER_URL; // nest server url
 const walletURL = env.WALLET_URL; // blockchain server url
@@ -46,12 +46,12 @@ const routes = {
     TX: {
       SOL: (
         networkMode,
-        publicKey, // publicKey : Solana publicKey
+        publicKey // publicKey : Solana publicKey
       ) =>
         `${env.WALLET_URL}/sol/solTransfer?network=${networkMode}&account=${publicKey}&limit=100&offset=0`,
       SOL_TOKEN: (
         networkMode,
-        publicKey, // publicKey : 조회하려는 토큰의 public key
+        publicKey // publicKey : 조회하려는 토큰의 public key
       ) =>
         `${env.WALLET_URL}/sol/splTransfer?network=${networkMode}&account=${publicKey}&limit=100&offset=0`,
     },
@@ -63,7 +63,7 @@ const routes = {
         .map((symbol, index) =>
           index === symbols.length - 1
             ? `symbol=${symbol}`
-            : `symbol=${symbol}&`,
+            : `symbol=${symbol}&`
         )
         .join('')}`,
   },
