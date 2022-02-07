@@ -61,22 +61,6 @@ import SolSendAmountScreen from '../home/wallet/send/SolSendAmountScreen';
 const ScreenRouter = (props) => {
   const [jwt, setJWT] = useState(false);
 
-  // useEffect(() => {
-  //   async function getStorage() {
-  //     if (await getData('jwt')) {
-  //       setJWT(true);
-  //     } else if ((await getData('isValidAuth')) === 'false') {
-  //       Actions.GenerateMnemonic();
-  //       Actions.emailSendingSuccessScreen();
-  //     } else if ((await getData('isValidAuth')) === 'true') {
-  //       Actions.GenerateMnemonic();
-  //       Actions.registerSuccessScreen();
-  //     }
-  //   }
-
-  //   getStorage();
-  // }, []);
-
   // 탭 바 아이콘 설정
   const tabBarIcon = ({ title, focused }) => {
     const iconSize = 25;
@@ -109,69 +93,6 @@ const ScreenRouter = (props) => {
   return (
     <Router>
       <Stack hideNavBar key="root">
-        {/* <Scene key={'Index'}>
-          <Scene
-            key="indexScreen"
-            component={IndexScreen}
-            hideTabBar
-            hideNavBar
-          />
-        </Scene>
-
-        <Scene key={'GetMnemonic'}>
-          <Scene
-            key="mnemonicInputScreen"
-            component={MnemonicInputScreen}
-            hideTabBar
-            hideNavBar
-          />
-        </Scene>
-
-        <Scene key={'GenerateMnemonic'}>
-          <Scene
-            key="serviceAgreementScreen"
-            component={ServiceAgreementScreen}
-            hideTabBar
-            hideNavBar
-          />
-          <Scene
-            key="mnemonicGuideScreen"
-            component={MnemonicGuideScreen}
-            hideTabBar
-            hideNavBar
-          />
-          <Scene
-            key="mnemonicGenerationScreen"
-            component={MnemonicGenerationScreen}
-            hideTabBar
-            hideNavBar
-          /> */}
-        {/* <Scene
-            key="mnemonicConfirmationScreen"
-            component={MnemonicConfirmationScreen}
-            hideTabBar
-            hideNavBar
-          /> */}
-        {/* <Scene
-            key="emailVerificationScreen"
-            component={EmailVerificationScreen}
-            hideTabBar
-            hideNavBar
-          /> */}
-        {/* <Scene
-            key="emailSendingSuccessScreen"
-            component={EmailSendingSuccessScreen}
-            hideTabBar
-            hideNavBar
-          /> */}
-        {/* <Scene
-            key="registerSuccessScreen"
-            component={RegisterSuccessScreen}
-            hideTabBar
-            hideNavBar
-          /> */}
-        {/* </Scene> */}
-
         <Scene
           key={'tabBar'}
           initial={jwt}

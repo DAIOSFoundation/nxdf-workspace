@@ -45,67 +45,6 @@ const FlexibleInputScreen = ({ item }) => {
   const stakingRayInfo = '';
   const message = 'ray staking success';
 
-  // const {
-  //   tickers,
-  //   usdExchangeRate,
-  //   ethPublic,
-  //   ethSecret,
-  //   solPublic,
-  //   solSecret,
-  //   ethNetworkMode,
-  //   solNetworkMode,
-  //   erc20Tokens,
-  //   solTokens,
-  //   stakingRayInfo,
-  //   message,
-  // } = useSelector(
-  //   (state: RootStateOrAny) => ({
-  //     tickers: state.ticker.tickers,
-  //     usdExchangeRate: state.ticker.usdExchangeRate,
-  //     ethPublic: state.global.ethPublic,
-  //     ethSecret: state.global.ethSecret,
-  //     solPublic: state.global.solPublic,
-  //     solSecret: state.global.solSecret,
-  //     ethNetworkMode: state.global.ethNetworkMode,
-  //     solNetworkMode: state.global.solNetworkMode,
-  //     erc20Tokens: state.wallet.erc20Tokens,
-  //     solTokens: state.wallet.solTokens,
-  //     stakingRayInfo: state.stakeRay.stakingRayInfo,
-  //     message: state.stakeRay.message,
-  //   }),
-  //   shallowEqual
-  // );
-
-  useEffect(() => {
-    const params = {
-      networkMode: solNetworkMode,
-      solPublic,
-    };
-    dispatch(stakeRayActions.get_ray_staking_account_info(params));
-  }, []);
-
-  useEffect(() => {
-    if (ERC20_TOKENS.includes(item.symbol)) {
-      const params = {
-        networkMode: ethNetworkMode,
-        publicKey: ethPublic,
-      };
-      dispatch(walletActions.get_erc20_balances(params));
-    } else if (SOL_TOKENS.includes(item.symbol)) {
-      const params = {
-        networkMode: solNetworkMode,
-        publicKey: solPublic,
-      };
-      dispatch(walletActions.get_sol_token_balances(params));
-    }
-
-    const params = {
-      networkMode: solNetworkMode,
-      solPublic,
-    };
-    dispatch(stakeRayActions.get_ray_staking_account_info(params));
-  }, []);
-
   useEffect(() => {
     if (message === 'ray staking success') {
       Actions.stakingCompleteScreen({
@@ -127,16 +66,11 @@ const FlexibleInputScreen = ({ item }) => {
   const renderBalance = useCallback(() => {
     if (ERC20_TOKENS.includes(item.symbol)) {
       maxAmount.current = 1;
-      //maxAmount.current = erc20Tokens?.[item.symbol].balance;
       return erc20Tokens
         ? `Balance : ${erc20Tokens?.[item.symbol].balance} ${item.symbol}`
         : `Balance : 0 ${item.symbol}`;
     } else if (SOL_TOKENS.includes(item.symbol)) {
       maxAmount.current = 1;
-      //maxAmount.current = solTokens?.[item.symbol].amount;
-      // return solTokens
-      //   ? `Balance : ${solTokens?.[item.symbol].amount} ${item.symbol}`
-      //   : `Balance : 0 ${item.symbol}`;
       return solTokens
         ? `Balance : 1 ${item.symbol}`
         : `Balance : 0 ${item.symbol}`;

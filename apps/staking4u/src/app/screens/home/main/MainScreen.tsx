@@ -17,38 +17,6 @@ import useFetchExchangeRate from '../../../hooks/useFetchExchangeRate';
 const MainScreen = () => {
   const dispatch = useDispatch();
 
-  // useFetchTickers();
-  // useFetchExchangeRate();
-
-  // useEffect(() => {
-  //   async function getKeys() {
-  //     if (await getData('AESKey')) {
-  //       const mnemonic = await AESDecrypt(await getData('AESKey'));
-
-  //       const ethParam = {
-  //         index: 0,
-  //         mnemonic: mnemonic.trim(),
-  //       };
-
-  //       let solParam = {
-  //         accountIndex: 0,
-  //         walletIndex: 0,
-  //         mnemonic: mnemonic.trim(),
-  //       };
-  //       dispatch(globalActions.get_eth_keys(ethParam));
-  //       dispatch(globalActions.get_sol_keys(solParam));
-  //     }
-  //   }
-
-  //   async function getJwt() {
-  //     const jwt = await getData('jwt');
-  //     dispatch(authsActions.configure_init_jwt(jwt));
-  //   }
-
-  //   getKeys();
-  //   getJwt();
-  // }, []);
-
   const renderListHeader = () => {
     return (
       <ViewRow flex={1} marginBottom={10} justifyContent={'space-between'}>
