@@ -18,29 +18,14 @@ import * as userActions from '../../../store/modules/user/actions';
 import { StorageBackdoor } from '../../../components/BackdoorComponents';
 
 const MyInfoScreen = () => {
-  const { userInfo } = useSelector(
-    (state: RootStateOrAny) => ({
-      userInfo: state.user.userInfo,
-    }),
-    shallowEqual
-  );
-
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function getStorage() {
-      let publicMnemonic;
-      publicMnemonic = await getData('publicMnemonic');
-      dispatch(userActions.get_user_by_public_mnemonic(publicMnemonic));
-    }
-    getStorage();
-  }, []);
+  const userInfo = { email: 'user@example.com' };
 
   const onPressLogOut = async () => {
     dispatch(authsActions.reset_jwt());
     dispatch(authsActions.reset_email_auth());
     await AsyncStorage.clear();
-    Actions.reset('Index');
+    Actions.reset('Main'); // 작동 안함
   };
 
   const sections = [
