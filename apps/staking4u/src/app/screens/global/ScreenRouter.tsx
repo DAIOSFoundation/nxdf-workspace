@@ -31,9 +31,9 @@ import SendRequestFailedScreen from '../home/wallet/send/SendRequestFailedScreen
 
 import InvestmentScreen from '../home/investment/InvestmentScreen';
 // import InvestmentInfoScreen from '../home/investment/InvestmentInfoScreen';
-// import InvestmentHistoryScreen from '../home/investment/InvestmentHistoryScreen';
+import InvestmentHistoryScreen from '../home/investment/InvestmentHistoryScreen';
 // import FlexibleDetailInfoScreen from '../home/investment/FlexibleDetailInfoScreen';
-// import InvestmentHistoryDetailScreen from '../home/investment/InvestmentHistoryDetailScreen';
+import InvestmentHistoryDetailScreen from '../home/investment/InvestmentHistoryDetailScreen';
 
 import MyInfoScreen from '../home/myinfo/MyInfoScreen';
 
@@ -59,8 +59,6 @@ import SolSendAmountScreen from '../home/wallet/send/SolSendAmountScreen';
 
 // 라우터
 const ScreenRouter = (props) => {
-  const [jwt, setJWT] = useState(false);
-
   // 탭 바 아이콘 설정
   const tabBarIcon = ({ title, focused }) => {
     const iconSize = 25;
@@ -95,7 +93,6 @@ const ScreenRouter = (props) => {
       <Stack hideNavBar key="root">
         <Scene
           key={'tabBar'}
-          initial={jwt}
           tabs
           showLabel={false}
           tabBarStyle={{
@@ -169,10 +166,10 @@ const ScreenRouter = (props) => {
               key="investmentInfoScreen"
               component={InvestmentInfoScreen}
             /> */}
-            {/* <Scene
+            <Scene
               key="investmentHistoryScreen"
               component={InvestmentHistoryScreen}
-            /> */}
+            />
             {/* <Scene
               hideTabBar
               key="flexibleDetailInfoScreen"
@@ -188,11 +185,11 @@ const ScreenRouter = (props) => {
               key="harvestCompleteScreen"
               component={HarvestCompleteScreen}
             /> */}
-            {/* <Scene
+            <Scene
               hideTabBar
               key="investmentHistoryDetailScreen"
               component={InvestmentHistoryDetailScreen}
-            /> */}
+            />
           </Scene>
           {/* 나의 정보 */}
           <Scene hideNavBar key={'MyInfo'} title={'myInfo'} icon={tabBarIcon}>
