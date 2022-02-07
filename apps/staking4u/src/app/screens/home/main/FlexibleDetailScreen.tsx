@@ -27,28 +27,6 @@ import iconInfo from '../../../assets/main/icon_coin_info.png';
 const FlexibleDetailScreen = ({ item }) => {
   const tickers = [];
   const dispatch = useDispatch();
-  // const {
-  //   tickers,
-  //   usdExchangeRate,
-  //   ethPublic,
-  //   ethSecret,
-  //   solPublic,
-  //   ethNetworkMode,
-  //   solNetworkMode,
-  //   erc20Balances,
-  // } = useSelector(
-  //   (state: RootStateOrAny) => ({
-  //     tickers: state.ticker.tickers,
-  //     usdExchangeRate: state.ticker.usdExchangeRate,
-  //     ethPublic: state.global.ethPublic,
-  //     ethSecret: state.global.ethSecret,
-  //     solPublic: state.global.solPublic,
-  //     ethNetworkMode: state.global.ethNetworkMode,
-  //     solNetworkMode: state.global.solNetworkMode,
-  //     erc20Balances: state.wallet.erc20Balances,
-  //   }),
-  //   shallowEqual
-  // );
 
   // TODO 추후 상품이 정해지면 리팩토링 필요
   // → 참고 : 오브스의 경우 업비트 API이기때문에 전일대비 시세 기준이 바이낸스/FTX와 다르다.
@@ -66,7 +44,6 @@ const FlexibleDetailScreen = ({ item }) => {
         }
       } else {
         const percent = 1;
-        //const percent = tickers[item.symbol].info.priceChangePercent || 0;
         if (percent > 0) {
           return <Text ftMint>{`+${Number(percent).toFixed(2)}%`}</Text>;
         } else if (percent < 0) {
@@ -130,12 +107,7 @@ const FlexibleDetailScreen = ({ item }) => {
         alignSelf={'center'}
         justifyContent={'center'}
       >
-        <Text fontSize={28} ftWhite bold marginBottom={5}>{`$ ${
-          // item.symbol !== 'ORBS'
-          //   ? tickers[item.symbol].close
-          //   : (tickers[item.symbol].close / usdExchangeRate).toFixed(4)
-          1
-        }`}</Text>
+        <Text fontSize={28} ftWhite bold marginBottom={5}>{`$ ${1}`}</Text>
         {renderFluctateRate(tickers)}
         <Line width={'100%'} height={1} marginTop={10} marginBottom={10} />
         <ViewRow

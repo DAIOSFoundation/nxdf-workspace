@@ -29,13 +29,6 @@ const SendAddressScreen = ({ title, amount, mintAddress }) => {
 
   const address = '1234567890';
 
-  // const { address } = useSelector(
-  //   (state: RootStateOrAny) => ({
-  //     address: state.wallet.address,
-  //   }),
-  //   shallowEqual
-  // );
-
   useEffect(() => {
     return () => dispatch(walletActions.reset_wallet());
   }, []);

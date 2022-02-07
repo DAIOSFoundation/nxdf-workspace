@@ -30,10 +30,10 @@ import SendRequestSuccessScreen from '../home/wallet/send/SendRequestSuccessScre
 import SendRequestFailedScreen from '../home/wallet/send/SendRequestFailedScreen';
 
 import InvestmentScreen from '../home/investment/InvestmentScreen';
-// import InvestmentInfoScreen from '../home/investment/InvestmentInfoScreen';
-// import InvestmentHistoryScreen from '../home/investment/InvestmentHistoryScreen';
-// import FlexibleDetailInfoScreen from '../home/investment/FlexibleDetailInfoScreen';
-// import InvestmentHistoryDetailScreen from '../home/investment/InvestmentHistoryDetailScreen';
+import InvestmentInfoScreen from '../home/investment/InvestmentInfoScreen';
+import InvestmentHistoryScreen from '../home/investment/InvestmentHistoryScreen';
+import FlexibleDetailInfoScreen from '../home/investment/FlexibleDetailInfoScreen';
+import InvestmentHistoryDetailScreen from '../home/investment/InvestmentHistoryDetailScreen';
 
 import MyInfoScreen from '../home/myinfo/MyInfoScreen';
 
@@ -51,32 +51,14 @@ import iconMyInfoPressed from '../../assets/tabBar/icon_my_info_pressed.png';
 
 import { colors } from '../../components/styled/Common';
 import { getData } from '../../utils/functions';
-// import UnstakingCompleteScreen from '../home/investment/UnstakingCompleteScreen copy';
-// import HarvestCompleteScreen from '../home/investment/HarvestCompleteScreen';
+import UnstakingCompleteScreen from '../home/investment/UnstakingCompleteScreen';
+import HarvestCompleteScreen from '../home/investment/HarvestCompleteScreen';
 import SolSendAmountScreen from '../home/wallet/send/SolSendAmountScreen';
 // import TermsOfServiceScreen from './TermsOfServiceScreen';
 // import PrivacyScreen from './PrivacyScreen';
 
 // 라우터
 const ScreenRouter = (props) => {
-  const [jwt, setJWT] = useState(false);
-
-  // useEffect(() => {
-  //   async function getStorage() {
-  //     if (await getData('jwt')) {
-  //       setJWT(true);
-  //     } else if ((await getData('isValidAuth')) === 'false') {
-  //       Actions.GenerateMnemonic();
-  //       Actions.emailSendingSuccessScreen();
-  //     } else if ((await getData('isValidAuth')) === 'true') {
-  //       Actions.GenerateMnemonic();
-  //       Actions.registerSuccessScreen();
-  //     }
-  //   }
-
-  //   getStorage();
-  // }, []);
-
   // 탭 바 아이콘 설정
   const tabBarIcon = ({ title, focused }) => {
     const iconSize = 25;
@@ -109,72 +91,8 @@ const ScreenRouter = (props) => {
   return (
     <Router>
       <Stack hideNavBar key="root">
-        {/* <Scene key={'Index'}>
-          <Scene
-            key="indexScreen"
-            component={IndexScreen}
-            hideTabBar
-            hideNavBar
-          />
-        </Scene>
-
-        <Scene key={'GetMnemonic'}>
-          <Scene
-            key="mnemonicInputScreen"
-            component={MnemonicInputScreen}
-            hideTabBar
-            hideNavBar
-          />
-        </Scene>
-
-        <Scene key={'GenerateMnemonic'}>
-          <Scene
-            key="serviceAgreementScreen"
-            component={ServiceAgreementScreen}
-            hideTabBar
-            hideNavBar
-          />
-          <Scene
-            key="mnemonicGuideScreen"
-            component={MnemonicGuideScreen}
-            hideTabBar
-            hideNavBar
-          />
-          <Scene
-            key="mnemonicGenerationScreen"
-            component={MnemonicGenerationScreen}
-            hideTabBar
-            hideNavBar
-          /> */}
-        {/* <Scene
-            key="mnemonicConfirmationScreen"
-            component={MnemonicConfirmationScreen}
-            hideTabBar
-            hideNavBar
-          /> */}
-        {/* <Scene
-            key="emailVerificationScreen"
-            component={EmailVerificationScreen}
-            hideTabBar
-            hideNavBar
-          /> */}
-        {/* <Scene
-            key="emailSendingSuccessScreen"
-            component={EmailSendingSuccessScreen}
-            hideTabBar
-            hideNavBar
-          /> */}
-        {/* <Scene
-            key="registerSuccessScreen"
-            component={RegisterSuccessScreen}
-            hideTabBar
-            hideNavBar
-          /> */}
-        {/* </Scene> */}
-
         <Scene
           key={'tabBar'}
-          initial={jwt}
           tabs
           showLabel={false}
           tabBarStyle={{
@@ -244,34 +162,34 @@ const ScreenRouter = (props) => {
             icon={tabBarIcon}
           >
             <Scene key="investmentScreen" component={InvestmentScreen} />
-            {/* <Scene
+            <Scene
               key="investmentInfoScreen"
               component={InvestmentInfoScreen}
-            /> */}
-            {/* <Scene
+            />
+            <Scene
               key="investmentHistoryScreen"
               component={InvestmentHistoryScreen}
-            /> */}
-            {/* <Scene
+            />
+            <Scene
               hideTabBar
               key="flexibleDetailInfoScreen"
               component={FlexibleDetailInfoScreen}
-            /> */}
-            {/* <Scene
+            />
+            <Scene
               hideTabBar
               key="unstakingCompleteScreen"
               component={UnstakingCompleteScreen}
-            /> */}
-            {/* <Scene
+            />
+            <Scene
               hideTabBar
               key="harvestCompleteScreen"
               component={HarvestCompleteScreen}
-            /> */}
-            {/* <Scene
+            />
+            <Scene
               hideTabBar
               key="investmentHistoryDetailScreen"
               component={InvestmentHistoryDetailScreen}
-            /> */}
+            />
           </Scene>
           {/* 나의 정보 */}
           <Scene hideNavBar key={'MyInfo'} title={'myInfo'} icon={tabBarIcon}>

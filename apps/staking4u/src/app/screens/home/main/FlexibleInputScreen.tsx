@@ -43,68 +43,9 @@ const FlexibleInputScreen = ({ item }) => {
   const erc20Tokens = [];
   const solTokens = [];
   const stakingRayInfo = '';
-  const message = 'ray staking success';
+  const [message, setMessage] = useState('');
 
-  // const {
-  //   tickers,
-  //   usdExchangeRate,
-  //   ethPublic,
-  //   ethSecret,
-  //   solPublic,
-  //   solSecret,
-  //   ethNetworkMode,
-  //   solNetworkMode,
-  //   erc20Tokens,
-  //   solTokens,
-  //   stakingRayInfo,
-  //   message,
-  // } = useSelector(
-  //   (state: RootStateOrAny) => ({
-  //     tickers: state.ticker.tickers,
-  //     usdExchangeRate: state.ticker.usdExchangeRate,
-  //     ethPublic: state.global.ethPublic,
-  //     ethSecret: state.global.ethSecret,
-  //     solPublic: state.global.solPublic,
-  //     solSecret: state.global.solSecret,
-  //     ethNetworkMode: state.global.ethNetworkMode,
-  //     solNetworkMode: state.global.solNetworkMode,
-  //     erc20Tokens: state.wallet.erc20Tokens,
-  //     solTokens: state.wallet.solTokens,
-  //     stakingRayInfo: state.stakeRay.stakingRayInfo,
-  //     message: state.stakeRay.message,
-  //   }),
-  //   shallowEqual
-  // );
-
-  useEffect(() => {
-    const params = {
-      networkMode: solNetworkMode,
-      solPublic,
-    };
-    dispatch(stakeRayActions.get_ray_staking_account_info(params));
-  }, []);
-
-  useEffect(() => {
-    if (ERC20_TOKENS.includes(item.symbol)) {
-      const params = {
-        networkMode: ethNetworkMode,
-        publicKey: ethPublic,
-      };
-      dispatch(walletActions.get_erc20_balances(params));
-    } else if (SOL_TOKENS.includes(item.symbol)) {
-      const params = {
-        networkMode: solNetworkMode,
-        publicKey: solPublic,
-      };
-      dispatch(walletActions.get_sol_token_balances(params));
-    }
-
-    const params = {
-      networkMode: solNetworkMode,
-      solPublic,
-    };
-    dispatch(stakeRayActions.get_ray_staking_account_info(params));
-  }, []);
+  const depositBalance = 100;
 
   useEffect(() => {
     if (message === 'ray staking success') {
@@ -127,16 +68,11 @@ const FlexibleInputScreen = ({ item }) => {
   const renderBalance = useCallback(() => {
     if (ERC20_TOKENS.includes(item.symbol)) {
       maxAmount.current = 1;
-      //maxAmount.current = erc20Tokens?.[item.symbol].balance;
       return erc20Tokens
         ? `Balance : ${erc20Tokens?.[item.symbol].balance} ${item.symbol}`
         : `Balance : 0 ${item.symbol}`;
     } else if (SOL_TOKENS.includes(item.symbol)) {
       maxAmount.current = 1;
-      //maxAmount.current = solTokens?.[item.symbol].amount;
-      // return solTokens
-      //   ? `Balance : ${solTokens?.[item.symbol].amount} ${item.symbol}`
-      //   : `Balance : 0 ${item.symbol}`;
       return solTokens
         ? `Balance : 1 ${item.symbol}`
         : `Balance : 0 ${item.symbol}`;
@@ -159,7 +95,8 @@ const FlexibleInputScreen = ({ item }) => {
           solSecret,
           amount,
         };
-        dispatch(stakeRayActions.post_ray_staking(body));
+        //dispatch(stakeRayActions.post_ray_staking(body));
+        setMessage('ray staking success');
         break;
       }
       default: {
@@ -168,6 +105,8 @@ const FlexibleInputScreen = ({ item }) => {
   };
 
   const onPressStart = () => {
+    setAmount('0.1'); // input not working
+
     if (amount && toggleCheckBox) {
       if (Number(amount) > maxAmount.current) {
         dispatch(
@@ -202,8 +141,7 @@ const FlexibleInputScreen = ({ item }) => {
             alignSelf={'center'}
           >
             <Text fontSize={15} ftWhite>
-              {stakingRayInfo.length > 0 &&
-              stakingRayInfo[0].depositBalance !== '0'
+              {stakingRayInfo.length > 0 && depositBalance !== '0'
                 ? 'Additional Staking Amount'
                 : 'Staking Amount'}
             </Text>
@@ -211,7 +149,7 @@ const FlexibleInputScreen = ({ item }) => {
               {renderBalance()}
             </Text>
           </ViewRow>
-          <InputBorderWith
+          <InputBorderWith // Not working
             width={'96%'}
             value={amount}
             placeholder={
@@ -241,8 +179,7 @@ const FlexibleInputScreen = ({ item }) => {
             </ButtonBorderRadius>
           </InputBorderWith>
         </View>
-        {stakingRayInfo.length > 0 &&
-        stakingRayInfo[0].depositBalance !== '0' ? (
+        {stakingRayInfo.length > 0 && depositBalance !== '0' ? (
           <ViewRowBorderRadius
             justifyContent={'space-between'}
             width={'94%'}
@@ -256,7 +193,7 @@ const FlexibleInputScreen = ({ item }) => {
               Existing Deposit
             </Text>
             <Text ftBlueGray fontSize={13} paddingRight={15}>
-              {`${stakingRayInfo[0].depositBalance} ${item.symbol}`}
+              {`${depositBalance} ${item.symbol}`}
             </Text>
           </ViewRowBorderRadius>
         ) : (
@@ -449,11 +386,11 @@ const FlexibleInputScreen = ({ item }) => {
           onValueChange={(newValue) => setToggleCheckBox(newValue)}
           value={toggleCheckBox}
         />
-        <Text fontSize={13} ftWhite paddingLeft={5}>
+        <Text fontSize={13} ftWhite paddingLeft={13}>
           I have read and agree to all notices
         </Text>
       </Button>
-      <View flex={1} justifyContent={'flex-end'}>
+      <View flex={1.5} justifyContent={'flex-end'}>
         <ButtonRadius
           bgYellowTheme
           width={'94%'}

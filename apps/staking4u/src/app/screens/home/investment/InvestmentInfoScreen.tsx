@@ -23,47 +23,48 @@ const InvestmentInfoScreen = () => {
   const [totalInvestment, setTotalInvestment] = useState(0);
   const [pieChartData, setPieChartData] = useState([]);
 
-  const {
-    tickers,
-    usdExchangeRate,
-    solPublic,
-    solSecret,
-    solNetworkMode,
-    solTokens,
-  } = useSelector(
-    (state) => ({
-      tickers: state.ticker.tickers,
-      usdExchangeRate: state.ticker.usdExchangeRate,
-      solPublic: state.global.solPublic,
-      solSecret: state.global.solSecret,
-      solNetworkMode: state.global.solNetworkMode,
-      solTokens: state.wallet.solTokens,
-    }),
-    shallowEqual
-  );
+  const rayStakingAccountInfo = '';
 
-  const { data: rayStakingAccountInfo, error: rayStakingAccountInfoError } =
-    useSWR(
-      ROUTES.STAKE.RAY.STAKING_ACCOUNT_INFO(solNetworkMode, solPublic),
-      fetcher,
-      {
-        refreshInterval: 5000,
-      }
-    );
-
+  const dummyData: any = {
+    responseStatus: 200,
+    responseMessage: 'S0000',
+    data: {
+      result: [
+        {
+          publicKey: 'DJ2bHMbS2GpnzcE5Y8rgTRiRjgv3vXUNSLBjR1FXLmQG',
+          decimals: 6,
+          name: 'RAY-SOL',
+          rewardDebt: '0.009426878429478',
+          depositBalance: '0.168719',
+          poolTotalReward: '1066212.39',
+        },
+        {
+          publicKey: '9T1DZ7kgPKkLPr1Jq5u4TDCWdVwhQoJ8qKaUjS3HAFZX',
+          decimals: 6,
+          name: 'RAY',
+          rewardDebt: '0.002720706183536',
+          depositBalance: '0.505136',
+          poolTotalReward: '1947851.7',
+        },
+      ],
+    },
+  };
   useEffect(() => {
-    const rayInfo =
-      rayStakingAccountInfo?.data.result.filter(
-        (item) => item.name === 'RAY'
-      ) || [];
+    // const rayInfo =
+    //   rayStakingAccountInfo?.data.result.filter(
+    //     (item) => item.name === 'RAY'
+    //   ) || [];
 
-    if (rayInfo.length > 0) {
+    const rayInfo = dummyData;
+    const count = Object.keys(rayInfo).length;
+
+    if (count > 0) {
       const reward = convertNumberFormat(
         12,
-        Number(Number(rayInfo[0].rewardDebt).toFixed(10)) /
-          (10 * rayInfo[0].decimals)
+        Number(Number(rayInfo.data.result[0].rewardDebt).toFixed(10)) /
+          (10 * rayInfo.data.result[0].decimals)
       );
-      const depositBalance = Number(rayInfo[0].depositBalance);
+      const depositBalance = Number(rayInfo.data.result[0].depositBalance);
 
       if (depositBalance > 0) {
         setStakingProducts([
