@@ -46,103 +46,14 @@ const WalletScreen = (props) => {
   const tickers = [];
   const usdExchangeRate = '';
 
-  // const {
-  //   ethPublic,
-  //   ethSecret,
-  //   ethNetworkMode,
-  //   solPublic,
-  //   solSecret,
-  //   solNetworkMode,
-  //   solTokens,
-  //   tickers,
-  //   usdExchangeRate,
-  // } = useSelector(
-  //   (state: RootStateOrAny) => ({
-  //     ethPublic: state.global.ethPublic,
-  //     ethSecret: state.global.ethSecret,
-  //     solPublic: state.global.solPublic,
-  //     solSecret: state.global.solSecret,
-  //     ethNetworkMode: state.global.ethNetworkMode,
-  //     solNetworkMode: state.global.solNetworkMode,
-  //     solTokens: state.wallet.solTokenList, //todo solTokenList 추후 변수명 변경
-  //     tickers: state.ticker.tickers,
-  //     usdExchangeRate: state.ticker.usdExchangeRate,
-  //   }),
-  //   shallowEqual
-  // );
-
   const [rayBalance, setRayBalance] = useState(0);
   const [atlasBalance, setAtlasBalance] = useState(0);
   const dispatch = useDispatch();
 
-  // 업비트 기준 이더 시세 조회
-  // const { data: ethData, error: ethError } = useSWR(
-  //   `${cryptoCurrency.upbit.ticker.KRW_ETH}`,
-  //   fetcher,
-  //   {
-  //     refreshInterval: 5000,
-  //   }
-  // );
-  // 나의 지갑 ORBS 수량 가져오기
-  // const { data: orbsAmount, error: orbsAmountError } = useSWR(
-  //   `${
-  //     env.WALLET_URL
-  //   }/eth/tokenBalance?endpoint=${ethNetworkMode}&walletAddress=${ethPublic}&contractAddress=${
-  //     findOneThemeToken('ORBS').mainNetContractAddress
-  //   }`,
-  //   fetcher,
-  //   {
-  //     refreshInterval: 5000,
-  //   }
-  // );
-  // 나의 지갑 AAVE 수량 가져오기
-  // const { data: aaveAmount, error: aaveAmountError } = useSWR(
-  //   `${
-  //     env.WALLET_URL
-  //   }/eth/tokenBalance?endpoint=${ethNetworkMode}&walletAddress=${ethPublic}&contractAddress=${
-  //     findOneThemeToken('AAVE').mainNetContractAddress
-  //   }`,
-  //   fetcher,
-  //   {
-  //     refreshInterval: 5000,
-  //   }
-  // );
-  // // 나의 지갑 Sol 수량 가져오기
-  // const { data: solAmount, error: solAmountError } = useSWR(
-  //   `${env.WALLET_URL}/sol/balance?network=${solNetworkMode}&address=${solPublic}`,
-  //   fetcher,
-  //   {
-  //     refreshInterval: 5000,
-  //   }
-  // );
-  // // 나의 지갑 Sol Token 리스트 가져오기
-  // const { data: solTokenList, error: solTokenListError } = useSWR(
-  //   `${env.WALLET_URL}/sol/tokenBalance?network=${solNetworkMode}&address=${solPublic}`,
-  //   fetcher,
-  //   {
-  //     refreshInterval: 5000,
-  //   }
-  // );
-
-  // useEffect(() => {
-  //   let param = {
-  //     network: 'mainnet-beta',
-  //     address: solPublic,
-  //   };
-  //   dispatch(walletActions.get_sol_token_list(param));
-  // }, []);
-
   const solTokenList = [];
 
   useEffect(() => {
-    // solTokenList?.data.tokens.map(async (item) => {
-    //   if (item.tokenSymbol === 'RAY') {
-    //     setRayBalance(item.amount);
-    //   } else if (item.tokenSymbol === 'ATLAS') {
-    //     setAtlasBalance(item.amount);
-    //   }
-    // });
-    setRayBalance(1);
+    setRayBalance(123);
   }, [solTokenList]);
 
   // 총 보유 자산 계산
@@ -183,22 +94,6 @@ const WalletScreen = (props) => {
       );
     }
   };
-
-  // const totalBalances = useMemo(() => {
-  //   return totalBalanceCalculation(
-  //     usdExchangeRate,
-  //     tickers?.['ORBS']?.close,
-  //     orbsAmount?.data.balance,
-  //     tickers?.['AAVE']?.close,
-  //     aaveAmount?.data.balance,
-  //     tickers?.['RAY']?.close,
-  //     rayBalance,
-  //     tickers?.['ATLAS']?.close,
-  //     atlasBalance,
-  //     tickers?.['SOL']?.close,
-  //     solAmount?.data.balance
-  //   );
-  // }, [tickers]);
 
   const totalBalances = useMemo(() => {
     return totalBalanceCalculation(

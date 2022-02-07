@@ -20,22 +20,15 @@ import { SOL_TOKENS } from '../../../../utils/constants';
 const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
   const dispatch = useDispatch();
 
-  let message = '';
+  const [message, setMessage] = useState('');
   const solNetworkMode = 'test';
   const solSecret = '';
 
-  // const {message, solNetworkMode, solSecret} = useSelector(
-  //   (state) => ({
-  //     message: state.wallet.message,
-  //     solNetworkMode: state.global.solNetworkMode,
-  //     solSecret: state.global.solSecret,
-  //   }),
-  //   shallowEqual,
-  // );
   const [withdrawalAmount, setWithdrawalAmount] = useState('0');
   const [isMax, setIsMax] = useState(false);
 
   useEffect(() => {
+    console.log(message);
     if (message === 'transactionSuccess') {
       dispatch(walletActions.reset_message());
       Actions.sendRequestSuccessScreen();
@@ -86,7 +79,8 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
       };
 
       console.log('SPL 전송 =====>', param);
-      dispatch(walletActions.post_send_sol_token_transaction(param));
+      //dispatch(walletActions.post_send_sol_token_transaction(param));
+      setMessage('transactionSuccess');
     } else {
       // SOL일 경우
       // let param = {
@@ -105,6 +99,7 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
 
       console.log('SOL 전송 =====>', param);
       //dispatch(walletActions.post_send_sol_transaction(param));
+      setMessage('transactionSuccess');
     }
   };
 
