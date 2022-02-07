@@ -22,7 +22,7 @@
     "**/*.js",
     "**/*.jsx",
     "next-env.d.ts"
-  ],
+, "../../node_modules/@types/react-table/react-table-config.d.ts"  ],
   "exclude": [
     "node_modules"
   ]

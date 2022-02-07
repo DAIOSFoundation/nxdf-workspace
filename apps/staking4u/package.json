@@ -33,6 +33,8 @@
     "react-native-push-notification": "*",
     "react-native-loading-spinner-overlay": "*",
     "@react-native-community/checkbox": "*",
-    "date-fns": "*"
+    "date-fns": "*",
+    "react-native-qrcode-svg": "*",
+    "react-native-qrcode-scanner": "*"
   }
 }

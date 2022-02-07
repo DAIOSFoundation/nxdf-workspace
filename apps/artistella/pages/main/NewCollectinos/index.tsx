@@ -1,47 +1,22 @@
-import React from 'react'
-import styled from 'styled-components'
-import GridElm from './mainEle'
+import React from 'react';
+import Link from 'next/link';
+import GridElm from './newElement';
+import {GridDiv,TopDiv,GridTitle,MoreButton,Grid} from './style';
 
-export const GridDiv = styled.div`
-  padding: 70px 0px;
-  width: 100%;
-  background: #faf8f4;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`
-const Grid=styled.div`
-  width: 80%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: minmax(200px,50%);
-  grid-gap: 26px;
-  align-items: center;
-  justify-content: center;
-`
-const GridTitle = styled.div`
-  width: 80%;
-  height: 5%;
-  display: inline-block;
-  margin-bottom: 16px;
-
-  h1{
-    font-size:30px;
-    font-weight:bold;
-    color:black;
-  }
-`
-function MainGrid(){
+function NewCollectinos(){
   return(
     <GridDiv>
-      <GridTitle>
-        <h1>Lorem Ipsum</h1>
-      </GridTitle>
+      <TopDiv>
+        <GridTitle>New Collections</GridTitle>
+        <MoreButton>
+          <Link href={`/moreItem`}>
+            <a>More</a>
+          </Link>
+        </MoreButton>
+      </TopDiv>
       <Grid>
         {
           data.map( (data, index) =>
-
             <GridElm key={index} img={data.img} header={data.header} text={data.text} date={data.date} />
           )
         }
@@ -92,4 +67,4 @@ const data =[
 ]
 
 
-export default MainGrid;
+export default NewCollectinos;
