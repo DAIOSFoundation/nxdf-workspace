@@ -21,11 +21,13 @@ import iconInfo from '../../../assets/main/icon_coin_info.png';
 
 // 시세 더미 데이터
 const tickers = {
-  AAVE: { info: { priceChangePercent: -1.2 } },
-  ORBS: { info: { signed_change_rate: 0.1 } },
-  SOL: { info: { priceChangePercent: -3.14 } },
-  RAY: { info: { priceChangePercent: 2.23 } },
+  AAVE: { info: { priceChangePercent: -1.2 }, close: 1.2 },
+  ORBS: { info: { signed_change_rate: 0.1 }, close: 12.45 },
+  SOL: { info: { priceChangePercent: -3.14 }, close: 123.45 },
+  RAY: { info: { priceChangePercent: 2.23 }, close: 67.8 },
 };
+
+const usdExchangeRate = 1;
 
 const FlexibleDetailScreen = ({ item }) => {
   const dispatch = useDispatch();
@@ -108,7 +110,11 @@ const FlexibleDetailScreen = ({ item }) => {
         alignSelf={'center'}
         justifyContent={'center'}
       >
-        <Text fontSize={28} ftWhite bold marginBottom={5}>{`$ ${1}`}</Text>
+        <Text fontSize={28} ftWhite bold marginBottom={5}>{`$ ${
+          item.symbol !== 'ORBS'
+            ? tickers[item.symbol].close
+            : (tickers[item.symbol].close / usdExchangeRate).toFixed(4)
+        }`}</Text>
         {renderFluctateRate(tickers)}
         <Line width={'100%'} height={1} marginTop={10} marginBottom={10} />
         <ViewRow

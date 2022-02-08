@@ -34,7 +34,12 @@ const FlexibleInputScreen = ({ item }) => {
   const solSecret = '';
   const ethNetworkMode = '';
   const solNetworkMode = '';
-  const erc20Tokens = [];
+  const erc20Tokens = {
+    AAVE: { balance: 100 },
+    ORBS: { balance: 200 },
+    SOL: { balance: 300 },
+    RAY: { balance: 400 },
+  };
   const solTokens = [];
   const stakingRayInfo = '';
   const [message, setMessage] = useState('');
@@ -61,14 +66,15 @@ const FlexibleInputScreen = ({ item }) => {
 
   const renderBalance = useCallback(() => {
     if (ERC20_TOKENS.includes(item.symbol)) {
-      maxAmount.current = 1;
+      // maxAmount.current = 1;
+      maxAmount.current = erc20Tokens?.[item.symbol].balance;
       return erc20Tokens
         ? `Balance : ${erc20Tokens?.[item.symbol].balance} ${item.symbol}`
         : `Balance : 0 ${item.symbol}`;
     } else if (SOL_TOKENS.includes(item.symbol)) {
       maxAmount.current = 1;
       return solTokens
-        ? `Balance : 1 ${item.symbol}`
+        ? `Balance : ${erc20Tokens?.[item.symbol].balance} ${item.symbol}`
         : `Balance : 0 ${item.symbol}`;
     }
   }, [erc20Tokens, solTokens]);
