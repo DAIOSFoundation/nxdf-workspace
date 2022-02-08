@@ -35,6 +35,10 @@
     "@react-native-community/checkbox": "*",
     "date-fns": "*",
     "react-native-qrcode-svg": "*",
-    "react-native-qrcode-scanner": "*"
+    "react-native-qrcode-scanner": "*",
+    "react-native-pdf": "*",
+    "react-native-chart-kit": "*",
+    "react-native-collapsible": "*",
+    "redux": "*"
   }
 }

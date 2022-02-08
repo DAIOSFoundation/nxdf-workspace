@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Router, Stack, Scene, Actions } from 'react-native-router-flux';
 
-import IndexScreen from '../index/IndexScreen';
-import ServiceAgreementScreen from '../register/ServiceAgreementScreen';
-import MnemonicGuideScreen from '../register/MnemonicGuideScreen';
-import MnemonicGenerationScreen from '../register/MnemonicGenerationScreen';
-import MnemonicConfirmationScreen from '../register/MnemonicConfirmationScreen';
-import EmailVerificationScreen from '../register/EmailVerificationScreen';
-import EmailSendingSuccessScreen from '../register/EmailSendingSuccessScreen';
-import RegisterSuccessScreen from '../register/RegisterSuccessScreen';
-import MnemonicInputScreen from '../login/MnemonicInputScreen';
+// import IndexScreen from '../index/IndexScreen';
+// import ServiceAgreementScreen from '../register/ServiceAgreementScreen';
+// import MnemonicGuideScreen from '../register/MnemonicGuideScreen';
+// import MnemonicGenerationScreen from '../register/MnemonicGenerationScreen';
+// import MnemonicConfirmationScreen from '../register/MnemonicConfirmationScreen';
+// import EmailVerificationScreen from '../register/EmailVerificationScreen';
+// import EmailSendingSuccessScreen from '../register/EmailSendingSuccessScreen';
+// import RegisterSuccessScreen from '../register/RegisterSuccessScreen';
+// import MnemonicInputScreen from '../login/MnemonicInputScreen';
 
 import MainScreen from '../home/main/MainScreen';
 import FlexibleDetailScreen from '../home/main/FlexibleDetailScreen';

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Linking } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { useDispatch, useSelector } from 'react-redux';
-import * as walletActions from '../../../store/modules/wallet/actions';
+import { useDispatch } from 'react-redux';
 import * as globalActions from '../../../store/modules/global/actions';
 import Topbar from '../../../components/bar/TopBar';
 import {
@@ -23,7 +22,6 @@ const InvestmentHistoryDetailScreen = ({ item }) => {
   const dispatch = useDispatch();
 
   const blockConfirmation = '';
-  const solNetworkMode = '';
 
   // const { blockConfirmation, solNetworkMode } = useSelector((state) => ({
   //   solNetworkMode: state.global.solNetworkMode,

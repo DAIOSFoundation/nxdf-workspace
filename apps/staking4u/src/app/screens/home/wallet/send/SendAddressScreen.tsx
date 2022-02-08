@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  shallowEqual,
-  useDispatch,
-  useSelector,
-  RootStateOrAny,
-} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { Actions } from 'react-native-router-flux';
 import * as modalActions from '../../../../store/modules/modal/actions';

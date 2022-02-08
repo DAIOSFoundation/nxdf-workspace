@@ -2,15 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { format } from 'date-fns';
-import useSWR from 'swr';
-import env from 'react-native-config';
-import {
-  shallowEqual,
-  useDispatch,
-  useSelector,
-  RootStateOrAny,
-} from 'react-redux';
-import * as walletActions from '../../../store/modules/wallet/actions';
+import { useDispatch } from 'react-redux';
 import Line from '../../../components/line/Line';
 import Coin from '../../../components/items/wallet/Coin';
 import {
@@ -22,12 +14,7 @@ import {
 import { Text } from '../../../components/styled/Text';
 import { Button } from '../../../components/styled/Button';
 import { Image } from '../../../components/styled/Image';
-import {
-  fetcher,
-  findOneThemeToken,
-  localeString,
-} from '../../../utils/functions';
-import cryptoCurrency from '../../../utils/cryptoCurrency';
+import { localeString } from '../../../utils/functions';
 import dollarIcon from '../../../assets/common/dollar.png';
 import checkPressed from '../../../assets/common/iconOvalCheckPressed.png';
 import orbsLogo from '../../../assets/logos/orbs.png';
@@ -38,16 +25,22 @@ import solLogo from '../../../assets/logos/sol.png';
 
 // 나의 지갑
 const WalletScreen = (props) => {
-  const ethPublic = '';
-  const ethNetworkMode = '';
-  const solPublic = '';
-  const solNetworkMode = '';
   const solTokens = [];
-  const tickers = [];
-  const usdExchangeRate = '';
+  const tickers = {
+    AAVE: { info: { priceChangePercent: -1.2 }, close: 1.2 },
+    ORBS: { info: { signed_change_rate: 0.1 }, close: 12.45 },
+    SOL: { info: { priceChangePercent: -3.14 }, close: 123.45 },
+    RAY: { info: { priceChangePercent: 2.23 }, close: 67.8 },
+    ATLAS: { info: { priceChangePercent: 10.01 }, close: 10.0 },
+  };
+  const usdExchangeRate = 1;
 
+  const aaveAmount = { data: { balance: 1 } };
+  const orbsAmount = { data: { balance: 2 } };
+  const solAmount = { data: { balance: 3 } };
   const [rayBalance, setRayBalance] = useState(0);
-  const [atlasBalance, setAtlasBalance] = useState(0);
+  const [atlasBalance, setAtlasBalance] = useState(1);
+
   const dispatch = useDispatch();
 
   const solTokenList = [];
@@ -99,18 +92,15 @@ const WalletScreen = (props) => {
     return totalBalanceCalculation(
       usdExchangeRate,
       tickers?.['ORBS']?.close,
-      1,
-      //orbsAmount?.data.balance,
+      orbsAmount?.data.balance,
       tickers?.['AAVE']?.close,
-      2,
-      //aaveAmount?.data.balance,
+      aaveAmount?.data.balance,
       tickers?.['RAY']?.close,
       rayBalance,
       tickers?.['ATLAS']?.close,
       atlasBalance,
       tickers?.['SOL']?.close,
-      3
-      //solAmount?.data.balance
+      solAmount?.data.balance
     );
   }, []);
 
@@ -120,31 +110,25 @@ const WalletScreen = (props) => {
       symbol: 'AAVE', // 단위
       logo: aaveLogo, // 로고 이미지
       ticker: tickers?.['AAVE']?.close, // 현재 시장 가격 (시세)
-      //amount: aaveAmount?.data.balance, //  보유 코인 개수
-      amount: 1,
-      //price: tickers?.['AAVE']?.close * aaveAmount?.data.balance, // 현재 시장 가 * 보유 코인 갯수 ( $ )
-      price: 10000,
+      amount: aaveAmount?.data.balance, //  보유 코인 개수
+      price: tickers?.['AAVE']?.close * aaveAmount?.data.balance, // 현재 시장 가 * 보유 코인 갯수 ( $ )
     },
     {
       name: 'Orbs',
       symbol: 'ORBS',
       logo: orbsLogo,
       ticker: tickers?.['ORBS']?.close,
-      amount: 2,
-      price: 20000,
-      //amount: orbsAmount?.data.balance,
-      // price:
-      //   (tickers?.['ORBS']?.close * orbsAmount?.data.balance) / usdExchangeRate,
+      amount: orbsAmount?.data.balance,
+      price:
+        (tickers?.['ORBS']?.close * orbsAmount?.data.balance) / usdExchangeRate,
     },
     {
       name: 'Solana',
       symbol: 'SOL',
       logo: solLogo,
       ticker: tickers?.['SOL']?.close,
-      amount: 3,
-      price: 30000,
-      // amount: solAmount?.data.balance,
-      // price: tickers?.['SOL']?.close * solAmount?.data.balance,
+      amount: solAmount?.data.balance,
+      price: tickers?.['SOL']?.close * solAmount?.data.balance,
     },
     {
       name: 'Raydium',
