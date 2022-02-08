@@ -29,10 +29,7 @@ const FlexibleInputScreen = ({ item }) => {
   const [amount, setAmount] = useState('');
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
-  const ethPublic = '';
-  const solPublic = '';
   const solSecret = '';
-  const ethNetworkMode = '';
   const solNetworkMode = '';
   const erc20Tokens = {
     AAVE: { balance: 100 },
@@ -41,7 +38,30 @@ const FlexibleInputScreen = ({ item }) => {
     RAY: { balance: 400 },
   };
   const solTokens = [];
-  const stakingRayInfo = '';
+  const stakingRayInfo: any = {
+    responseStatus: 200,
+    responseMessage: 'S0000',
+    data: {
+      result: [
+        {
+          publicKey: 'DJ2bHMbS2GpnzcE5Y8rgTRiRjgv3vXUNSLBjR1FXLmQG',
+          decimals: 6,
+          name: 'RAY-SOL',
+          rewardDebt: '0.009426878429478',
+          depositBalance: '0.168719',
+          poolTotalReward: '1066212.39',
+        },
+        {
+          publicKey: '9T1DZ7kgPKkLPr1Jq5u4TDCWdVwhQoJ8qKaUjS3HAFZX',
+          decimals: 6,
+          name: 'RAY',
+          rewardDebt: '0.002720706183536',
+          depositBalance: '0.505136',
+          poolTotalReward: '1947851.7',
+        },
+      ],
+    },
+  };
   const [message, setMessage] = useState('');
 
   const depositBalance = 100;
@@ -66,13 +86,12 @@ const FlexibleInputScreen = ({ item }) => {
 
   const renderBalance = useCallback(() => {
     if (ERC20_TOKENS.includes(item.symbol)) {
-      // maxAmount.current = 1;
       maxAmount.current = erc20Tokens?.[item.symbol].balance;
       return erc20Tokens
         ? `Balance : ${erc20Tokens?.[item.symbol].balance} ${item.symbol}`
         : `Balance : 0 ${item.symbol}`;
     } else if (SOL_TOKENS.includes(item.symbol)) {
-      maxAmount.current = 1;
+      maxAmount.current = solTokens?.[item.symbol].amount;
       return solTokens
         ? `Balance : ${erc20Tokens?.[item.symbol].balance} ${item.symbol}`
         : `Balance : 0 ${item.symbol}`;
@@ -141,7 +160,8 @@ const FlexibleInputScreen = ({ item }) => {
             alignSelf={'center'}
           >
             <Text fontSize={15} ftWhite>
-              {stakingRayInfo.length > 0 && depositBalance !== '0'
+              {stakingRayInfo.length > 0 &&
+              stakingRayInfo[0].depositBalance !== '0'
                 ? 'Additional Staking Amount'
                 : 'Staking Amount'}
             </Text>
@@ -179,7 +199,8 @@ const FlexibleInputScreen = ({ item }) => {
             </ButtonBorderRadius>
           </InputBorderWith>
         </View>
-        {stakingRayInfo.length > 0 && depositBalance !== '0' ? (
+        {stakingRayInfo.length > 0 &&
+        stakingRayInfo[0].depositBalance !== '0' ? (
           <ViewRowBorderRadius
             justifyContent={'space-between'}
             width={'94%'}
