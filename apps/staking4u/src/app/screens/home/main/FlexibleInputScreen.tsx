@@ -37,7 +37,12 @@ const FlexibleInputScreen = ({ item }) => {
     SOL: { balance: 300 },
     RAY: { balance: 400 },
   };
-  const solTokens = [];
+  const solTokens = {
+    AAVE: { amount: 100 },
+    ORBS: { amount: 200 },
+    SOL: { amount: 300 },
+    RAY: { amount: 400 },
+  };
   const stakingRayInfo: any = {
     responseStatus: 200,
     responseMessage: 'S0000',

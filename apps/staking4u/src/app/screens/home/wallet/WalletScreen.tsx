@@ -31,6 +31,7 @@ const WalletScreen = (props) => {
     ORBS: { info: { signed_change_rate: 0.1 }, close: 12.45 },
     SOL: { info: { priceChangePercent: -3.14 }, close: 123.45 },
     RAY: { info: { priceChangePercent: 2.23 }, close: 67.8 },
+    ATLAS: { info: { priceChangePercent: 10.01 }, close: 10.0 },
   };
   const usdExchangeRate = 1;
 
@@ -38,7 +39,7 @@ const WalletScreen = (props) => {
   const orbsAmount = { data: { balance: 2 } };
   const solAmount = { data: { balance: 3 } };
   const [rayBalance, setRayBalance] = useState(0);
-  const [atlasBalance, setAtlasBalance] = useState(0);
+  const [atlasBalance, setAtlasBalance] = useState(1);
 
   const dispatch = useDispatch();
 

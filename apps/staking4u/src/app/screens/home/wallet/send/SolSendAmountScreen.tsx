@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as globalActions from '../../../../store/modules/global/actions';
 import * as modalActions from '../../../../store/modules/modal/actions';
 import * as walletActions from '../../../../store/modules/wallet/actions';

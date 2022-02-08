@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  shallowEqual,
-  useDispatch,
-  useSelector,
-  RootStateOrAny,
-} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import * as authsActions from '../../../store/modules/auths/actions';
 import SectionButton from '../../../components/buttons/SectionButton';
@@ -13,9 +8,6 @@ import Topbar from '../../../components/bar/TopBar';
 import Line from '../../../components/line/Line';
 import { View, SafeAreaView } from '../../../components/styled/View';
 import { Text } from '../../../components/styled/Text';
-import { getData } from '../../../utils/functions';
-import * as userActions from '../../../store/modules/user/actions';
-import { StorageBackdoor } from '../../../components/BackdoorComponents';
 
 const MyInfoScreen = () => {
   const dispatch = useDispatch();

@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Actions } from 'react-native-router-flux';
-import {
-  shallowEqual,
-  useDispatch,
-  useSelector,
-  RootStateOrAny,
-} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as walletActions from '../../../../store/modules/wallet/actions';
 import * as globalActions from '../../../../store/modules/global/actions';
 import * as modalActions from '../../../../store/modules/modal/actions';
@@ -23,7 +18,6 @@ import { Text } from '../../../../components/styled/Text';
 import {
   calculateERC20GasFee,
   calculateEthGasFee,
-  findOneThemeToken,
 } from '../../../../utils/functions';
 
 const EthSendAmountScreen = ({ title, amount, address }) => {
@@ -33,15 +27,6 @@ const EthSendAmountScreen = ({ title, amount, address }) => {
   let message = '';
   const ethNetworkMode = '';
   const ethSecret = '';
-  // const {ethGasPrice, message, ethNetworkMode, ethSecret} = useSelector(
-  //   (state : RootStateOrAny) => ({
-  //     ethGasPrice: state.wallet.ethGasPrice,
-  //     message: state.wallet.message,
-  //     ethNetworkMode: state.global.ethNetworkMode,
-  //     ethSecret: state.global.ethSecret,
-  //   }),
-  //   shallowEqual,
-  // );
   const [withdrawalAmount, setWithdrawalAmount] = useState('0');
   const [isMax, setIsMax] = useState(false);
 

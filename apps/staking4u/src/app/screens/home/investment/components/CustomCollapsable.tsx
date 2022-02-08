@@ -5,7 +5,6 @@ import Collapsible from 'react-native-collapsible';
 import { View, ViewRow } from '../../../../components/styled/View';
 import { Text } from '../../../../components/styled/Text';
 import { Image } from '../../../../components/styled/Image';
-import { Button } from '../../../../components/styled/Button';
 import { GestureButton } from '../../../../components/styled/GestureButton';
 // images
 import icon_expand_less from '../../../../assets/investment/icon_expand_less.png';

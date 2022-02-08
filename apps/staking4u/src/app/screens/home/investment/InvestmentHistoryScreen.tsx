@@ -1,12 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import {
-  ScrollView,
-  View,
-  ViewRow,
-  ViewBorderRadius,
-} from '../../../components/styled/View';
-import { Text } from '../../../components/styled/Text';
-import { Image } from '../../../components/styled/Image';
+import React from 'react';
+import { View } from '../../../components/styled/View';
 import Line from '../../../components/line/Line';
 import { FlatList } from 'react-native';
 import { investmentHistory } from '../../../utils/dummy';

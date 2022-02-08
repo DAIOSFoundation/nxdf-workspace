@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import { useSelector, shallowEqual } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import useSWR from 'swr';
-import { View, ViewRow, ViewAbsolute } from '../../../components/styled/View';
+import { View, ViewAbsolute } from '../../../components/styled/View';
 import { Text } from '../../../components/styled/Text';
 import CustomCollapsable from './components/CustomCollapsable';
 import Line from '../../../components/line/Line';
 import Pie from '../../../components/chart/Pie';
-import { Button } from '../../../components/styled/Button';
 import { Image } from '../../../components/styled/Image';
 import dollarIcon from '../../../assets/common/dollar.png';
 import { convertNumberFormat, fetcher } from '../../../utils/functions';
-import ROUTES from '../../../routes';
 import StakedProduct from '../../../components/items/stake/StakedProduct';
-import iconDownGray from '../../../assets/main/icon_down_gray.png';
 import rayLogo from '../../../assets/logos/ray.png';
 import { getToday } from '../../../utils/date';
 
