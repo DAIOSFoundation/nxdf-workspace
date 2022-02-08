@@ -1,13 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import {
-  useSelector,
-  useDispatch,
-  shallowEqual,
-  RootStateOrAny,
-} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import * as modalActions from '../../../store/modules/modal/actions';
-import * as walletActions from '../../../store/modules/wallet/actions';
 import * as stakeRayActions from '../../../store/modules/stake/ray/actions';
 import {
   SafeAreaView,

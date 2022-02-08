@@ -19,8 +19,9 @@ import { GestureButtonBorderRadius } from '../../../components/styled/GestureBut
 import { ButtonRadius } from '../../../components/styled/Button';
 import iconInfo from '../../../assets/main/icon_coin_info.png';
 
+// 시세 더미 데이터
 const tickers = {
-  AAVE: { info: { priceChangePercent: 1.2 } },
+  AAVE: { info: { priceChangePercent: -1.2 } },
   ORBS: { info: { signed_change_rate: 0.1 } },
   SOL: { info: { priceChangePercent: -3.14 } },
   RAY: { info: { priceChangePercent: 2.23 } },

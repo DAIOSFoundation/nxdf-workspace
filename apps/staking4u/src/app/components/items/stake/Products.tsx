@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector, shallowEqual, RootStateOrAny } from 'react-redux';
 import Line from '../../line/Line';
 import { View, ViewBorderRadius, ViewRow } from '../../styled/View';
 import { GestureButton } from '../../styled/GestureButton';
@@ -8,13 +7,15 @@ import { Image } from '../../styled/Image';
 import { convertPrice } from '../../../utils/price';
 
 const Product = ({ name, symbol, annualInteresetRate, logo, onPress }) => {
-  const { tickers, usdExchangeRate } = useSelector(
-    (state: RootStateOrAny) => ({
-      tickers: state.ticker.tickers,
-      usdExchangeRate: state.ticker.usdExchangeRate,
-    }),
-    shallowEqual
-  );
+  // close = 장 마감 가격
+  const tickers = {
+    AAVE: { close: 1.2 },
+    ORBS: { close: 12.45 },
+    SOL: { close: 123.45 },
+    RAY: { close: 67.8 },
+  };
+
+  const usdExchangeRate = 1;
 
   return (
     <>
