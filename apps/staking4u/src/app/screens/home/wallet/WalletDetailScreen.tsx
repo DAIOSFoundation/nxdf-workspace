@@ -1,8 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList, Linking } from 'react-native';
-import { shallowEqual, useSelector } from 'react-redux';
-import useSWR from 'swr';
-import env from 'react-native-config';
 import { format } from 'date-fns';
 import { Actions } from 'react-native-router-flux';
 import TopBar from '../../../components/bar/TopBar';
@@ -10,14 +7,10 @@ import Line from '../../../components/line/Line';
 import ETHTransaction from '../../../components/items/wallet/ETHTransaction';
 import SOLTransaction from '../../../components/items/wallet/SOLTransaction';
 import SOLTokensTransaction from '../../../components/items/wallet/SOLTokensTransaction';
-import { Image } from '../../../components/styled/Image';
 import { SafeAreaView, View, ViewRow } from '../../../components/styled/View';
 import { Text } from '../../../components/styled/Text';
 import { ButtonBorderRadius } from '../../../components/styled/Button';
-import { fetcher, findOneThemeToken } from '../../../utils/functions';
-import { ERC20_TOKENS, SOL_TOKENS } from '../../../utils/constants';
-import { cryptoCurrency } from '../../../utils/cryptoCurrency';
-import iconWhiteDown from '../../../assets/common/iconWhiteDown.png';
+import { findOneThemeToken } from '../../../utils/functions';
 
 // 지갑 상세
 const WalletDetailScreen = (props) => {
