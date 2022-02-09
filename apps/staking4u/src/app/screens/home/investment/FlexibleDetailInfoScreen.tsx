@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Linking } from 'react-native';
-import { useDispatch, shallowEqual, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as stakeRayActions from '../../../store/modules/stake/ray/actions';
 import * as modalActions from '../../../store/modules/modal/actions';
 import Topbar from '../../../components/bar/TopBar';
@@ -15,7 +15,6 @@ import {
 import { Text } from '../../../components/styled/Text';
 import { Image } from '../../../components/styled/Image';
 import {
-  Button,
   ButtonRadius,
   ButtonBorderRadius,
 } from '../../../components/styled/Button';
@@ -27,45 +26,6 @@ import { Actions } from 'react-native-router-flux';
 const FlexibleDetailInfoScreen = ({ item }) => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState('');
-
-  // const {
-  //   tickers,
-  //   usdExchangeRate,
-  //   ethPublic,
-  //   ethSecret,
-  //   solPublic,
-  //   solSecret,
-  //   ethNetworkMode,
-  //   solNetworkMode,
-  //   erc20Tokens,
-  //   solTokens,
-  //   stakingRayInfo,
-  //   message,
-  // } = useSelector(
-  //   (state) => ({
-  //     tickers: state.ticker.tickers,
-  //     usdExchangeRate: state.ticker.usdExchangeRate,
-  //     ethPublic: state.global.ethPublic,
-  //     ethSecret: state.global.ethSecret,
-  //     solPublic: state.global.solPublic,
-  //     solSecret: state.global.solSecret,
-  //     ethNetworkMode: state.global.ethNetworkMode,
-  //     solNetworkMode: state.global.solNetworkMode,
-  //     erc20Tokens: state.wallet.erc20Tokens,
-  //     solTokens: state.wallet.solTokens,
-  //     stakingRayInfo: state.stakeRay.stakingRayInfo,
-  //     message: state.stakeRay.message,
-  //   }),
-  //   shallowEqual,
-  // );
-
-  // useEffect(() => {
-  //   const params = {
-  //     networkMode: solNetworkMode,
-  //     solPublic,
-  //   };
-  //   dispatch(stakeRayActions.get_ray_staking_account_info(params));
-  // }, []);
 
   const onPressCoinInfo = () => {
     Linking.openURL(
@@ -99,22 +59,10 @@ const FlexibleDetailInfoScreen = ({ item }) => {
   };
 
   const onPressHarvestOK = () => {
-    // const body = {
-    //   networkMode: solNetworkMode,
-    //   solSecret,
-    //   publicKey: stakingRayInfo[0].publicKey,
-    // };
-    // dispatch(stakeRayActions.post_ray_harvest(body));
     setMessage('ray unstake success');
   };
 
   const onPressUnstakeOK = () => {
-    // const body = {
-    //   networkMode: solNetworkMode,
-    //   solSecret,
-    //   amount: item.depositBalance,
-    // };
-    // dispatch(stakeRayActions.post_ray_unstaking(body));
     setMessage('ray harvest success');
   };
 

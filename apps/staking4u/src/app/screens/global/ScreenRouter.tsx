@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Router, Stack, Scene, Actions } from 'react-native-router-flux';
+import React, { useCallback } from 'react';
+import { Router, Stack, Scene } from 'react-native-router-flux';
 
 // import IndexScreen from '../index/IndexScreen';
 // import ServiceAgreementScreen from '../register/ServiceAgreementScreen';
@@ -24,7 +24,7 @@ import WalletScreen from '../home/wallet/WalletScreen';
 import WalletDetailScreen from '../home/wallet/WalletDetailScreen';
 import ReceiveScreen from '../home/wallet/receive/ReceiveScreen';
 import SendAddressScreen from '../home/wallet/send/SendAddressScreen';
-import EthSendAmountScreen from '../home/wallet/send/EthSendAmountScreen';
+// import EthSendAmountScreen from '../home/wallet/send/EthSendAmountScreen';
 //import QRCodeScannerScreen from '../qr/QRCodeScannerScreen';
 import SendRequestSuccessScreen from '../home/wallet/send/SendRequestSuccessScreen';
 import SendRequestFailedScreen from '../home/wallet/send/SendRequestFailedScreen';
@@ -50,7 +50,6 @@ import iconMyInfoNormal from '../../assets/tabBar/icon_my_info_normal.png';
 import iconMyInfoPressed from '../../assets/tabBar/icon_my_info_pressed.png';
 
 import { colors } from '../../components/styled/Common';
-import { getData } from '../../utils/functions';
 import UnstakingCompleteScreen from '../home/investment/UnstakingCompleteScreen';
 import HarvestCompleteScreen from '../home/investment/HarvestCompleteScreen';
 import SolSendAmountScreen from '../home/wallet/send/SolSendAmountScreen';
@@ -143,11 +142,11 @@ const ScreenRouter = (props) => {
               component={SendAddressScreen}
               hideTabBar
             />
-            <Scene
+            {/* <Scene
               key={'ethSendAmountScreen'}
               component={EthSendAmountScreen}
               hideTabBar
-            />
+            /> */}
             <Scene
               key={'solSendAmountScreen'}
               component={SolSendAmountScreen}
