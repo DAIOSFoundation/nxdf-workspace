@@ -33,6 +33,7 @@
     "react-native-push-notification": "*",
     "react-native-loading-spinner-overlay": "*",
     "@react-native-community/checkbox": "*",
-    "date-fns": "*"
+    "date-fns": "*",
+    "react-native-collapsible": "*"
   }
 }
