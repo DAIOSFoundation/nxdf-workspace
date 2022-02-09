@@ -2,15 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { format } from 'date-fns';
-import useSWR from 'swr';
-import env from 'react-native-config';
-import {
-  shallowEqual,
-  useDispatch,
-  useSelector,
-  RootStateOrAny,
-} from 'react-redux';
-import * as walletActions from '../../../store/modules/wallet/actions';
+import { useDispatch } from 'react-redux';
 import Line from '../../../components/line/Line';
 import Coin from '../../../components/items/wallet/Coin';
 import {
@@ -22,12 +14,7 @@ import {
 import { Text } from '../../../components/styled/Text';
 import { Button } from '../../../components/styled/Button';
 import { Image } from '../../../components/styled/Image';
-import {
-  fetcher,
-  findOneThemeToken,
-  localeString,
-} from '../../../utils/functions';
-import cryptoCurrency from '../../../utils/cryptoCurrency';
+import { localeString } from '../../../utils/functions';
 import dollarIcon from '../../../assets/common/dollar.png';
 import checkPressed from '../../../assets/common/iconOvalCheckPressed.png';
 import orbsLogo from '../../../assets/logos/orbs.png';
@@ -38,100 +25,28 @@ import solLogo from '../../../assets/logos/sol.png';
 
 // 나의 지갑
 const WalletScreen = (props) => {
-  const {
-    ethPublic,
-    ethSecret,
-    ethNetworkMode,
-    solPublic,
-    solSecret,
-    solNetworkMode,
-    solTokens,
-    tickers,
-    usdExchangeRate,
-  } = useSelector(
-    (state: RootStateOrAny) => ({
-      ethPublic: state.global.ethPublic,
-      ethSecret: state.global.ethSecret,
-      solPublic: state.global.solPublic,
-      solSecret: state.global.solSecret,
-      ethNetworkMode: state.global.ethNetworkMode,
-      solNetworkMode: state.global.solNetworkMode,
-      solTokens: state.wallet.solTokenList, //todo solTokenList 추후 변수명 변경
-      tickers: state.ticker.tickers,
-      usdExchangeRate: state.ticker.usdExchangeRate,
-    }),
-    shallowEqual
-  );
+  const solTokens = [];
+  const tickers = {
+    AAVE: { info: { priceChangePercent: -1.2 }, close: 1.2 },
+    ORBS: { info: { signed_change_rate: 0.1 }, close: 12.45 },
+    SOL: { info: { priceChangePercent: -3.14 }, close: 123.45 },
+    RAY: { info: { priceChangePercent: 2.23 }, close: 67.8 },
+    ATLAS: { info: { priceChangePercent: 10.01 }, close: 10.0 },
+  };
+  const usdExchangeRate = 1;
 
+  const aaveAmount = { data: { balance: 1 } };
+  const orbsAmount = { data: { balance: 2 } };
+  const solAmount = { data: { balance: 3 } };
   const [rayBalance, setRayBalance] = useState(0);
-  const [atlasBalance, setAtlasBalance] = useState(0);
+  const [atlasBalance, setAtlasBalance] = useState(1);
+
   const dispatch = useDispatch();
 
-  // 업비트 기준 이더 시세 조회
-  const { data: ethData, error: ethError } = useSWR(
-    `${cryptoCurrency.upbit.ticker.KRW_ETH}`,
-    fetcher,
-    {
-      refreshInterval: 5000,
-    }
-  );
-  // 나의 지갑 ORBS 수량 가져오기
-  const { data: orbsAmount, error: orbsAmountError } = useSWR(
-    `${
-      env.WALLET_URL
-    }/eth/tokenBalance?endpoint=${ethNetworkMode}&walletAddress=${ethPublic}&contractAddress=${
-      findOneThemeToken('ORBS').mainNetContractAddress
-    }`,
-    fetcher,
-    {
-      refreshInterval: 5000,
-    }
-  );
-  // 나의 지갑 AAVE 수량 가져오기
-  const { data: aaveAmount, error: aaveAmountError } = useSWR(
-    `${
-      env.WALLET_URL
-    }/eth/tokenBalance?endpoint=${ethNetworkMode}&walletAddress=${ethPublic}&contractAddress=${
-      findOneThemeToken('AAVE').mainNetContractAddress
-    }`,
-    fetcher,
-    {
-      refreshInterval: 5000,
-    }
-  );
-  // 나의 지갑 Sol 수량 가져오기
-  const { data: solAmount, error: solAmountError } = useSWR(
-    `${env.WALLET_URL}/sol/balance?network=${solNetworkMode}&address=${solPublic}`,
-    fetcher,
-    {
-      refreshInterval: 5000,
-    }
-  );
-  // 나의 지갑 Sol Token 리스트 가져오기
-  const { data: solTokenList, error: solTokenListError } = useSWR(
-    `${env.WALLET_URL}/sol/tokenBalance?network=${solNetworkMode}&address=${solPublic}`,
-    fetcher,
-    {
-      refreshInterval: 5000,
-    }
-  );
+  const solTokenList = [];
 
   useEffect(() => {
-    let param = {
-      network: 'mainnet-beta',
-      address: solPublic,
-    };
-    dispatch(walletActions.get_sol_token_list(param));
-  }, []);
-
-  useEffect(() => {
-    solTokenList?.data.tokens.map(async (item) => {
-      if (item.tokenSymbol === 'RAY') {
-        setRayBalance(item.amount);
-      } else if (item.tokenSymbol === 'ATLAS') {
-        setAtlasBalance(item.amount);
-      }
-    });
+    setRayBalance(123);
   }, [solTokenList]);
 
   // 총 보유 자산 계산
@@ -187,7 +102,7 @@ const WalletScreen = (props) => {
       tickers?.['SOL']?.close,
       solAmount?.data.balance
     );
-  }, [tickers]);
+  }, []);
 
   const coins = [
     {

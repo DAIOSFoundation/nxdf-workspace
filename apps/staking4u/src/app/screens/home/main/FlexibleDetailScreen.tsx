@@ -1,11 +1,6 @@
 import React, { useCallback } from 'react';
 import { Linking } from 'react-native';
-import {
-  useSelector,
-  shallowEqual,
-  useDispatch,
-  RootStateOrAny,
-} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import * as modalActions from '../../../store/modules/modal/actions';
 import Topbar from '../../../components/bar/TopBar';
@@ -24,30 +19,18 @@ import { GestureButtonBorderRadius } from '../../../components/styled/GestureBut
 import { ButtonRadius } from '../../../components/styled/Button';
 import iconInfo from '../../../assets/main/icon_coin_info.png';
 
+// 시세 더미 데이터
+const tickers = {
+  AAVE: { info: { priceChangePercent: -1.2 }, close: 1.2 },
+  ORBS: { info: { signed_change_rate: 0.1 }, close: 12.45 },
+  SOL: { info: { priceChangePercent: -3.14 }, close: 123.45 },
+  RAY: { info: { priceChangePercent: 2.23 }, close: 67.8 },
+};
+
+const usdExchangeRate = 1;
+
 const FlexibleDetailScreen = ({ item }) => {
   const dispatch = useDispatch();
-  const {
-    tickers,
-    usdExchangeRate,
-    ethPublic,
-    ethSecret,
-    solPublic,
-    ethNetworkMode,
-    solNetworkMode,
-    erc20Balances,
-  } = useSelector(
-    (state: RootStateOrAny) => ({
-      tickers: state.ticker.tickers,
-      usdExchangeRate: state.ticker.usdExchangeRate,
-      ethPublic: state.global.ethPublic,
-      ethSecret: state.global.ethSecret,
-      solPublic: state.global.solPublic,
-      ethNetworkMode: state.global.ethNetworkMode,
-      solNetworkMode: state.global.solNetworkMode,
-      erc20Balances: state.wallet.erc20Balances,
-    }),
-    shallowEqual
-  );
 
   // TODO 추후 상품이 정해지면 리팩토링 필요
   // → 참고 : 오브스의 경우 업비트 API이기때문에 전일대비 시세 기준이 바이낸스/FTX와 다르다.
