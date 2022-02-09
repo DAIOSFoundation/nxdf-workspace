@@ -17,100 +17,11 @@ const WalletDetailScreen = (props) => {
   const ethPublic = '';
   const ethNetworkMode = '';
   const solPublic = '';
-  const solNetworkMode = '';
   const tickers = '';
-  const usdExchangeRate = '';
-
-  // const {
-  //   ethPublic,
-  //   ethNetworkMode,
-  //   solPublic,
-  //   solNetworkMode,
-  //   tickers,
-  //   usdExchangeRate,
-  // } = useSelector(
-  //   (state) => ({
-  //     ethPublic: state.global.ethPublic,
-  //     solPublic: state.global.solPublic,
-  //     ethNetworkMode: state.global.ethNetworkMode,
-  //     solNetworkMode: state.global.solNetworkMode,
-  //     tickers: state.ticker.tickers,
-  //     usdExchangeRate: state.ticker.usdExchangeRate,
-  //   }),
-  //   shallowEqual
-  // );
 
   const [solTokensBalance, setSolTokensBalance] = useState(0);
 
-  // 업비트 기준 이더 시세 조회
-  // const { data: ethData, error: ethError } = useSWR(
-  //   `${upbit.ticker.KRW_ETH}`,
-  //   fetcher,
-  //   {
-  //     refreshInterval: 5000,
-  //   }
-  // );
-  // erc20 트랜잭션 내역 조회
-  // const { data: erc20TransactionList, error: erc20TransactionListError } =
-  //   useSWR(
-  //     `${
-  //       env.WALLET_URL
-  //     }/eth/tokenTxWithAddress?endpoint=${ethNetworkMode}&walletAddress=${ethPublic}&tokenAddress=${
-  //       findOneThemeToken(props.coin.symbol)?.mainNetContractAddress
-  //     }&sort=desc`,
-  //     fetcher,
-  //     {
-  //       refreshInterval: 5000,
-  //     }
-  //   );
-  // SOL 트랜잭션 내역 조회
-  // const { data: solTransactionList, error: solTransactionListError } = useSWR(
-  //   `${env.WALLET_URL}/sol/solTransfer?network=${solNetworkMode}&account=${solPublic}&limit=100&offset=0`,
-  //   fetcher,
-  //   {
-  //     refreshInterval: 5000,
-  //   }
-  // );
-  // SOL Token 트랜잭션 내역 조회
-  // const { data: solTokenTransactionList, error: solTokenTransactionListError } =
-  //   useSWR(
-  //     `${env.WALLET_URL}/sol/splTransfer?network=${solNetworkMode}&account=${props.solTokenPublicKey}&limit=100&offset=0`,
-  //     fetcher,
-  //     {
-  //       refreshInterval: 5000,
-  //     }
-  //   );
-
-  // 나의 지갑 erc20 수량 가져오기
-  // const { data: erc20Amount, error: erc20AmountError } = useSWR(
-  //   `${
-  //     env.WALLET_URL
-  //   }/eth/tokenBalance?endpoint=${ethNetworkMode}&walletAddress=${ethPublic}&contractAddress=${
-  //     findOneThemeToken(props.coin.symbol)?.mainNetContractAddress
-  //   }`,
-  //   fetcher,
-  //   {
-  //     refreshInterval: 5000,
-  //   }
-  // );
-  // 나의 지갑 Sol 수량 가져오기
-  // const { data: solAmount, error: solAmountError } = useSWR(
-  //   `${env.WALLET_URL}/sol/balance?network=${solNetworkMode}&address=${solPublic}`,
-  //   fetcher,
-  //   {
-  //     refreshInterval: 5000,
-  //   }
-  // );
-  // // 나의 지갑 Sol Token 리스트 가져오기
-  // const { data: solTokenList, error: solTokenListError } = useSWR(
-  //   `${env.WALLET_URL}/sol/tokenBalance?network=${solNetworkMode}&address=${solPublic}`,
-  //   fetcher,
-  //   {
-  //     refreshInterval: 5000,
-  //   }
-  // );
-
-  const solTokenList = [];
+  const solTokenList = {data : {tokens : {}}};
 
   useEffect(() => {
     // solTokenList?.data.tokens.map(async (item) => {

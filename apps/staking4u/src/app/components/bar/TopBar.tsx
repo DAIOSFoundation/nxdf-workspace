@@ -1,10 +1,10 @@
 import React from 'react';
-import {Actions} from 'react-native-router-flux';
-import {Button} from '../styled/Button';
-import {ViewRow} from '../styled/View';
-import {Image} from '../styled/Image';
-import {Text} from '../styled/Text';
-import {isEmpty} from '../../utils/functions';
+import { Actions } from 'react-native-router-flux';
+import { Button } from '../styled/Button';
+import { ViewRow } from '../styled/View';
+import { Image } from '../styled/Image';
+import { Text } from '../styled/Text';
+import { isEmpty } from '../../utils/functions';
 import icon_back_white from '../../assets/common/icon_back_white.png';
 
 // isLeftButton : 좌측 버튼 활성화
@@ -20,8 +20,8 @@ import icon_back_white from '../../assets/common/icon_back_white.png';
 // backGroundColor : 배경색
 
 const Topbar = (props) => {
-  const lineColor = props.lineColor || {brIceBlue: true};
-  const titleColor = props.titleColor || {ftDarkNavy: true};
+  const lineColor = props.lineColor || { brIceBlue: true };
+  const titleColor = props.titleColor || { ftDarkNavy: true };
 
   // 뒤로가기
   const onPressLeft = () => {
@@ -39,7 +39,8 @@ const Topbar = (props) => {
         alignItems={'center'}
         paddingTop={20}
         paddingBottom={10}
-        bgNavyTheme>
+        bgNavyTheme
+      >
         <Button
           paddingLeft={30}
           paddingRight={30}
@@ -47,7 +48,8 @@ const Topbar = (props) => {
           height={'150%'}
           disabled={!props.isLeftButton}
           onPress={onPressLeft}
-          alignSelf={'center'}>
+          alignSelf={'center'}
+        >
           {props.isLeftButton && (
             <Image
               width={25}
