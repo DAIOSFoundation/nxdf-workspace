@@ -20,7 +20,7 @@ const InvestmentInfoScreen = () => {
 
   const rayStakingAccountInfo = '';
 
-  const dummyData: any = {
+  const rayInfo: any = {
     responseStatus: 200,
     responseMessage: 'S0000',
     data: {
@@ -45,12 +45,6 @@ const InvestmentInfoScreen = () => {
     },
   };
   useEffect(() => {
-    // const rayInfo =
-    //   rayStakingAccountInfo?.data.result.filter(
-    //     (item) => item.name === 'RAY'
-    //   ) || [];
-
-    const rayInfo = dummyData;
     const count = Object.keys(rayInfo).length;
 
     if (count > 0) {

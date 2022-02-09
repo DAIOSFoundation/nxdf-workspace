@@ -23,11 +23,6 @@ const InvestmentHistoryDetailScreen = ({ item }) => {
 
   const blockConfirmation = '';
 
-  // const { blockConfirmation, solNetworkMode } = useSelector((state) => ({
-  //   solNetworkMode: state.global.solNetworkMode,
-  //   blockConfirmation: state.wallet.blockConfirmation,
-  // }));
-
   const onPressCopy = (address) => {
     Clipboard.setString(address);
     dispatch(globalActions.change_toast_message('Copied!'));
@@ -93,14 +88,6 @@ const InvestmentHistoryDetailScreen = ({ item }) => {
       </ViewRow>
     ));
   };
-
-  // useEffect(() => {
-  //   const params = {
-  //     networkMode: solNetworkMode,
-  //     txHash: item.txHash,
-  //   };
-  //   dispatch(walletActions.get_sol_tx_confirmation(params));
-  // }, []);
 
   return (
     <SafeAreaView bgNavyTheme>
