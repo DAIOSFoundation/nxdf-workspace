@@ -18,10 +18,11 @@ const WalletDetailScreen = (props) => {
   const ethNetworkMode = '';
   const solPublic = '';
   const tickers = '';
+  const SOL_TOKENS = '';
 
   const [solTokensBalance, setSolTokensBalance] = useState(0);
 
-  const solTokenList = {data : {tokens : {}}};
+  const solTokenList = { data: { tokens: {} } };
 
   useEffect(() => {
     // solTokenList?.data.tokens.map(async (item) => {
