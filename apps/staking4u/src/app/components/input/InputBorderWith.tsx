@@ -1,14 +1,15 @@
 import React from 'react';
-import {View, ViewAbsolute} from '../styled/View';
-import {NBInputBorderRadius} from '../styled/Input';
-import {colors} from '../styled/Common';
+import { View, ViewAbsolute } from '../styled/View';
+import { NBInputBorderRadius } from '../styled/Input';
+import { colors } from '../styled/Common';
 
 const InputBorderWith = (props) => {
   return (
     <View
       width={props.width || '100%'}
       height={props.height || 50}
-      alignSelf={'center'}>
+      alignSelf={'center'}
+    >
       <NBInputBorderRadius
         value={props.value}
         placeholderTextColor={colors.BlueGray}
@@ -29,7 +30,8 @@ const InputBorderWith = (props) => {
           top={0}
           right={0}
           justifyContent={'center'}
-          alignItems={'center'}>
+          alignItems={'center'}
+        >
           {props.children}
         </ViewAbsolute>
       )}
