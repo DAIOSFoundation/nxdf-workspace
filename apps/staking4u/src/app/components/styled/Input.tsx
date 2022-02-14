@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import * as Common from './Common';
-import { Input, TextArea, NativeBaseProvider } from 'native-base'; // Textarea
+import { Input, Textarea } from 'native-base';
 
 export const NBInput = styled(Input)((props) => ({
   // size
@@ -31,10 +31,7 @@ export const NBInput = styled(Input)((props) => ({
   textAlign: props.textAlign || 'left',
 }));
 
-export const NBInputBorder = styled(
-  NativeBaseProvider,
-  NBInput
-)((props) => ({
+export const NBInputBorder = styled(NBInput)((props) => ({
   borderColor: Common.BORDER_COLOR(props),
   borderLeftWidth: Common.BORDER_LEFT_WIDTH(props),
   borderRightWidth: Common.BORDER_RIGHT_WIDTH(props),
@@ -42,10 +39,7 @@ export const NBInputBorder = styled(
   borderBottomWidth: Common.BORDER_BOTTOM_WIDTH(props),
 }));
 
-export const NBTextarea = styled(
-  NativeBaseProvider,
-  TextArea
-)((props) => ({
+export const NBTextarea = styled(Textarea)((props) => ({
   // size
   width: props.width || '100%',
 

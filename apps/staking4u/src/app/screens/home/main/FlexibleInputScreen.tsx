@@ -129,8 +129,6 @@ const FlexibleInputScreen = ({ item }) => {
   };
 
   const onPressStart = () => {
-    setAmount('0.1'); // input not working
-
     if (amount && toggleCheckBox) {
       if (Number(amount) > maxAmount.current) {
         dispatch(
