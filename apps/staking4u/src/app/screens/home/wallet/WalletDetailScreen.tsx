@@ -30,7 +30,7 @@ const WalletDetailScreen = (props) => {
     //     setSolTokensBalance(item.amount);
     //   }
     // });
-    setSolTokensBalance(1);
+    setSolTokensBalance(3);
   }, [solTokenList]);
 
   const erc20Amount = 1;
