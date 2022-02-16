@@ -1,8 +1,8 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
-import {isEmpty} from '../../utils/functions';
+import { isEmpty } from '../../utils/functions';
 
-const preventDoubleClick = (WrappedComponent) => {
+const preventDoubleClick = (WrappedComponent): any => {
   class preventDoubleClick extends React.PureComponent {
     debouncedOnPress = () => {
       this.props.onPress && this.props.onPress();
@@ -17,6 +17,7 @@ const preventDoubleClick = (WrappedComponent) => {
       leading: true,
       trailing: false,
     });
+    static displayName: string; // added for ts
 
     render() {
       return <WrappedComponent {...this.props} onPress={this.onPress} />;
