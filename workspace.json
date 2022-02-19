@@ -3,6 +3,8 @@
   "projects": {
     "artistella": "apps/artistella",
     "artistella-e2e": "apps/artistella-e2e",
+    "nxdf-airdrop": "apps/nxdf-airdrop",
+    "nxdf-airdrop-e2e": "apps/nxdf-airdrop-e2e",
     "nxdf-api": "apps/nxdf-api",
     "shared-assets": "libs/shared/assets",
     "shared-config": "libs/shared/config",
