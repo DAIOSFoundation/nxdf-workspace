@@ -1,8 +1,8 @@
-import { FC, useCallback } from "react";
+import {FC, useCallback, useState} from "react";
 
 import styled from 'styled-components';
 
-import { SendSPLTransaction, useConnection, useWallet, WalletMultiButton } from "@nxdf/shared/services";
+import { SendSPLTransaction, useConnection, useWallet, WalletMultiButton, filterValidAccount } from "@nxdf/shared/services";
 
 const StyledPage = styled.div`
   .page {
@@ -13,12 +13,14 @@ const StyledPage = styled.div`
 export const Index: FC = ({}) => {
 // export function Index() {
 
+  const [AddressAmountList, setAddressAmountList] = useState("");
+
   const { connection } = useConnection();
   const { publicKey, signTransaction } = useWallet();
 
-  let addressAmountList = '';
   const onAddressListChange = (event: any) => {
-    addressAmountList = event.target.value;
+    setAddressAmountList(event.target.value);
+    console.log('onAddressListChange:', AddressAmountList);
   }
 
   const sendToken = useCallback(async () => {
@@ -27,20 +29,35 @@ export const Index: FC = ({}) => {
       return;
     }
 
+    if(AddressAmountList.trim() === '') {
+      alert('error: addresses are empty.');
+      return;
+    }
+
     const mintAddress = 'Au6EdrSDubCUc34awy9c6iQAg5GSos9pPBXyZQtyZewV'; //nxdf
 
-    const addressAmounts = addressAmountList.trim().split('\n');
+    const addressAmounts = AddressAmountList.trim().split('\n');
     const toAddresses:string[] = [];
     const amounts:number[] = [];
 
-    addressAmounts.map(addressAmount => {
-      addressAmount = addressAmount.trim().replace('\t', '');
-      if(addressAmount === '') return;
+    for (let i = 0; i < addressAmounts.length; i++) {
+      const addressAmount = addressAmounts[i].trim().replace('\t', '');
+      if(addressAmount === '') continue;
 
       const splitAddressAmount = addressAmount.split(',');
-      toAddresses.push(splitAddressAmount[0].trim());
+
+      const toAddress = splitAddressAmount[0].trim();
+      const isValid = await filterValidAccount(connection, mintAddress, toAddress);
+      await waitforme(1000);
+
+      if(!isValid) continue;
+
+      toAddresses.push(toAddress.trim());
       amounts.push(Number(splitAddressAmount[1].trim()));
-    });
+    }
+
+    console.log('addressAmounts: ', addressAmounts.length);
+    console.log('toAddresses: ', toAddresses.length);
 
     const decimals = 10**6;
 
@@ -52,11 +69,19 @@ export const Index: FC = ({}) => {
       return i % chunkSize === 0 ? amounts.slice(i, i + chunkSize) : null;
     }).filter(e => { return e; });
 
-    toAddressesGroup.map(async (group, index) => {
-      await SendSPLTransaction(connection, publicKey, signTransaction, mintAddress, toAddressesGroup[index], amountsGroup[index], decimals);
-    });
+    console.log('toAddressesGroup: ', toAddressesGroup.length);
 
+    // toAddressesGroup.map(async (group, index) => {
+    //   await SendSPLTransaction(connection, publicKey, signTransaction, mintAddress, toAddressesGroup[index], amountsGroup[index], decimals);
+    //   await waitforme(1000);
+    // });
   }, [publicKey, connection, signTransaction]);
+
+  function waitforme(milisec) {
+    return new Promise(resolve => {
+      setTimeout(() => { resolve('') }, milisec);
+    })
+  }
 
   /*
    * Replace the elements below with your own.

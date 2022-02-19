@@ -24,6 +24,8 @@ export async function SendSPLTransaction(
   if (!toAddresses || !amounts) return;
   console.log('Processing transaction...');
 
+  const receiverAccountNullList = [];
+
   try {
     if (!publicKey || !signTransaction) throw new WalletNotConnectedError();
 
@@ -36,6 +38,7 @@ export async function SendSPLTransaction(
       signTransaction
     );
 
+    // const __log__ = [];
     const instructions: TransactionInstruction[] = [];
     for (let i = 0; i < toAddresses.length; i++) {
       const dest = toAddresses[i];
@@ -54,28 +57,35 @@ export async function SendSPLTransaction(
       );
 
       if (receiverAccount === null) {
+        // instructions.push(
+        //   Token.createAssociatedTokenAccountInstruction(
+        //     ASSOCIATED_TOKEN_PROGRAM_ID,
+        //     TOKEN_PROGRAM_ID,
+        //     mintPublicKey,
+        //     associatedDestinationTokenAddr,
+        //     destPublicKey,
+        //     publicKey
+        //   )
+        // );
+        receiverAccountNullList.push(dest);
+      }
+      else {
         instructions.push(
-          Token.createAssociatedTokenAccountInstruction(
-            ASSOCIATED_TOKEN_PROGRAM_ID,
+          Token.createTransferInstruction(
             TOKEN_PROGRAM_ID,
-            mintPublicKey,
+            fromTokenAccount.address,
             associatedDestinationTokenAddr,
-            destPublicKey,
-            publicKey
+            publicKey,
+            [],
+            amounts[i] * decimals
           )
         );
       }
-      instructions.push(
-        Token.createTransferInstruction(
-          TOKEN_PROGRAM_ID,
-          fromTokenAccount.address,
-          associatedDestinationTokenAddr,
-          publicKey,
-          [],
-          amounts[i] * decimals
-        )
-      );
+
+      // __log__.push([dest, amounts[i] * decimals, receiverAccount !== null]);
     }
+
+    // console.log(__log__);
 
     const transaction = new Transaction().add(...instructions);
 
@@ -86,9 +96,11 @@ export async function SendSPLTransaction(
 
     const result = await connection.sendRawTransaction(signed.serialize());
 
-    console.log(publicKey, result);
-    console.log('Transaction sent');
+    // console.log(publicKey, result);
+    console.log('Transaction sent:', result);
   } catch (error: any) {
     console.log(`Transaction failed: ${error.message}`);
   }
+
+  return receiverAccountNullList;
 }
