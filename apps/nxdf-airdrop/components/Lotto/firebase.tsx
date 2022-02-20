@@ -1,16 +1,16 @@
 import { initializeApp } from "firebase/app";
 import {getDatabase} from "firebase/database"
-import 'dotenv/config';
+// import 'dotenv/config';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_APIKEY,
-  authDomain: process.env.REACT_APP_AUTHDOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASEURL,
-  projectId: process.env.REACT_APP_PROJECTID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APPID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID
+  apiKey: 'AIzaSyCKtLyuE6-TDJyRwsb51s_ueWm8agevkOQ',
+  authDomain: 'eminent-glider-213307.firebaseapp.com',
+  databaseURL: 'https://eminent-glider-213307.firebaseio.com/',
+  projectId: 'eminent-glider-213307',
+  storageBucket: 'eminent-glider-213307.appspot.com',
+  messagingSenderId: '135223261282',
+  appId: '1:135223261282:web:6611690312708b035e393b',
+  measurementId: 'Y70S028HE4'
 };
 
 // Initialize Firebase

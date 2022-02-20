@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import './css/MainCenter/font.css'
+
 import {
   ref,child,get
 } from "@firebase/database"

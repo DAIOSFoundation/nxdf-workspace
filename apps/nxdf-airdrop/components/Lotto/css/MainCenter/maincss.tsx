@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import './font.css'
 
 export const PotContainer=styled.div`
   font-weight:bold;
@@ -7,7 +6,7 @@ export const PotContainer=styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
 `
 export const PotSolContainer=styled.div`
   font-size:65px;

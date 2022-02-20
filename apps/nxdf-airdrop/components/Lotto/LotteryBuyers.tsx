@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import './css/MainCenter/font.css'
+
 import {
   ref,child,get
 } from "@firebase/database"
@@ -37,7 +37,7 @@ const Table=styled.table`
     padding:20px 0;
     vertical-align:middle;
   }
-  
+
 `
 
 function LotteryBuyers() {
@@ -76,7 +76,7 @@ function LotteryBuyers() {
                 <th style={{color:'pink'}}>{data[1].date}</th>
               </tr>)
             })
-          } 
+          }
         </tbody>
       </Table>
     </BuyerDiv>

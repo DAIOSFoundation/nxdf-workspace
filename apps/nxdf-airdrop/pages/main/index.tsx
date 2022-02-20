@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import Flex from "../../components/Box/Flex";
 import { getIsValidSolanaAddress } from '../../util/isValidSolanaAddress';
 import {useWallet} from "@solana/wallet-adapter-react";
+import {useConnection, WalletMultiButton} from "@nxdf/shared/services";
+import {useIsMobile} from "../../hooks/useIsMobile";
 
 /* eslint-disable-next-line */
 export interface MainProps {};
@@ -15,26 +17,25 @@ export function Main(props: MainProps) {
   const router = useRouter();
 
   useEffect(() => {
-    if(!router.isReady) return;
-    setUserId(router.query.user_id as string);
+    if(!router.isReady || !router.query.user_id) return;
+    setUserId(router.query.user_id.toString());
   }, [router.isReady, router.query]);
 
   //const [loading, setLoading] = useState(false)
   const [referral, setReferral] = useState<string>('')
   const [retweetLink, setRetweetLink] = useState<string>('')
   const [redditLink, setRedditLink] = useState<string>('')
-  // const { walletAddress, connectWallet } = useWallet()
   const [address, setAddress] = useState('');
 
-  const isMobile = false; //useIsMobile()
-  const walletAddress = '';
+  const { publicKey } = useWallet();
+  const isMobile = useIsMobile();
 
   const handleSubmit = async () => {
     const isValidAddress = getIsValidSolanaAddress(address);
 
     if (!isValidAddress) {
-      alert('Invalid wallet address')
-      return
+      alert('Invalid wallet address');
+      return;
     }
 
     if (userId && address) {
@@ -56,15 +57,12 @@ export function Main(props: MainProps) {
       alert('Required param missed');
     }
   }
-  const connectWallet = () => {
 
-  }
-
-  // useEffect(() => {
-  //   if (walletAddress) {
-  //     setAddress(walletAddress)
-  //   }
-  // }, [walletAddress])
+  useEffect(() => {
+    if (publicKey) {
+      setAddress(publicKey.toString());
+    }
+  }, [publicKey])
 
   return (
     <Wrapper isMobile={isMobile}>
@@ -129,13 +127,8 @@ export function Main(props: MainProps) {
               <div className="label">Enter your NXDF wallet address</div>
               {isMobile ? (
                 <input type="text" value={address ?? ''} onChange={(e) => setAddress(e.target.value)} />
-              ) : walletAddress ? (
-                <input type="text" disabled value={address} />
               ) : (
-                <button className="connect-button" onClick={connectWallet}>
-                  <img src="/img/icon-wallet.svg" alt="connect to a wallet" />
-                  Connect to a wallet
-                </button>
+                <WalletMultiButton className="btn btn-ghost" />
               )}
             </Flex>
           </Flex>

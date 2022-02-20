@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import './css/MainCenter/font.css';
 
 const AboutDiv=styled.div`
   text-align:center;
@@ -17,7 +16,7 @@ const Welcome=styled.h1`
   color:rgb(220, 52, 141);
   color: var(--color-override,rgb(244,134,193));
   text-shadow: 0 0 10px rgb(220, 52, 141), 0 0 10px #e6469b;
- 
+
 `
 const TopDiv=styled.div`
   display:flex;
