@@ -7,16 +7,18 @@ function GridElm({img,header,text,date}){
 
     return(
       <Link href='/collectionInfo'>
-      <EleDivM>
-          <GridImgDiv>
-            <GridImage src={img} />
-          </GridImgDiv>
-          <GridContent>
-            <ImageHead>{header}</ImageHead>
-            <ImageSummary>{text}</ImageSummary>
-            <ImageDate>{date}</ImageDate>
-          </GridContent>
-        </EleDivM>
+        <a>
+          <EleDivM>
+              <GridImgDiv>
+                <GridImage src={img} />
+              </GridImgDiv>
+              <GridContent>
+                <ImageHead>{header}</ImageHead>
+                <ImageSummary>{text}</ImageSummary>
+                <ImageDate>{date}</ImageDate>
+              </GridContent>
+            </EleDivM>
+        </a>
       </Link>
     )
   }
