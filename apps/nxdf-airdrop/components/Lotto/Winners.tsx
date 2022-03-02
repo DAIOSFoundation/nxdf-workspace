@@ -83,8 +83,10 @@ function Winners() {
     }).catch((error)=>{
     console.error(error)
   })
-  },[])
+  },[]);
+
   //console.log(winners[0]["winningTicket"][0])
+
   return (
     <WinnersDiv id='winners'>
       <Title>HALL OF WINNERS</Title>
@@ -107,13 +109,13 @@ function Winners() {
             <>
               <div key={index}>
                 <span style={{float:'left',marginLeft:'30px'}}>{winner[0]} </span>
-                <span style={{float:'right',marginRight:'30px'}}> {winner[1]} SOL</span>
+                <span style={{float:'right',marginRight:'30px'}}> {winner[1]} NXDF</span>
               </div>
               <div style={{clear:'both'}}></div>
             </>
             )}
           </th>
-          <th style={{color:'rgb(244,134,193)'}}>{data.prizePool} SOL</th>
+          <th style={{color:'rgb(244,134,193)'}}>{data.prizePool} NXDF</th>
         </tr>)}
         </tbody>
       </Table>

@@ -19,34 +19,34 @@
     }
 }
 
-html {
-    font-family: BMJUA;
-}
+/*html {*/
+/*    font-family: BMJUA;*/
+/*}*/
 
-html,
-body,
+/*html,*/
+/*body,*/
 #root {
     min-height: 100vh;
     background-color:#453C70;
 }
 
-*,
-::before,
-::after {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
+/**,*/
+/*::before,*/
+/*::after {*/
+/*    box-sizing: border-box;*/
+/*    -webkit-tap-highlight-color: transparent;*/
+/*}*/
 
-body,
-div,
-button,
-h1 {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    outline: 0;
-    background: 0;
-}
+/*body,*/
+/*div,*/
+/*button,*/
+/*h1 {*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    border: 0;*/
+/*    outline: 0;*/
+/*    background: 0;*/
+/*}*/
 
 #title {
     font-size: 3rem;
@@ -172,6 +172,7 @@ h1 {
     transition: 0.5s;
     user-select: none;
     font-size: 1.5rem;
+    background-color: transparent;
 }
 
 #btn:active {
@@ -209,9 +210,9 @@ h1 {
 }
 
 @media (prefers-color-scheme: dark) {
-    html {
-        background: #121212;
-    }
+    /*html {*/
+    /*    background: #121212;*/
+    /*}*/
 
     #title,
     #btn,

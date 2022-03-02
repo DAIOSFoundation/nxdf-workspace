@@ -1,6 +1,8 @@
 import React from "react";
 import LotteryItem from "./LotteryItem";
-import "./lottoIndex.css";
+
+import styles from './Lottery.module.css';
+
 import {
   ref,push
 } from "@firebase/database"
@@ -19,7 +21,7 @@ export default class LotteryBox extends React.Component<
             effect: false,
         };
     }
-    
+
     randomize = () => {
         if (!this.state.effect) {
             const numberCopy = numbers.map((x) => x);
@@ -34,35 +36,21 @@ export default class LotteryBox extends React.Component<
             this.setState({ number: arr, effect: true });
             setTimeout(() => {
                 this.setState({ effect: false });
-                this.update();
             }, 4*1000);
         }
     };
 
-    update = () => {
-        const hook = window.location.search;
-        const userId=hook.split('=')
-        const Ref=ref(dbService,'drawnumber/')
-        const today=new Date()
-
-        if(this.state.number.includes(0)===false){
-            push(Ref,{
-                numbers: this.state.number.join(''),
-                date: today.toUTCString(),
-                userid:userId[1]
-            })
-            .then(()=>console.log(Ref))
-        }
-    }
-
     buy = async () => {
-        this.props.buyTicket();
+      if(this.state.number.includes(0)) {
+        return;
+      }
+      this.props.buyTicket(this.state.number);
     }
 
     render() {
       return (
        <>
-                <div id="numbers">
+                <div id={styles.numbers}>
                     <LotteryItem
                         index="0"
                         color="blue"
@@ -87,26 +75,26 @@ export default class LotteryBox extends React.Component<
                         number={this.state.number[3]}
                         decrypting={this.state.effect}
                     />
-                    
+
                 </div>
                 <div>
                     <button
-                        id="btn"
-                        className={this.state.effect ? "hide" : ""}
+                        id={styles.btn}
+                        className={this.state.effect ? styles.hide : ""}
                         onClick={this.randomize}
                     >
                       Draw
                     </button>
                     <button
-                        id="btn"
-                        className={this.state.effect ? "hide" : ""}
+                        id={styles.btn}
+                        className={this.state.effect ? styles.hide : ""}
                         onClick={this.buy}
                     >
                       Buy
                     </button>
                 </div>
           </>
-        
+
         );
     }
 }

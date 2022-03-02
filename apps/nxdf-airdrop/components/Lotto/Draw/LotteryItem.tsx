@@ -1,5 +1,7 @@
 import React from "react";
-import "./lottoIndex.css";
+
+import styles from './Lottery.module.css';
+
 export default class LotteryItem extends React.Component<
     LotteryItemProps,
     LotteryItemState
@@ -45,7 +47,7 @@ export default class LotteryItem extends React.Component<
     render() {
         return (
             <div
-                className={`ball ${this.props.color} ${this.state.decryptingDone}`}
+                className={`${styles.ball} ${styles[this.props.color]} ${styles[this.state.decryptingDone]}`}
             >
                 {this.state.number}
             </div>

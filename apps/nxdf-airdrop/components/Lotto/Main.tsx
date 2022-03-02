@@ -3,16 +3,15 @@ import styled from 'styled-components';
 import Slider from 'react-input-slider';
 import Timer from '../Lotto/Timer';
 import {
-  ref,child,get
-} from "@firebase/database"
-import {dbService} from "./firebase"
-import {PotContainer,PotSolContainer,PotUsdContainer,CurrentJackpot,GetTicket,BuyMultipleTicket,TimerContainer,GetTicketContainer, BackgroundDiv} from "./css/MainCenter/maincss"
+  ref, child, get, update
+} from "@firebase/database";
+import {dbService} from "./firebase";
+import {PotContainer,PotSolContainer,PotUsdContainer,CurrentJackpot,GetTicket,BuyMultipleTicket,TimerContainer,GetTicketContainer, BackgroundDiv} from "./css/MainCenter/maincss";
 import Link from 'next/link';
+import { increment } from 'firebase/database';
 
-import styles from './Lotto.module.css';
-import {useRouter} from "next/router";
-import {useIsMobile} from "../../hooks/useIsMobile";
-import {useWallet} from "@solana/wallet-adapter-react";
+// import styles from './Lotto.module.css';
+import {WalletMultiButton} from "@nxdf/shared/services";
 
 /* eslint-disable-next-line */
 export interface LottoProps {
@@ -21,7 +20,6 @@ export interface LottoProps {
 
 function Main(props: LottoProps) {
   const [loading,setloading] = useState(false);
-  // const {connectWallet} =useWallet();
 
   const [nxdfInfo,setNxdfInfo]=useState({})
   const [current,setCurrent]=useState(0)
@@ -49,34 +47,21 @@ function Main(props: LottoProps) {
 
   async function CurrentJackpotDB(){
     const dbRef=ref(dbService);
-    await get(child(dbRef,'/currentJackpot')).then((snapshot)=>{
+    await get(child(dbRef,'/currentJackpot/value')).then((snapshot)=>{
       if(snapshot.exists()){
-        setCurrent(snapshot.val())
+        setCurrent(snapshot.val());
       } else {
-        console.log("No data available")
+        console.log("No data available");
       }
     }).catch((error)=>{
-    console.error(error)
-  })
+      console.error(error);
+    });
   }
 
   useEffect(()=>{
-    CurrentJackpotDB()
-    ToUsd()
-  },[])
-
-  //events/lotto 페이지 진입 시 user_id 없으며 home화면으로 이동, 진입하면 지갑 연동
-  // useEffect(()=>{
-  //   if (userId===null){
-  //     alert('discord login please!')
-  //     window.location.replace('/')
-  //   }
-  //   else{
-  //     connectWallet()
-  //   }
-  // },[])
-
-  // console.log('userId', props.userId);
+    CurrentJackpotDB();
+    ToUsd();
+  },[]);
 
   return (
     <MainLayout id="Main">
@@ -92,6 +77,7 @@ function Main(props: LottoProps) {
             <TimerContainer>
                 <Timer></Timer>
             </TimerContainer>
+            <WalletMultiButton className="btn btn-ghost" />
             <Link href={`/events/lotto/draw/?user_id=${props.userId}`}>
               <GetTicket>
                 GET {noftic} TICKET
@@ -99,19 +85,18 @@ function Main(props: LottoProps) {
             </Link>
             </BackgroundDiv>
         </GetTicketContainer>
-        <BuyMultipleTicket onClick={()=>setMultiple(!multiple)}>Buy Multiple Tickets</BuyMultipleTicket>
-        {multiple?
-        <SliderDiv>
-          <Slider styles={{track:{backgroundColor:'rgb(197, 186, 250)'}, active:{backgroundColor:'rgb(244,134,193)'}}} xmin={1} xmax={50} axis='x' x={noftic} onChange={({x})=>setNoftic(x)}></Slider>
-          <SliderLabel>{noftic} Tickets</SliderLabel>
-        </SliderDiv>
-        :
-        <SliderDiv style={{opacity:0}}>
-        <Slider styles={{track:{backgroundColor:'rgb(197, 186, 250)'}, active:{backgroundColor:'rgb(244,134,193)'}}} xmin={1} xmax={50} axis='x' x={noftic} onChange={({x})=>setNoftic(x)}></Slider>
-        <SliderLabel>{noftic} Tickets</SliderLabel>
-      </SliderDiv>
-
-      }
+        {/*<BuyMultipleTicket onClick={()=>setMultiple(!multiple)}>Buy Multiple Tickets</BuyMultipleTicket>*/}
+        {/*{multiple?*/}
+        {/*<SliderDiv>*/}
+        {/*  <Slider styles={{track:{backgroundColor:'rgb(197, 186, 250)'}, active:{backgroundColor:'rgb(244,134,193)'}}} xmin={1} xmax={50} axis='x' x={noftic} onChange={({x})=>setNoftic(x)}></Slider>*/}
+        {/*  <SliderLabel>{noftic} Tickets</SliderLabel>*/}
+        {/*</SliderDiv>*/}
+        {/*:*/}
+        {/*<SliderDiv style={{opacity:0}}>*/}
+        {/*  <Slider styles={{track:{backgroundColor:'rgb(197, 186, 250)'}, active:{backgroundColor:'rgb(244,134,193)'}}} xmin={1} xmax={50} axis='x' x={noftic} onChange={({x})=>setNoftic(x)}></Slider>*/}
+        {/*  <SliderLabel>{noftic} Tickets</SliderLabel>*/}
+        {/*</SliderDiv>*/}
+        {/*}*/}
     </MainLayout>
   );
 }

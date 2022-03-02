@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import Flex from "../../components/Box/Flex";
 import { getIsValidSolanaAddress } from '../../util/isValidSolanaAddress';
 import {useWallet} from "@solana/wallet-adapter-react";
-import {useConnection, WalletMultiButton} from "@nxdf/shared/services";
+import { WalletMultiButton } from "@nxdf/shared/services";
 import {useIsMobile} from "../../hooks/useIsMobile";
 
 /* eslint-disable-next-line */
