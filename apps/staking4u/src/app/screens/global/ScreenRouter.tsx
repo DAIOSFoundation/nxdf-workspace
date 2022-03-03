@@ -12,8 +12,8 @@ import { Router, Stack, Scene } from 'react-native-router-flux';
 // import MnemonicInputScreen from '../login/MnemonicInputScreen';
 
 import MainScreen from '../home/main/MainScreen';
-import FlexibleDetailScreen from '../home/main/FlexibleDetailScreen';
-import FlexibleInputScreen from '../home/main/FlexibleInputScreen';
+import FlexibleDetailScreen from '../home/main/Flexible/FlexibleDetailScreen';
+import FlexibleInputScreen from '../home/main/Flexible/FlexibleInputScreen';
 import StakingCompleteScreen from '../home/main/StakingCompleteScreen';
 // import ProductDetailScreen from '../home/main/ProductDetailScreen';
 // import ProductOperationHistory from '../home/main/ProductOperationHistory';
@@ -21,6 +21,7 @@ import StakingCompleteScreen from '../home/main/StakingCompleteScreen';
 // import AutonomousDetailScreen from '../home/main/AutonomousDetailScreen';
 
 import WalletScreen from '../home/wallet/WalletScreen';
+import SwapScreen from '../home/swap/SwapScreen';
 import WalletDetailScreen from '../home/wallet/WalletDetailScreen';
 import ReceiveScreen from '../home/wallet/receive/ReceiveScreen';
 import SendAddressScreen from '../home/wallet/send/SendAddressScreen';
@@ -48,11 +49,14 @@ import iconInvestmentNormal from '../../assets/tabBar/icon_investment_normal.png
 import iconInvestmentPressed from '../../assets/tabBar/icon_investment_pressed.png';
 import iconMyInfoNormal from '../../assets/tabBar/icon_my_info_normal.png';
 import iconMyInfoPressed from '../../assets/tabBar/icon_my_info_pressed.png';
+import iconCoinInfo from '../../assets/tabBar/icon-coin-info_noraml.png';
 
 import { colors } from '../../components/styled/Common';
 import UnstakingCompleteScreen from '../home/investment/UnstakingCompleteScreen';
 import HarvestCompleteScreen from '../home/investment/HarvestCompleteScreen';
 import SolSendAmountScreen from '../home/wallet/send/SolSendAmountScreen';
+import LiquidityDetailScreen from '../home/main/Liquidity/LiquidityDetailScreen';
+import SwapDetailScreen from '../home/swap/SwapDetailScreen';
 // import TermsOfServiceScreen from './TermsOfServiceScreen';
 // import PrivacyScreen from './PrivacyScreen';
 
@@ -84,6 +88,8 @@ const ScreenRouter = (props) => {
         return tabBarIconGenerator(iconInvestmentPressed, iconInvestmentNormal);
       case 'myInfo':
         return tabBarIconGenerator(iconMyInfoPressed, iconMyInfoNormal);
+      case 'Swap':
+        return tabBarIconGenerator(iconCoinInfo, iconCoinInfo);
     }
   };
 
@@ -109,6 +115,7 @@ const ScreenRouter = (props) => {
             initial
           >
             <Scene key="mainScreen" component={MainScreen} />
+            {/* 시세창 이동 */}
             <Scene
               hideNavBar
               hideTabBar
@@ -120,6 +127,13 @@ const ScreenRouter = (props) => {
               hideTabBar
               key="flexibleInputScreen"
               component={FlexibleInputScreen}
+            />
+            {/* 유동성풀 이동 */}
+             <Scene
+              hideNavBar
+              hideTabBar
+              key="LiquidityDetailScreen"
+              component={LiquidityDetailScreen}
             />
             <Scene
               hideNavBar
@@ -188,6 +202,16 @@ const ScreenRouter = (props) => {
               hideTabBar
               key="investmentHistoryDetailScreen"
               component={InvestmentHistoryDetailScreen}
+            />
+          </Scene>
+          {/* swap */}
+           <Scene hideNavBar key={'Swap'} title={'Swap'} icon={tabBarIcon}>
+            <Scene hideNavBar key="SwapScreen" component={SwapScreen} />
+              <Scene
+              hideNavBar
+              hideTabBar
+              key="swapDetailScreen"
+              component={SwapDetailScreen}
             />
           </Scene>
           {/* 나의 정보 */}
