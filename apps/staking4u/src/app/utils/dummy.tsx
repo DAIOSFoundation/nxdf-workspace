@@ -47,6 +47,55 @@ export const products = [
   },
 ];
 
+export const SwapData = [
+   {
+    id: 1,
+    name: 'Dummy3',
+    symbol: 'SOL',
+    annualInteresetRate: 7.27,
+    balance: '300',
+    logo: solLogo,
+    minimumLockedAmount: 0,
+    officialURL: 'https://solana.com/',
+  },
+  {
+    id: 2,
+    name: 'Dummy4',
+    symbol: 'RAY',
+    balance: '400',
+    annualInteresetRate: 26.65,
+    logo: rayLogo,
+    minimumLockedAmount: 0,
+    officialURL: 'https://raydium.io/',
+  },
+];
+
+export const LiquidityData = [
+  
+  {
+    id: 1,
+    name: 'SOL+RAY',
+    symbol: 'SOL',
+    annualInteresetRate: 7.27,
+    balance: '300',
+    logo: [solLogo,rayLogo],
+    minimumLockedAmount: 0,
+    officialURL: 'https://solana.com/',
+    poolPrice: 1234,
+  },
+  {
+    id: 2,
+    name: 'RAY+SOL',
+    symbol: 'RAY',
+    balance: '400',
+    annualInteresetRate: 26.65,
+    logo: [rayLogo,solLogo],
+    minimumLockedAmount: 0,
+    officialURL: 'https://raydium.io/',
+    poolPrice: 999999,
+  },
+];
+
 export const banners = [
   {
     image: banner1,
