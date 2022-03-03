@@ -55,12 +55,11 @@ const LotteryApp = () => {
       const Ref = ref(dbService,'drawnumber/');
       const today = new Date();
 
-      push(Ref,{
+      await push(Ref,{
         numbers: lottoNumber.join(''),
         date: today.toUTCString(),
         userid: userId[1]
-      })
-        .then(()=>console.log(Ref));
+      });
 
       const Ref2 = ref(dbService,'currentJackpot');
       await update(Ref2, {
