@@ -21,11 +21,15 @@ export async function SendSPLTransaction(
   amounts: number[],
   decimals: number
 ) {
-  if (!toAddresses || !amounts) return;
+  if (!toAddresses || !amounts) return false;
   console.log('Processing transaction...');
 
   try {
-    if (!publicKey || !signTransaction) throw new WalletNotConnectedError();
+    if (!publicKey || !signTransaction) {
+      // throw new WalletNotConnectedError();
+      console.log('WalletNotConnectedError');
+      return false;
+    }
 
     const mintPublicKey = new PublicKey(mintAddress);
     const fromTokenAccount = await getOrCreateAssociatedTokenAccount(
@@ -86,9 +90,14 @@ export async function SendSPLTransaction(
 
     const result = await connection.sendRawTransaction(signed.serialize());
 
-    console.log(publicKey, result);
+    // console.log(publicKey, result);
     console.log('Transaction sent');
+
+    return true;
   } catch (error: any) {
     console.log(`Transaction failed: ${error.message}`);
+    console.error(error);
+
+    return false;
   }
 }
