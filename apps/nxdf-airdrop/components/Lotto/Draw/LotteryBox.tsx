@@ -77,8 +77,8 @@ export default class LotteryBox extends React.Component<
                     />
 
                 </div>
-                <div>
-                    <button
+                <div style={{display:'flex'}}>
+                    <button style={{marginRight:'30px'}}
                         id={styles.btn}
                         className={this.state.effect ? styles.hide : ""}
                         onClick={this.randomize}
