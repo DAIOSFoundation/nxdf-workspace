@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import styled from 'styled-components';
 import Slider from 'react-input-slider';
 import Timer from '../Lotto/Timer';
@@ -8,6 +9,7 @@ import {
 import {dbService} from "./firebase";
 import {PotContainer,PotSolContainer,PotUsdContainer,CurrentJackpot,GetTicket,BuyMultipleTicket,TimerContainer,GetTicketContainer, BackgroundDiv} from "./css/MainCenter/maincss";
 import Link from 'next/link';
+import router from 'next/router';
 import { increment } from 'firebase/database';
 
 // import styles from './Lotto.module.css';
@@ -26,6 +28,8 @@ function Main(props: LottoProps) {
   const [noftic,setNoftic]=useState(1)
   const [multiple, setMultiple] = useState(false)
 
+  const {publicKey}=useWallet()
+
   async function ToUsd(){
     await fetch('https://api.coingecko.com/api/v3/coins/next-defi-protocol/',{
       method:'GET',
@@ -35,7 +39,6 @@ function Main(props: LottoProps) {
       },
     })
     .then(Currency=>Currency.json())
-    //.then(Currency=>console.log(Currency))
     .then(Currency=>{
       setNxdfInfo(Currency.market_data.current_price.usd)
       setloading(true)
@@ -63,6 +66,18 @@ function Main(props: LottoProps) {
     ToUsd();
   },[]);
 
+  function BuyTicketClick(){
+    if(props.userId===null || props.userId===''){
+      alert('Please log in through the Discord chatbot!')
+    }
+    else if(publicKey===null){
+      alert('Please connect your wallet!')
+    }
+    else{
+      router.push(`/events/lotto/draw/?user_id=${props.userId}`)
+    }
+  }
+  console.log(props.userId==='')
   return (
     <MainLayout id="Main">
         <PotContainer>
@@ -78,25 +93,23 @@ function Main(props: LottoProps) {
                 <Timer></Timer>
             </TimerContainer>
             <WalletMultiButton className="btn btn-ghost" />
-            <Link href={`/events/lotto/draw/?user_id=${props.userId}`}>
-              <GetTicket>
+              <GetTicket onClick={BuyTicketClick}>
                 GET {noftic} TICKET
               </GetTicket>
-            </Link>
             </BackgroundDiv>
         </GetTicketContainer>
-        {/*<BuyMultipleTicket onClick={()=>setMultiple(!multiple)}>Buy Multiple Tickets</BuyMultipleTicket>*/}
-        {/*{multiple?*/}
-        {/*<SliderDiv>*/}
-        {/*  <Slider styles={{track:{backgroundColor:'rgb(197, 186, 250)'}, active:{backgroundColor:'rgb(244,134,193)'}}} xmin={1} xmax={50} axis='x' x={noftic} onChange={({x})=>setNoftic(x)}></Slider>*/}
-        {/*  <SliderLabel>{noftic} Tickets</SliderLabel>*/}
-        {/*</SliderDiv>*/}
-        {/*:*/}
-        {/*<SliderDiv style={{opacity:0}}>*/}
-        {/*  <Slider styles={{track:{backgroundColor:'rgb(197, 186, 250)'}, active:{backgroundColor:'rgb(244,134,193)'}}} xmin={1} xmax={50} axis='x' x={noftic} onChange={({x})=>setNoftic(x)}></Slider>*/}
-        {/*  <SliderLabel>{noftic} Tickets</SliderLabel>*/}
-        {/*</SliderDiv>*/}
-        {/*}*/}
+        {/* <BuyMultipleTicket onClick={()=>setMultiple(!multiple)}>Buy Multiple Tickets</BuyMultipleTicket>
+        {multiple?
+        <SliderDiv>
+         <Slider styles={{track:{backgroundColor:'rgb(197, 186, 250)'}, active:{backgroundColor:'rgb(244,134,193)'}}} xmin={1} xmax={50} axis='x' x={noftic} onChange={({x})=>setNoftic(x)}></Slider>
+          <SliderLabel>{noftic} Tickets</SliderLabel>
+        </SliderDiv>
+        :
+        <SliderDiv style={{opacity:0}}>
+          <Slider styles={{track:{backgroundColor:'rgb(197, 186, 250)'}, active:{backgroundColor:'rgb(244,134,193)'}}} xmin={1} xmax={50} axis='x' x={noftic} onChange={({x})=>setNoftic(x)}></Slider>
+         <SliderLabel>{noftic} Tickets</SliderLabel>
+        </SliderDiv>
+        } */}
     </MainLayout>
   );
 }
@@ -108,7 +121,7 @@ const MainLayout = styled.div`
   align-items:center;
   justify-content: center;
   flex-direction: column;
-  height:100%;
+  height:100%a;
   width:100vw;
   margin-top:5rem;
   background-color: #453C70;

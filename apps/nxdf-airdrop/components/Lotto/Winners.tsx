@@ -17,7 +17,7 @@ const WinnersDiv=styled.div`
 const Title=styled.h1`
   font-size:3em;
   font-weight:bold;
-  font-family:'neoneon';
+  font-family:'neon';
   color:rgb(220, 52, 141);
   color: var(--color-override,rgb(244,134,193));
   text-shadow: 0 0 10px rgb(220, 52, 141), 0 0 10px #e6469b;
@@ -28,6 +28,7 @@ const Table=styled.table`
   border:1px solid white;
   margin:0 auto;
   width:90%;
+  color:white;
   tr {
     border:1px solid white;
   }
