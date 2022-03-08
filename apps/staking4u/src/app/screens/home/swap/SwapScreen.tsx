@@ -7,6 +7,7 @@ import { Text } from '../../../components/styled/Text';
 import { View, ViewRow, SafeAreaView } from '../../../components/styled/View';
 import iconExcahnge from "../../../assets/main/icon_Exchange.png"
 import { SwapData } from '../../../utils/dummy';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const SwapView = styled.View`
@@ -80,7 +81,7 @@ const MaxBtn = styled.TouchableOpacity`
   border-radius: 5px;
 `;
 
-const IconView = styled.View`
+const IconView = styled.TouchableOpacity`
   align-self: center;
 `
 
@@ -92,6 +93,12 @@ const ToText = styled(FromText)`
 
 const ToSwapText = styled(SwapText)`
   margin-left: 40px;
+`;
+const ToSwapInput = styled.TextInput`
+  width: 60%;
+  justify-content: flex-end;
+  color: white;
+  text-align: right;
 `;
 
 //설명 부분 
@@ -114,12 +121,33 @@ const BtnView = styled(ViewRow)`
 
 
 const SwapDetailScreen = ( )=> {
-  // console.log(item);
   const [bgbtn, setbgbtn] = useState(0);
+  const [fCoin, setFCoin] = useState("ETH");
+  const [sCoin, setSCoin] = useState("NXDF");
+  const [fInput, setFinput] = useState(0);
+  const [sInput, setSinput] = useState(0);
+
   const onClick = (value) => {
     setbgbtn(value);
   }
-  const item = SwapData;
+  const Schange = (event) => {
+      const {text} = event.nativeEvent;
+      setSinput(text.replace(/[^0-9]/g, ''));
+      }
+  const Fchange = (event) => {
+    const { text } = event.nativeEvent;
+    const num = text.replace(/[^0-9]/g, '')
+      setFinput(num);
+      }
+
+  const onPress = () => {
+    setSCoin(fCoin);
+    setFCoin(sCoin);
+    setFinput(0);
+    setSinput(0);
+    console.log(fCoin, sCoin);
+  }
+
 
   return (
     <SafeAreaView bgNavyTheme>
@@ -131,21 +159,21 @@ const SwapDetailScreen = ( )=> {
       <TopView>
         <FromView>
           <FromText>From</FromText>
-          <FromText>{`Balance: ${0} ETH`}</FromText>
+          <FromText>{`Balance: ${fInput} ETH`}</FromText>
         </FromView>
         <SwapBox>
           <SwapCoin>
             <Image source={0} height={20} width={20}/>
-            <Text ftWhite marginLeft={5}>{"ETH"}</Text>
+            <Text ftWhite marginLeft={5}>{fCoin}</Text>
           </SwapCoin>
           <SwapPrice>
-            <SwapText>{`${0} ETH`}</SwapText>
+            <ToSwapInput value={fInput} placeholder={'0'} onChange={Fchange} />
             <MaxBtn><Text>Max</Text></MaxBtn>
           </SwapPrice>
         </SwapBox>
       </TopView>
       {/* 이미지 */}
-        <IconView>
+        <IconView onPress={onPress}>
           <Image source={iconExcahnge} height={30} width={30} />
         </IconView>
     {/* to */}
@@ -156,13 +184,14 @@ const SwapDetailScreen = ( )=> {
         <SwapBox>
           <SwapCoin>
             <Image source={0} height={20} width={20}/>
-            <Text ftWhite marginLeft={5}>{"NXDF"}</Text>
+            <Text ftWhite marginLeft={5}>{sCoin}</Text>
           </SwapCoin>
           <SwapPrice>
-            <ToSwapText>{`${0} ETH`}</ToSwapText>
+            <SwapText>{`${fInput}`}</SwapText>
+            <SwapText>{`ETH`}</SwapText>
           </SwapPrice>
         </SwapBox>
-        <ToText>{`Balance: ${0} ETH`}</ToText>
+        <ToText>{`Balance: ${fInput} ETH`}</ToText>
       </SwapView>
       {/* 상세 정보 창 */}
       <View flex={3} marginTop={30}>
@@ -210,7 +239,7 @@ const SwapDetailScreen = ( )=> {
           </BtnView>
           <ViewRow>
             <Text width={'50%'} ftWhite>Path</Text>
-            <Text width={'50%'} ftWhite  textAlign={'right'}>{`${"ETH"} > ${"NXDF"}`}</Text>
+            <Text width={'50%'} ftWhite  textAlign={'right'}>{`${fCoin} > ${sCoin}`}</Text>
           </ViewRow>
         </DesView>
       </View>
