@@ -61,9 +61,7 @@ const FlexibleScreen = () => {
         width={'96%'}
       >
         <View height={50} marginTop={20} marginLeft={10}>
-          <Text fontSize={24} ftWhite bold>
-            Flexible
-          </Text>
+          
         </View>
         <View flex={6} marginBottom={10}>
           <FlatList

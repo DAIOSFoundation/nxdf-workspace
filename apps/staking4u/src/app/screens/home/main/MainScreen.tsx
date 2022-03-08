@@ -11,7 +11,7 @@ const MainScreen = () => {
     { key: 'first', title: 'First' },
     { key: 'second', title: 'Second' },
   ]);
-  const [tabItems] = useState(['Flexible.', 'Liquidity']);
+  const [tabItems] = useState(['Staking', 'Liquidity']);
 
   // 탭뷰 스크린
   const renderScene = SceneMap({

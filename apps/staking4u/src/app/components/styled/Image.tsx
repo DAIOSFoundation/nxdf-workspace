@@ -14,6 +14,12 @@ export const Image = styled.Image((props) => ({
 
   resizeMode: props.resizeMode ? props.resizeMode : 'cover',
   justifyContent: props.justifyContent || 'center',
+
+  // background
+  backgroundColor: Common.BACKGROUND_COLOR(props),
+
+  //ftcolor
+  color: Common.FONT_COLOR(props)
 }));
 
 export const ImageAbsolute = styled(Image)((props) => ({
