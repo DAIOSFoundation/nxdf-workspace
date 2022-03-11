@@ -67,8 +67,8 @@ function Main(props: LottoProps) {
     <MainLayout id="Main">
         <PotContainer>
           <CurrentJackpot>CURRENT<br/>JACKPOT</CurrentJackpot>
-          <PotSolContainer>{current} NXDF</PotSolContainer>
-          <PotUsdContainer>( { loading ?  (Number(nxdfInfo)*current).toFixed(2) : 0 } $)</PotUsdContainer>
+          <PotSolContainer>{current.toLocaleString(undefined, { maximumFractionDigits: 2 }) } NXDF</PotSolContainer>
+          <PotUsdContainer>( { loading ?  (Number(nxdfInfo)*current).toLocaleString(undefined, { maximumFractionDigits: 2 }) : 0 } $)</PotUsdContainer>
         </PotContainer>
         <GetTicketContainer>
           <HourGlass src='/img/img-hourglass.svg'/>

@@ -41,7 +41,7 @@ const LotteryApp = () => {
       console.log(result);
 
       if(result) {
-        await pushLottoNumber(lottoNumber);
+        await pushLottoNumber(walletPublicKey.toString(), lottoNumber);
         router.back();
       }
       else {
@@ -49,7 +49,7 @@ const LotteryApp = () => {
       }
     };
 
-    const pushLottoNumber = async (lottoNumber) => {
+    const pushLottoNumber = async (walletAddress, lottoNumber) => {
       const hook = window.location.search;
       const userId = hook.split('=');
       const Ref = ref(dbService,'drawnumber/');
@@ -58,7 +58,8 @@ const LotteryApp = () => {
       await push(Ref,{
         numbers: lottoNumber.join(''),
         date: today.toUTCString(),
-        userid: userId[1]
+        userid: userId[1],
+        walletAddress
       });
 
       const Ref2 = ref(dbService,'currentJackpot');

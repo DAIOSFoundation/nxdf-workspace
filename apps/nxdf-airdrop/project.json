@@ -9,7 +9,7 @@
       "defaultConfiguration": "production",
       "options": {
         "root": "apps/nxdf-airdrop",
-        "outputPath": "dist/apps/nxdf-airdrop"
+        "outputPath": "apps/nxdf-airdrop/build"
       },
       "configurations": {
         "production": {}
