@@ -4,7 +4,7 @@ import moment from 'moment';
 function Timer() {
   
   const TimeLeft=()=>{
-    let drawtime=new Date("February 26, 2022 23:00:00").getTime()/1000;
+    let drawtime=new Date("March 12, 2022 23:00:00").getTime()/1000;
     let now=new Date().getTime()/1000;
     let lefttime=drawtime-now;
     let duration=moment.duration(lefttime,'seconds');
@@ -24,7 +24,7 @@ function Timer() {
   })
 
   return (
-    <div style={{fontSize:'1.8rem', fontWeight:'bold',textAlign:'center'}}>
+    <div style={{fontSize:'1.5rem', fontWeight:'bold',textAlign:'center',color:'white'}}>
       {timeLeft}
     </div>
   );

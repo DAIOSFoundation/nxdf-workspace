@@ -1,3 +1,8 @@
+@font-face{
+  font-family: neon;
+  src:url('../components/Lotto/css/font/Neoneon.otf')
+}
+
 html {
   -webkit-text-size-adjust: 100%;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -53,11 +58,6 @@ pre {
     Liberation Mono, Courier New, monospace;
   overflow: scroll;
   padding: 0.5rem 0.75rem;
-}
-
-* {
-  font-family: Poppins, sans-serif;
-  -webkit-font-smoothing: antialiased;
 }
 
 .shadow {
