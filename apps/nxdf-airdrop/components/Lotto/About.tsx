@@ -86,7 +86,7 @@ function About() {
       <div style={{width:'80%', margin:'0 auto'}}>
       <TopDiv>
         <LottoInfoDiv>
-          <p>NXDF LOTTO is the premiere lottery of Solana. You can buy lotto tickets everyday for a price of 50￠. Every Monday, Saturday we will announce the winners of our lotto in a live draw.</p>
+          <p>NXDF LOTTO is the premiere lottery of Solana. You can buy lotto tickets everyday for a price of 5,000 NXDF. Every Monday, Saturday we will announce the winners of our lotto in a live draw.</p>
           <LottoInfoImg src='/img/img-lottoticket.png'></LottoInfoImg>
         </LottoInfoDiv>
         <div>
@@ -101,7 +101,7 @@ function About() {
         <TextDiv>
           <div>
           <Text><Numbering>1.</Numbering>Join NXDF Discord</Text>
-          <Text><Numbering>2.</Numbering>Purchase lotto ticket(s) for 50￠</Text>
+          <Text><Numbering>2.</Numbering>Purchase lotto ticket(s) for 5,000 NXDF</Text>
           <Text><Numbering>3.</Numbering>Wait until Saturday 2:00pm UTC the next lotto day</Text>
           <Text><Numbering>4.</Numbering>Watch the live winning ticket being picked in Discord</Text>
           <Text><Numbering>5.</Numbering>Wait for your prize to get sent to your wallet</Text>
