@@ -136,7 +136,7 @@ export function Main(props: MainProps) {
             <Flex flexDirection="column" width={isMobile ? '100%' : 'inherit'}>
               <div className="label">Enter your friend’s email address</div>
               <Flex>
-                <input type="text" value={retweetLink} onChange={(e) => setRetweetLink(e.target.value)} />
+                <input type="text" value={referral} onChange={(e) => setReferral(e.target.value)} />
                 <div className="badge">
                   <span className="K-More-Bonus">
                     <span className="text-style-1">MAX 5K</span>
@@ -150,7 +150,7 @@ export function Main(props: MainProps) {
             <Flex flexDirection="column" width={isMobile ? '100%' : 'inherit'}>
               <div className="label">Retweet NXDF's tweet to your followers then, enter your retweet link</div>
               <Flex>
-                <input type="text" className="full" value={redditLink} onChange={(e) => setRedditLink(e.target.value)} />
+                <input type="text" className="full" value={retweetLink} onChange={(e) => setRetweetLink(e.target.value)} />
               </Flex>
             </Flex>
           </Flex>
@@ -158,7 +158,7 @@ export function Main(props: MainProps) {
             <Flex flexDirection="column" width={isMobile ? '100%' : 'inherit'}>
               <div className="label">Upvote, leave your comment on our reddit then, enter your reddit comment link</div>
               <Flex>
-                <input type="text" className="full" value={referral} onChange={(e) => setReferral(e.target.value)} />
+                <input type="text" className="full" value={redditLink} onChange={(e) => setRedditLink(e.target.value)} />
               </Flex>
             </Flex>
           </Flex>
@@ -238,7 +238,7 @@ const Wrapper = styled.div<{ isMobile: boolean }>`
       color: #fff;
     }
     .desc {
-      font-family: Roboto;
+      //font-family: Roboto;
       font-size: 18px;
       font-weight: normal;
       font-stretch: normal;
@@ -272,6 +272,8 @@ const Wrapper = styled.div<{ isMobile: boolean }>`
       background-image: url('/img/img-middle-banner-rec@3x.png');
       background-size: 903px 188px;
       background-repeat: no-repeat;
+      color: #fff;
+      font-family: inherit;
     }
 
     .you-dont {
@@ -316,7 +318,7 @@ const Wrapper = styled.div<{ isMobile: boolean }>`
 
     .label {
       height: 32px;
-      font-family: Roboto;
+      //font-family: Roboto;
       font-size: 15px;
       font-weight: normal;
       font-stretch: normal;

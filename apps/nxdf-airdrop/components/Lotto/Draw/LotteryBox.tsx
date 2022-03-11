@@ -19,6 +19,7 @@ export default class LotteryBox extends React.Component<
         this.state = {
             number: [0, 0, 0, 0],
             effect: false,
+            numberGenerated: false
         };
     }
 
@@ -35,7 +36,7 @@ export default class LotteryBox extends React.Component<
             }
             this.setState({ number: arr, effect: true });
             setTimeout(() => {
-                this.setState({ effect: false });
+                this.setState({ effect: false, numberGenerated: true });
             }, 4*1000);
         }
     };
@@ -83,11 +84,11 @@ export default class LotteryBox extends React.Component<
                         className={this.state.effect ? styles.hide : ""}
                         onClick={this.randomize}
                     >
-                      Draw
+                      { this.state.numberGenerated ? 'Draw again' :'Draw' }
                     </button>
                     <button
                         id={styles.btn}
-                        className={this.state.effect ? styles.hide : ""}
+                        className={this.state.effect || !this.state.numberGenerated ? styles.hide : ""}
                         onClick={this.buy}
                     >
                       Buy

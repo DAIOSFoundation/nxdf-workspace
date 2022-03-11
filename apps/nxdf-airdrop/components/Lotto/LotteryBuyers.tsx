@@ -13,6 +13,7 @@ const BuyerDiv=styled.div`
   display:flex;
   flex-direction:column;
   padding:50px 0 100px 0;
+  color: #fff;
 `
 const Title=styled.h1`
   font-size:3em;
@@ -62,7 +63,7 @@ function LotteryBuyers() {
       <Table>
         <thead>
         <tr>
-          <th>USER ID</th>
+          <th>WALLET ADDRESS</th>
           <th>LOTTO TICKET NUMBER</th>
           <th>DATE</th>
         </tr>
@@ -71,7 +72,7 @@ function LotteryBuyers() {
           { buyers?.map((data,index) => {
             return(
               <tr key={index}>
-                <th style={{color:'rgb(244,134,193)'}}>{data[1].userid}</th>
+                <th style={{color:'rgb(244,134,193)'}}>{data[1].walletAddress}</th>
                 <th>{data[1].numbers}</th>
                 <th style={{color:'pink'}}>{data[1].date}</th>
               </tr>)

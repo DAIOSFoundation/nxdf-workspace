@@ -6,7 +6,7 @@ export const PotContainer=styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
+  color: #fff;
 `
 export const PotSolContainer=styled.div`
   font-size:65px;
@@ -75,6 +75,7 @@ export const TimerContainer = styled.div`
   width: 100%;
   padding-bottom:20px;
   z-index: 10;
+  color: #fff;
 `
 export const TimerBox = styled.div`
   width : 100%;
