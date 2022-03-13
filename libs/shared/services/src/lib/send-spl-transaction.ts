@@ -24,7 +24,7 @@ export async function SendSPLTransaction(
   if (!toAddresses || !amounts) return;
   console.log('Processing transaction...');
 
-  const receiverAccountNullList = [];
+  let result = false;
 
   try {
     if (!publicKey || !signTransaction) throw new WalletNotConnectedError();
@@ -67,7 +67,8 @@ export async function SendSPLTransaction(
         //     publicKey
         //   )
         // );
-        receiverAccountNullList.push(dest);
+        // receiverAccountNullList.push(dest);
+        return false;
       }
       else {
         instructions.push(
@@ -94,7 +95,8 @@ export async function SendSPLTransaction(
     transaction.recentBlockhash = await blockHash.blockhash;
     const signed = await signTransaction(transaction);
 
-    const result = await connection.sendRawTransaction(signed.serialize());
+    const tx_result = await connection.sendRawTransaction(signed.serialize());
+    result = true;
 
     // console.log(publicKey, result);
     console.log('Transaction sent:', result);
@@ -102,5 +104,5 @@ export async function SendSPLTransaction(
     console.log(`Transaction failed: ${error.message}`);
   }
 
-  return receiverAccountNullList;
+  return result;
 }

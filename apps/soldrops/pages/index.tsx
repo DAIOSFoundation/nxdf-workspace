@@ -48,7 +48,7 @@ export const Index: FC = ({}) => {
 
       const toAddress = splitAddressAmount[0].trim();
       const isValid = await filterValidAccount(connection, mintAddress, toAddress);
-      await waitforme(500);
+      await waitforme(700);
 
       if(!isValid) continue;
 
@@ -71,12 +71,13 @@ export const Index: FC = ({}) => {
 
     console.log('toAddressesGroup: ', toAddressesGroup.length);
 
-    toAddressesGroup.map(async (group, index) => {
+    for (let i = 0; i < toAddressesGroup.length; i++) {
       // console.log(toAddressesGroup[index]);
-      await SendSPLTransaction(connection, publicKey, signTransaction, mintAddress, toAddressesGroup[index], amountsGroup[index], decimals);
+      await SendSPLTransaction(connection, publicKey, signTransaction, mintAddress, toAddressesGroup[i], amountsGroup[i], decimals);
       await waitforme(500);
-    });
+    }
   }, [publicKey, connection, signTransaction]);
+
 
   function waitforme(milisec) {
     return new Promise(resolve => {
