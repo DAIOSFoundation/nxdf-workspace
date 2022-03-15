@@ -19,7 +19,7 @@ export function LottoDraw(props: LottoDrawProps) {
 
   return (
     <div>
-      <LotteryApp/>
+      <LotteryApp userId={userId}/>
     </div>
   )
 }

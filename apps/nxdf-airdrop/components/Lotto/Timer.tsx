@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
 function Timer() {
-  
+
   const TimeLeft=()=>{
-    let drawtime=new Date("February 26, 2022 23:00:00").getTime()/1000;
+    let drawtime=new Date("March 19, 2022 14:00:00 UTC").getTime()/1000;
     let now=new Date().getTime()/1000;
     let lefttime=drawtime-now;
     let duration=moment.duration(lefttime,'seconds');
@@ -15,7 +15,7 @@ function Timer() {
     duration=moment.duration(duration.asSeconds()-1,'seconds');
     return (duration.days()+' Days '+duration.hours()+' Hours '+duration.minutes()+' Min '+duration.seconds()+' Sec ')
   }
-  
+
   const [timeLeft,setTimeleft]=useState(TimeLeft());
   useEffect(()=>{
     setTimeout(()=>{
@@ -24,7 +24,7 @@ function Timer() {
   })
 
   return (
-    <div style={{fontSize:'1.8rem', fontWeight:'bold',textAlign:'center'}}>
+    <div style={{fontSize:'1.5rem', fontWeight:'bold',textAlign:'center',color:'white'}}>
       {timeLeft}
     </div>
   );

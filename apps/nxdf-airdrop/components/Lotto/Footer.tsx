@@ -10,12 +10,12 @@ const FooterDiv=styled.div`
   align-items:center;
   justify-content:center;
   flex-direction:column;
-  
+
 `
 const Title=styled.h1`
   font-size:2em;
   font-weight:bold;
-  font-family:'neoneon';
+  font-family:'neon';
   color:rgb(220, 52, 141);
   color: var(--color-override,rgb(244,134,193));
   text-shadow: 0 0 10px rgb(220, 52, 141), 0 0 10px #e6469b;
@@ -25,9 +25,10 @@ const Text=styled.p`
   font-size:1.5em;
   margin-top:15px;
   font-weight:700;
+  color:white;
 `
 const LinkDiv=styled.div`
-  
+
 `
 const Button=styled.button`
   border-radius:8px;
@@ -49,7 +50,7 @@ function Footer() {
         <Button>Buy Tickets →</Button>
       </Link>
       <LinkDiv>
-        <a href="https://discord.gg/GUyrnMSp" target="_blank" rel="noreferrer">
+        <a href="https://discord.gg/5yPGKdgzTD" target="_blank" rel="noreferrer">
         <img style={{width:'50px'}} className="social" src="/img/discord.svg" alt="discord" /></a>
         <a href="https://twitter.com/NXDF16" target="_blank" rel="noreferrer">
         <img style={{width:'50px',marginLeft:'20px'}} className="social" src="/img/icon-twitter@3x.png" alt="twitter" /></a>

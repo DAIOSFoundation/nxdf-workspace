@@ -98,3 +98,4 @@ buck-out/
 apps/staking4u-e2e/artifacts
 
 **/build
+**/.firebase

@@ -11,6 +11,7 @@ import {dbService} from "../firebase";
 import firebase from "firebase/compat";
 import database = firebase.database;
 import {increment} from "firebase/database";
+import router from 'next/router';
 
 const Div=styled.div`
   width:100vw;
@@ -22,7 +23,11 @@ const Div=styled.div`
   color:black;
   background-color:#453C70;
 `
-const LotteryApp = () => {
+export interface LottoProps {
+  userId: string;
+};
+
+const LotteryApp = (props:LottoProps) => {
   const router = useRouter();
 
     const { connection } = useConnection();
@@ -39,14 +44,13 @@ const LotteryApp = () => {
       // console.log(publicKey, walletPublicKey);
       const result = await SendSPLTransaction(connection, walletPublicKey, signTransaction, mintAddress, [toAddress], [amount], decimals);
       console.log(result);
-
       if(result) {
         await pushLottoNumber(walletPublicKey.toString(), lottoNumber);
         router.back();
       }
-      else {
-        alert('Please retry');
-      }
+      // else {
+      //   alert('Please connect your wallet');
+      //  }
     };
 
     const pushLottoNumber = async (walletAddress, lottoNumber) => {
