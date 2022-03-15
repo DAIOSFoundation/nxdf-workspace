@@ -7,8 +7,8 @@ import dynamic from 'next/dynamic';
 import './styles.css';
 import {clusterApiUrl, ConnectionProvider, WalletAdapterNetwork } from '@nxdf/shared/services';
 
-// const SOLANA_NETWORK = WalletAdapterNetwork.Mainnet;
-const SOLANA_NETWORK = WalletAdapterNetwork.Devnet;
+const SOLANA_NETWORK = WalletAdapterNetwork.Mainnet;
+// const SOLANA_NETWORK = WalletAdapterNetwork.Devnet;
 const network = SOLANA_NETWORK;
 
 const WalletProvider = dynamic(

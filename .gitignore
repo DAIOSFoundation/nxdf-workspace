@@ -96,3 +96,6 @@ buck-out/
 **/node_modules
 
 apps/staking4u-e2e/artifacts
+
+**/build
+**/.firebase
