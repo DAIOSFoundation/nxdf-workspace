@@ -1,10 +1,9 @@
-import React, { useCallback } from 'react';
-import { Linking } from 'react-native';
-import { useDispatch } from 'react-redux';
+import React  from 'react';
+import { Alert, Linking } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import * as modalActions from '../../../store/modules/modal/actions';
-import Topbar from '../../../components/bar/TopBar';
-import Line from '../../../components/line/Line';
+import * as modalActions from '../../../../store/modules/modal/actions';
+import Topbar from '../../../../components/bar/TopBar';
+import Line from '../../../../components/line/Line';
 
 import {
   SafeAreaView,
@@ -12,98 +11,45 @@ import {
   ViewAbsolute,
   ViewRow,
   ViewBorderRadius,
-} from '../../../components/styled/View';
-import { Text } from '../../../components/styled/Text';
-import { Image } from '../../../components/styled/Image';
-import { GestureButtonBorderRadius } from '../../../components/styled/GestureButton';
-import { ButtonRadius } from '../../../components/styled/Button';
+} from '../../../../components/styled/View';
+import { Image } from '../../../../components/styled/Image';
+import { GestureButtonBorderRadius } from '../../../../components/styled/GestureButton';
+import { ButtonRadius } from '../../../../components/styled/Button';
 import iconInfo from '../../../assets/main/icon_coin_info.png';
+import { Text } from '../../../../components/styled/Text';
+import { useQuery } from 'react-query';
+import { getCoin } from '../../../../api/coinStaking';
 
-// 시세 더미 데이터
-const tickers = {
-  AAVE: { info: { priceChangePercent: -1.2 }, close: 1.2 },
-  ORBS: { info: { signed_change_rate: 0.1 }, close: 12.45 },
-  SOL: { info: { priceChangePercent: -3.14 }, close: 123.45 },
-  RAY: { info: { priceChangePercent: 2.23 }, close: 67.8 },
-};
 
-const usdExchangeRate = 1;
 
-const FlexibleDetailScreen = ({ item }) => {
-  const dispatch = useDispatch();
-
-  // TODO 추후 상품이 정해지면 리팩토링 필요
-  // → 참고 : 오브스의 경우 업비트 API이기때문에 전일대비 시세 기준이 바이낸스/FTX와 다르다.
-  const renderFluctateRate = useCallback(
-    (tickers) => {
-      if (item.symbol === 'ORBS') {
-        const rate = tickers[item.symbol].info.signed_change_rate || 0;
-        if (rate > 0) {
-          return <Text ftMint>{`+${(rate * 100).toFixed(2)}%`}</Text>;
-        } else if (rate < 0) {
-          return <Text ftLightRed>{`${(rate * 100).toFixed(2)}%`}</Text>;
-        } else {
-          return <Text ftLightGray>0.00%</Text>;
-        }
-      } else {
-        const percent = tickers[item.symbol].info.priceChangePercent || 0;
-        if (percent > 0) {
-          return <Text ftMint>{`+${Number(percent).toFixed(2)}%`}</Text>;
-        } else if (percent < 0) {
-          return <Text ftLightRed>{`${Number(percent).toFixed(2)}%`}</Text>;
-        } else {
-          return <Text ftLightGray>0.00%</Text>;
-        }
-      }
-    },
-    [tickers]
-  );
-
-  // TODO 추후 상품이 정해지면 코인 등급 부분을 어떻게 처리할지 논의 필요
-  // 임시용
-  const renderFCAS = (symbol) => {
-    switch (symbol) {
-      case 'AAVE': {
-        return 'A';
-      }
-      case 'ORBS': {
-        return 'U';
-      }
-      case 'SOL': {
-        return 'B';
-      }
-      case 'RAY': {
-        return 'U';
-      }
-      default: {
-      }
-    }
-  };
-
+const FlexibleDetailScreen = ({data}) => {
+  const { isLoading: infoLoading, data: infoData } = useQuery(["info", data], getCoin.info);
+  const rate = infoData?.market_data?.price_change_24h.toFixed(2);
+  const price = infoData?.tickers[0].last;
+  const image = infoData?.image.thumb
   const onPressStart = () => {
-    if (item.symbol !== 'RAY') {
+    if (infoData.symbol !== 'ray') {
       // TODO 우선 하드코딩으로 레이만 스테이킹을 시작할 수 있게 만들어 놓음
-      dispatch(modalActions.change_modal_message('Coming Soon'));
-      dispatch(modalActions.change_modal_one_button(true));
+      Alert.alert('Coming Soon');
     } else {
-      Actions.flexibleInputScreen({ item });
+      Actions.flexibleInputScreen({data, rate, price});
     }
   };
 
-  const onPressCoinInfo = () => {
-    Linking.openURL(
-      `https://coinmarketcap.com/en/currencies/${item.name.toLowerCase()}`
-    );
-  };
-  const onPressFCAS = () => {
-    Linking.openURL(
-      `https://coinmarketcap.com/en/currencies/${item.name.toLowerCase()}/ratings/`
-    );
-  };
+  // const onPressCoinInfo = () => {
+  //   Linking.openURL(
+  //     `https://www.coingecko.com/en/coins/${item.name.toLowerCase()}`
+  //   );
+  // };
+  // const onPressFCAS = () => {
+  //   Linking.openURL(
+  //     `https://coinmarketcap.com/en/currencies/${item.name.toLowerCase()}/ratings/`
+  //   );
+  // };
 
   return (
     <SafeAreaView bgNavyTheme>
-      <Topbar isLeftButton title={item.symbol} />
+      <Topbar isLeftButton title={""} />
       <View
         flex={1.5}
         width={'90%'}
@@ -111,26 +57,23 @@ const FlexibleDetailScreen = ({ item }) => {
         justifyContent={'center'}
       >
         <Text fontSize={28} ftWhite bold marginBottom={5}>{`$ ${
-          item.symbol !== 'ORBS'
-            ? tickers[item.symbol].close
-            : (tickers[item.symbol].close / usdExchangeRate).toFixed(4)
+          price
         }`}</Text>
-        {renderFluctateRate(tickers)}
         <Line width={'100%'} height={1} marginTop={10} marginBottom={10} />
         <ViewRow
           justifyContent={'flex-start'}
           alignItems={'center'}
           marginBottom={10}
         >
-          <Image source={item.logo} width={25} height={25} marginRight={10} />
-          <Text fontSize={18} ftWhite>{`${item.name} Flexible Staking`}</Text>
+          <Image source={{uri:image}} width={25} height={25} marginRight={10} />
+          <Text fontSize={18} ftWhite>{`${infoData.name} Flexible Staking`}</Text>
         </ViewRow>
         <ViewRow justifyContent={'flex-start'} alignItems={'center'}>
           <Text fontSize={13} ftMint marginRight={10}>
             APR
           </Text>
           <Text fontSize={18} ftMint bold>
-            {`${item.annualInteresetRate}%`}
+            {`${rate}%`}
           </Text>
         </ViewRow>
       </View>
@@ -147,7 +90,7 @@ const FlexibleDetailScreen = ({ item }) => {
           <GestureButtonBorderRadius
             width={170}
             height={70}
-            onPress={onPressCoinInfo}
+            onPress={""}
             borderRadius={6}
             bgYellowTheme
             justifyContent={'center'}
@@ -194,7 +137,7 @@ const FlexibleDetailScreen = ({ item }) => {
           <GestureButtonBorderRadius
             width={170}
             height={70}
-            onPress={onPressFCAS}
+            onPress={""}
             borderRadius={6}
             bgYellowTheme
             justifyContent={'center'}
@@ -215,7 +158,7 @@ const FlexibleDetailScreen = ({ item }) => {
               marginRight={10}
             >
               <Text fontSize={22} bold ftWhite>
-                {renderFCAS(item.symbol)}
+                0
               </Text>
             </ViewBorderRadius>
             <View>
@@ -259,16 +202,14 @@ const FlexibleDetailScreen = ({ item }) => {
               ftWhite
               bold
               textAlign={'right'}
-            >{`${item.name} Flexible Staking`}</Text>
+            >{`${infoData.name} Flexible Staking`}</Text>
           </ViewRow>
           <ViewRow marginBottom={8}>
             <Text fontSize={14} ftBlueGray width={'60%'}>
               Minimum Locked Amount
             </Text>
             <Text width={'40%'} fontSize={14} ftWhite textAlign={'right'}>
-              {item.minimumLockedAmount > 0
-                ? `${item.minimumLockedAmount} ${item.symbol}`
-                : 'None'}
+              {"None"}
             </Text>
           </ViewRow>
           <ViewRow marginBottom={8}>
@@ -284,7 +225,7 @@ const FlexibleDetailScreen = ({ item }) => {
               Est. APR
             </Text>
             <Text width={'50%'} fontSize={14} ftWhite textAlign={'right'}>
-              {`${item.annualInteresetRate}%`}
+              {`${rate}%`}
             </Text>
           </ViewRow>
         </View>

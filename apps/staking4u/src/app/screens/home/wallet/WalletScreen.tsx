@@ -7,17 +7,16 @@ import WalletNftScreen from './WalletNftScreen';
 import { Text } from '../../../components/styled/Text';
 import Line from '../../../components/line/Line';
 import { Image } from '../../../components/styled/Image';
-import orbsLogo from '../../../assets/logos/orbs.png';
-import aaveLogo from '../../../assets/logos/aave.png';
-import rayLogo from '../../../assets/logos/ray.png';
-import atlasLogo from '../../../assets/logos/atlas.png';
-import solLogo from '../../../assets/logos/sol.png';
+
 import dollarIcon from '../../../assets/common/dollar.png';
 import checkPressed from '../../../assets/common/iconOvalCheckPressed.png';
 import { useDispatch } from 'react-redux';
 import { localeString } from '../../../utils/functions';
 import { format } from 'date-fns';
 import { Button } from '../../../components/styled/Button';
+import { tickers } from '../../../utils/dummy';
+import { Actions } from 'react-native-router-flux';
+import Coin from '../../../components/items/wallet/Coin';
 
 
 
@@ -37,13 +36,7 @@ const WalletScreen = () => {
     second: WalletNftScreen,
   });
 
-  const tickers = {
-    AAVE: { info: { priceChangePercent: -1.2 }, close: 1.2 },
-    ORBS: { info: { signed_change_rate: 0.1 }, close: 12.45 },
-    SOL: { info: { priceChangePercent: -3.14 }, close: 123.45 },
-    RAY: { info: { priceChangePercent: 2.23 }, close: 67.8 },
-    ATLAS: { info: { priceChangePercent: 10.01 }, close: 10.0 },
-  };
+  
   const aaveAmount = { data: { balance: 1 } };
   const orbsAmount = { data: { balance: 2 } };
   const solAmount = { data: { balance: 3 } };
@@ -115,49 +108,7 @@ const WalletScreen = () => {
     );
   }, []);
 
-  const coins = [
-    {
-      name: 'Aave', // 코인명
-      symbol: 'AAVE', // 단위
-      logo: aaveLogo, // 로고 이미지
-      ticker: tickers?.['AAVE']?.close, // 현재 시장 가격 (시세)
-      amount: aaveAmount?.data.balance, //  보유 코인 개수
-      price: tickers?.['AAVE']?.close * aaveAmount?.data.balance, // 현재 시장 가 * 보유 코인 갯수 ( $ )
-    },
-    {
-      name: 'Orbs',
-      symbol: 'ORBS',
-      logo: orbsLogo,
-      ticker: tickers?.['ORBS']?.close,
-      amount: orbsAmount?.data.balance,
-      price:
-        (tickers?.['ORBS']?.close * orbsAmount?.data.balance) / usdExchangeRate,
-    },
-    {
-      name: 'Solana',
-      symbol: 'SOL',
-      logo: solLogo,
-      ticker: tickers?.['SOL']?.close,
-      amount: solAmount?.data.balance,
-      price: tickers?.['SOL']?.close * solAmount?.data.balance,
-    },
-    {
-      name: 'Raydium',
-      symbol: 'RAY',
-      logo: rayLogo,
-      ticker: tickers?.['RAY']?.close,
-      amount: rayBalance,
-      price: tickers?.['RAY']?.close * rayBalance,
-    },
-    {
-      name: 'Star Atlas',
-      symbol: 'ATLAS',
-      logo: atlasLogo,
-      ticker: tickers?.['ATLAS']?.close,
-      amount: atlasBalance,
-      price: tickers?.['ATLAS']?.close * atlasBalance,
-    },
-  ];
+  
 
   const renderCoin = ({ item }) => {
     let solTokenPublicKey;
