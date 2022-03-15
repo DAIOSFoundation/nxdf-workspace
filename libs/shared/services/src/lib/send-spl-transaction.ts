@@ -24,6 +24,8 @@ export async function SendSPLTransaction(
   if (!toAddresses || !amounts) return false;
   console.log('Processing transaction...');
 
+  let result = false;
+
   try {
     if (!publicKey || !signTransaction) {
       // throw new WalletNotConnectedError();
@@ -40,6 +42,7 @@ export async function SendSPLTransaction(
       signTransaction
     );
 
+    // const __log__ = [];
     const instructions: TransactionInstruction[] = [];
     for (let i = 0; i < toAddresses.length; i++) {
       const dest = toAddresses[i];
@@ -58,28 +61,36 @@ export async function SendSPLTransaction(
       );
 
       if (receiverAccount === null) {
+        // instructions.push(
+        //   Token.createAssociatedTokenAccountInstruction(
+        //     ASSOCIATED_TOKEN_PROGRAM_ID,
+        //     TOKEN_PROGRAM_ID,
+        //     mintPublicKey,
+        //     associatedDestinationTokenAddr,
+        //     destPublicKey,
+        //     publicKey
+        //   )
+        // );
+        // receiverAccountNullList.push(dest);
+        return false;
+      }
+      else {
         instructions.push(
-          Token.createAssociatedTokenAccountInstruction(
-            ASSOCIATED_TOKEN_PROGRAM_ID,
+          Token.createTransferInstruction(
             TOKEN_PROGRAM_ID,
-            mintPublicKey,
+            fromTokenAccount.address,
             associatedDestinationTokenAddr,
-            destPublicKey,
-            publicKey
+            publicKey,
+            [],
+            amounts[i] * decimals
           )
         );
       }
-      instructions.push(
-        Token.createTransferInstruction(
-          TOKEN_PROGRAM_ID,
-          fromTokenAccount.address,
-          associatedDestinationTokenAddr,
-          publicKey,
-          [],
-          amounts[i] * decimals
-        )
-      );
+
+      // __log__.push([dest, amounts[i] * decimals, receiverAccount !== null]);
     }
+
+    // console.log(__log__);
 
     const transaction = new Transaction().add(...instructions);
 
@@ -88,10 +99,10 @@ export async function SendSPLTransaction(
     transaction.recentBlockhash = await blockHash.blockhash;
     const signed = await signTransaction(transaction);
 
-    const result = await connection.sendRawTransaction(signed.serialize());
+    const tx_result = await connection.sendRawTransaction(signed.serialize());
+    result = true;
 
     // console.log(publicKey, result);
-    console.log('Transaction sent');
 
     return true;
   } catch (error: any) {
@@ -100,4 +111,6 @@ export async function SendSPLTransaction(
 
     return false;
   }
+
+  return result;
 }
