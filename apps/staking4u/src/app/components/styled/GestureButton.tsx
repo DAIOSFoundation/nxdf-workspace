@@ -1,9 +1,8 @@
 import styled from 'styled-components/native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Common from './Common';
 // HOC
 import preventDoubleClick from '../higherOrderComponents/preventDoubleClick';
-import {Button} from './Button';
 
 /*
   react-native Button 내부에 View 컴포넌트를 쓰면 해당 영역 잡힌 부분은 터치가 안됨
@@ -40,7 +39,7 @@ export const GestureButton = preventDoubleClick(
     justifyContent: props.justifyContent || 'center',
     alignSelf: props.alignSelf || 'stretch',
     flexDirection: props.flexDirection || 'row',
-  })),
+  }))
 );
 
 export const Radius = styled(GestureButton)((props) => ({
@@ -55,7 +54,7 @@ export const GestureButtonBorder = styled(GestureButton)((props) => ({
 export const GestureButtonBorderRadius = styled(GestureButtonBorder)(
   (props) => ({
     borderRadius: props.borderRadius || '5px',
-  }),
+  })
 );
 
 export const GestureButtonEdgeRadius = styled(GestureButton)((props) => ({

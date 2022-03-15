@@ -1,6 +1,6 @@
-import {handleActions} from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import * as TICKER from './actions';
-import produce, {createDraft, finishDraft} from 'immer';
+import produce, { createDraft, finishDraft } from 'immer';
 
 const initialState = {
   tickers: null,
@@ -23,7 +23,7 @@ const ticker = handleActions(
       });
     },
   },
-  initialState,
+  initialState
 );
 
 export default ticker;
