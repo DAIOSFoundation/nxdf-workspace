@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Actions} from 'react-native-router-flux';
 import {
   SafeAreaView,
@@ -8,16 +8,19 @@ import {
 import {Text} from '../../components/styled/Text';
 import {ButtonRadius, ButtonBorderRadius} from '../../components/styled/Button';
 import {Image, ImageAbsolute} from '../../components/styled/Image';
-const startImage = '../../assets/index/start.png';
-const holdingImage = '../../assets/index/holding.png';
-const mainLogo = '../../assets/common/main_logo.png';
+import startImage from '../../assets/index/start.png';
+import holdingImage from '../../assets/index/holding.png';
+import mainLogo from '../../assets/common/main_logo.png';
+
+
 
 const IndexScreen = () => {
+
   return (
     <SafeAreaView bgYellowTheme>
       <View flex={1}>
         <ImageAbsolute source={holdingImage} width={'100%'} height={'100%'} />
-        <Image source={startImage} height={'90%'} resizeMode={'center'} />
+        <Image source={startImage} height={'90%'} resizeMode={'contain'} />
       </View>
       <ViewRadiusCustom
         flex={1}
@@ -28,7 +31,7 @@ const IndexScreen = () => {
           <Image source={mainLogo} height={'70%'} resizeMode={'contain'} />
         </View>
         <View flex={1} alignItems={'center'} justifyContent={'center'}>
-          <Text ftBlueGray>Experience your future finance.</Text>
+          <Text ftBlueGray>Experience your future Finance.</Text>
         </View>
         <View flex={4} alignItems={'center'} justifyContent={'center'}>
           <ButtonRadius
@@ -41,7 +44,7 @@ const IndexScreen = () => {
             marginRight={'auto'}
             onPress={Actions.GenerateMnemonic}>
             <Text ftFontNavy bold fontSize={16}>
-              Create Mnemonic
+              Create Wallet
             </Text>
           </ButtonRadius>
           <ButtonBorderRadius
