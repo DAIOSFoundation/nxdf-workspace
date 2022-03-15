@@ -1,19 +1,22 @@
 import styled from 'styled-components'
 
+
 export const PotContainer=styled.div`
   font-weight:bold;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #fff;
+
 `
 export const PotSolContainer=styled.div`
   font-size:65px;
+  color:white;
 `
 export const PotUsdContainer=styled.div`
   font-size:65px;
   margin-bottom:60px;
+  color:white;
 `
 export const CurrentJackpot=styled.h1`
   font-size:8em;
@@ -26,6 +29,7 @@ export const CurrentJackpot=styled.h1`
   :last-of-type{
     margin-bottom: 60px;
   }
+  font-family:'neon'
 `
 export const GetTicket=styled.button`
   width:80%;
@@ -75,7 +79,6 @@ export const TimerContainer = styled.div`
   width: 100%;
   padding-bottom:20px;
   z-index: 10;
-  color: #fff;
 `
 export const TimerBox = styled.div`
   width : 100%;
@@ -106,12 +109,13 @@ export const GetTicketContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  margin-bottom:50px;
   position: relative;
   width: 40%;
   background-color: #352F58;
   border-radius:6px;
   min-width:400px;
-`;
+`
 
 export const BackgroundDiv = styled.div`
   width: 70%;

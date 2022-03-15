@@ -24,7 +24,7 @@ function Timer() {
   })
 
   return (
-    <div style={{fontSize:'1.8rem', fontWeight:'bold',textAlign:'center'}}>
+    <div style={{fontSize:'1.5rem', fontWeight:'bold',textAlign:'center',color:'white'}}>
       {timeLeft}
     </div>
   );

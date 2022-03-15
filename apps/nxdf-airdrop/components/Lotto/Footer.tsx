@@ -15,7 +15,7 @@ const FooterDiv=styled.div`
 const Title=styled.h1`
   font-size:2em;
   font-weight:bold;
-  font-family:'neoneon';
+  font-family:'neon';
   color:rgb(220, 52, 141);
   color: var(--color-override,rgb(244,134,193));
   text-shadow: 0 0 10px rgb(220, 52, 141), 0 0 10px #e6469b;
@@ -25,6 +25,7 @@ const Text=styled.p`
   font-size:1.5em;
   margin-top:15px;
   font-weight:700;
+  color:white;
 `
 const LinkDiv=styled.div`
 
