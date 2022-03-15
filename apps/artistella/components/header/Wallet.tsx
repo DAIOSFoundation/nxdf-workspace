@@ -1,25 +1,53 @@
-import React, { useEffect, useState } from 'react'
-import wallet from '../../images/icon-wallet.png'
-import wallet2x from '../../images/icon-wallet@2x.png'
-import wallet3x from '../../images/icon-wallet@3x.png'
-import {Div,WalletD,Walletdiv,Icon_wallet,ImgWallet,ConnectDiv} from './style'
+import React, { FC, ReactNode, useMemo } from 'react';
+import dynamic from 'next/dynamic';
+import { WalletDiv } from './style';
+import { ConnectionProvider } from '@nxdf/shared/services';
+import { WalletAdapterNetwork } from '@nxdf/shared/services';
+import {
+    WalletModalProvider,
+    WalletMultiButton
+} from '@nxdf/shared/services';
+import { clusterApiUrl } from '@nxdf/shared/services';
 
-function Wallet(){
-    return (    
-        <Div>
-                <WalletD>
-                    <Walletdiv>
-                        <Icon_wallet>
-                          <ImgWallet src="images/icon-wallet.png" srcSet="images/icon-wallet@2x.png, images/icon-wallet@3x.png"/>
-                        </Icon_wallet>
-                        <ConnectDiv>
-                            <span>Connect Wallet</span>
-                        </ConnectDiv>
-                    </Walletdiv>
-                </WalletD>
-        </Div>
-    )
+const Wallet: FC=()=>{
+  return(
+    <Context>
+      <Content/>
+    </Context>
+  )
 }
+const Context: FC<{children: ReactNode}> = ({children}) => {
+    const network = WalletAdapterNetwork.Devnet;
 
+    const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+    
+    const WalletProvider = dynamic(
+      async () => {
+        const { WalletProvider } = await import('@nxdf/shared/services');
+        return WalletProvider;
+      },
+      {
+        ssr: false,
+      }
+    );
+
+    return (
+        <ConnectionProvider endpoint={endpoint}>
+            <WalletProvider autoConnect>
+                <WalletModalProvider>
+                    {children}
+                </WalletModalProvider>
+            </WalletProvider>
+        </ConnectionProvider>
+    );
+};
+
+const Content: FC = () => {
+  return (
+  <WalletDiv>
+    <WalletMultiButton />
+  </WalletDiv>
+  )
+};
 
 export default Wallet;

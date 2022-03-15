@@ -10,7 +10,7 @@ const FooterDiv=styled.div`
   align-items:center;
   justify-content:center;
   flex-direction:column;
-  
+
 `
 const Title=styled.h1`
   font-size:2em;
@@ -28,7 +28,7 @@ const Text=styled.p`
   color:white;
 `
 const LinkDiv=styled.div`
-  
+
 `
 const Button=styled.button`
   border-radius:8px;
@@ -50,7 +50,7 @@ function Footer() {
         <Button>Buy Tickets →</Button>
       </Link>
       <LinkDiv>
-        <a href="https://discord.gg/dC5z6qkkeh" target="_blank" rel="noreferrer">
+        <a href="https://discord.gg/5yPGKdgzTD" target="_blank" rel="noreferrer">
         <img style={{width:'50px'}} className="social" src="/img/discord.svg" alt="discord" /></a>
         <a href="https://twitter.com/NXDF16" target="_blank" rel="noreferrer">
         <img style={{width:'50px',marginLeft:'20px'}} className="social" src="/img/icon-twitter@3x.png" alt="twitter" /></a>

@@ -15,7 +15,7 @@ const TabViewBar = (props) => {
             height={50}
             onPress={() => props.setIndex(index)}>
             <Text
-              fontSize={24}
+              fontSize={props.ftsize? props.ftsize : 24}
               ftBlueGray={!active(index)}
               ftWhite={active(index)}
               bold={active(index)}>

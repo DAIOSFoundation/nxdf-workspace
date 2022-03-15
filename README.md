@@ -40,3 +40,8 @@ android: `yarn start:staking4u:android`
 `cd apps/staking4u/ios`  
 `pod cache clean all`  
 `rm -rf Pods`
+
+### Airdrop
+`nx build nxdf-airdrop && nx export nxdf-airdrop`
+`cd apps/nxdf-airdrop`
+`firebase deploy --only hosting`

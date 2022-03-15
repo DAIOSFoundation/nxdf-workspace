@@ -1,9 +1,12 @@
 import aaveLogo from '../assets/logos/aave.png';
-import adaLogo from '../assets/logos/ada.png';
-import dotLogo from '../assets/logos/dot.png';
 import rayLogo from '../assets/logos/ray.png';
 import solLogo from '../assets/logos/sol.png';
 import orbsLogo from '../assets/logos/orbs.png';
+import nxdfLogo from '../assets/logos/nxdf.png';
+import usdcLogo from '../assets/logos/usdc.png';
+import atlasLogo from '../assets/logos/atlas.png';
+import etherLogo from '../assets/logos/ether.png';
+import tehterLogo from '../assets/logos/tether.png';
 import banner1 from '../assets/banner/banner_01.png';
 import banner2 from '../assets/banner/banner_02.png';
 import {localeString} from './functions';
@@ -11,25 +14,25 @@ import {localeString} from './functions';
 export const products = [
   {
     id: 1,
-    name: 'Aave',
+    name: 'USD-Coin',
     symbol: 'AAVE',
     annualInteresetRate: 6.76,
-    logo: aaveLogo,
+    logo: usdcLogo,
     minimumLockedAmount: 0,
     officialURL: 'https://aave.com/',
   },
   {
     id: 2,
-    name: 'Orbs',
-    symbol: 'ORBS',
+    name: 'next-defi-protocol',
+    symbol: 'NXDF',
     annualInteresetRate: 5.95,
-    logo: orbsLogo,
+    logo: nxdfLogo,
     minimumLockedAmount: 0,
     officialURL: 'https://www.orbs.com/',
   },
   {
     id: 3,
-    name: 'Solana',
+    name: 'solana',
     symbol: 'SOL',
     annualInteresetRate: 7.27,
     logo: solLogo,
@@ -38,7 +41,7 @@ export const products = [
   },
   {
     id: 4,
-    name: 'Raydium',
+    name: 'raydium',
     symbol: 'RAY',
     annualInteresetRate: 26.65,
     logo: rayLogo,
@@ -46,6 +49,163 @@ export const products = [
     officialURL: 'https://raydium.io/',
   },
 ];
+
+export const SwapData = [
+   {
+    id: 1,
+    name: 'Dummy3',
+    symbol: 'SOL',
+    annualInteresetRate: 7.27,
+    balance: '300',
+    logo: solLogo,
+    minimumLockedAmount: 0,
+    officialURL: 'https://solana.com/',
+  },
+  {
+    id: 2,
+    name: 'Dummy4',
+    symbol: 'RAY',
+    balance: '400',
+    annualInteresetRate: 26.65,
+    logo: rayLogo,
+    minimumLockedAmount: 0,
+    officialURL: 'https://raydium.io/',
+  },
+];
+
+export const LiquidityData = [
+  
+  {
+    id: 1,
+    name: 'SOL+USDC',
+    symbol: 'SOL',
+    annualInteresetRate: 7.27,
+    balance: '300',
+    logo: [solLogo,usdcLogo],
+    minimumLockedAmount: 0,
+    officialURL: 'https://solana.com/',
+    poolPrice: 1234,
+  },
+  {
+    id: 2,
+    name: 'RAY+SOL',
+    symbol: 'RAY',
+    balance: '400',
+    annualInteresetRate: 26.65,
+    logo: [rayLogo,solLogo],
+    minimumLockedAmount: 0,
+    officialURL: 'https://raydium.io/',
+    poolPrice: 999999,
+  },
+  {
+    id: 3,
+    name: 'SOL+ETH',
+    symbol: 'SOL',
+    annualInteresetRate: 7.27,
+    balance: '300',
+    logo: [solLogo,etherLogo],
+    minimumLockedAmount: 0,
+    officialURL: 'https://solana.com/',
+    poolPrice: 1234,
+  },
+  {
+    id: 4,
+    name: 'RAY+USDC',
+    symbol: 'RAY',
+    balance: '400',
+    annualInteresetRate: 26.65,
+    logo: [rayLogo,usdcLogo],
+    minimumLockedAmount: 0,
+    officialURL: 'https://raydium.io/',
+    poolPrice: 999999,
+  },
+  {
+    id: 5,
+    name: 'RAY+USDT',
+    symbol: 'SOL',
+    annualInteresetRate: 7.27,
+    balance: '300',
+    logo: [rayLogo,tehterLogo],
+    minimumLockedAmount: 0,
+    officialURL: 'https://solana.com/',
+    poolPrice: 1234,
+  },
+  {
+    id: 6,
+    name: 'SOL+USDT',
+    symbol: 'RAY',
+    balance: '400',
+    annualInteresetRate: 26.65,
+    logo: [solLogo,tehterLogo],
+    minimumLockedAmount: 0,
+    officialURL: 'https://raydium.io/',
+    poolPrice: 999999,
+  },
+  {
+    id: 7,
+    name: 'ATLAS+RAY',
+    symbol: 'SOL',
+    annualInteresetRate: 7.27,
+    balance: '300',
+    logo: [atlasLogo,rayLogo],
+    minimumLockedAmount: 0,
+    officialURL: 'https://solana.com/',
+    poolPrice: 1234,
+  },
+];
+
+export const tickers = {
+    AAVE: { info: { priceChangePercent: -1.2 }, close: 1.2 },
+    ORBS: { info: { signed_change_rate: 0.1 }, close: 12.45 },
+    SOL: { info: { priceChangePercent: -3.14 }, close: 123.45 },
+    RAY: { info: { priceChangePercent: 2.23 }, close: 67.8 },
+    ATLAS: { info: { priceChangePercent: 10.01 }, close: 10.0 },
+  };
+
+
+export const Walletcoins = [
+    {
+      name: 'Aave', // 코인명
+      symbol: 'AAVE', // 단위
+      logo: aaveLogo, // 로고 이미지
+      ticker: tickers?.['AAVE']?.close, // 현재 시장 가격 (시세)
+      amount: { data: { balance: 1 } }, //  보유 코인 개수
+      price: tickers?.['AAVE']?.close * 1, // 현재 시장 가 * 보유 코인 갯수 ( $ )
+    },
+    {
+      name: 'Orbs',
+      symbol: 'ORBS',
+      logo: orbsLogo,
+      ticker: tickers?.['ORBS']?.close,
+      amount: { data: { balance: 1 } },
+      price:
+        (tickers?.['ORBS']?.close * 1) / 1,
+    },
+    {
+      name: 'Solana',
+      symbol: 'SOL',
+      logo: solLogo,
+      ticker: tickers?.['SOL']?.close,
+      amount: { data: { balance: 1 } },
+      price: tickers?.['SOL']?.close * 1,
+    },
+    {
+      name: 'Raydium',
+      symbol: 'RAY',
+      logo: rayLogo,
+      ticker: tickers?.['RAY']?.close,
+      amount: { data: { balance: 1 } },
+      price: tickers?.['RAY']?.close * 1,
+    },
+    {
+      name: 'Star Atlas',
+      symbol: 'ATLAS',
+      logo: atlasLogo,
+      ticker: tickers?.['ATLAS']?.close,
+      amount: { data: { balance: 1 } },
+      price: tickers?.['ATLAS']?.close * 1,
+    },
+  ];
 
 export const banners = [
   {

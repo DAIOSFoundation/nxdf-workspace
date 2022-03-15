@@ -31,6 +31,17 @@
     "styled-components": "*",
     "swr": "*",
     "react-native-push-notification": "*",
-    "react-native-loading-spinner-overlay": "*"
+    "react-native-loading-spinner-overlay": "*",
+    "@react-native-community/checkbox": "*",
+    "date-fns": "*",
+    "react-native-qrcode-svg": "*",
+    "react-native-qrcode-scanner": "*",
+    "react-native-pdf": "*",
+    "react-native-chart-kit": "*",
+    "react-native-collapsible": "*",
+    "redux": "*",
+    "openlogin-react-native-sdk": "*",
+    "react-query": "*",
+    "@web3auth/react-native-sdk": "*"
   }
 }

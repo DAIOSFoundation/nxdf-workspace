@@ -9,22 +9,17 @@ import ScreenRouter from './screens/global/ScreenRouter';
 import ToastMessage from './screens/global/ToastMessage';
 import GlobalModal from './screens/global/GlobalModal';
 import Loading from './screens/global/Loading';
-import AndroidBackHandle from './screens/global/AndroidBackHanlde';
+import AndroidBackHandle from './screens/global/AndroidBackHanlder';
 // import { SafeAreaView } from './src/components/styled/View';
 import Push from './screens/global/Push';
 import SplashScreen from 'react-native-splash-screen';
-
-//import { SafeAreaView, StyleSheet, ScrollView, StatusBar } from 'react-native';
-
-// import {Router, Stack, Scene, Actions} from 'react-native-router-flux';
-//import IndexScreen from './screens/index/IndexScreen';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const store = configure();
 
-const App = () => {
-  // const [whatsNextYCoord, setWhatsNextYCoord] = useState<number>(0);
-  // const scrollViewRef = useRef<null | ScrollView>(null);
+const queryClient = new QueryClient();
 
+const App = () => {
   useEffect(() => {
     SplashScreen.hide();
     initLocale();
@@ -32,12 +27,14 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <ScreenRouter />
-      <ToastMessage />
-      <GlobalModal />
-      <AndroidBackHandle />
-      {/* <Push /> */}
-      <Loading />
+       <QueryClientProvider client={queryClient} >
+          <ScreenRouter />
+          <ToastMessage />
+          <GlobalModal />
+          <AndroidBackHandle />
+          {/* <Push /> */}
+            <Loading />
+        </QueryClientProvider>
     </Provider>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Actions} from 'react-native-router-flux';
 import {
   SafeAreaView,
@@ -8,29 +8,19 @@ import {
 import {Text} from '../../components/styled/Text';
 import {ButtonRadius, ButtonBorderRadius} from '../../components/styled/Button';
 import {Image, ImageAbsolute} from '../../components/styled/Image';
-import {Linking} from "react-native";
-const startImage = '../../assets/index/start.png';
-const holdingImage = '../../assets/index/holding.png';
-const mainLogo = '../../assets/common/main_logo.png';
+import startImage from '../../assets/index/start.png';
+import holdingImage from '../../assets/index/holding.png';
+import mainLogo from '../../assets/common/main_logo.png';
+
+
 
 const IndexScreen = () => {
-
-  const login = async () => {
-    // const url = 'slopewallet://wallet.slope/pay?returnSchemes=staking4u://login?slopePayReturn&slopePayParams={"type": "connect"}';
-    const url = 'slopewallet://wallet.slope/pay?returnSchemes=7374616b696e6734753a2f2f6c6f67696e3f736c6f706550617952657475726e&slopePayParams=7b2274797065223a2022636f6e6e656374227d';
-    // const url = 'slopewallet://wallet.slope/pay';
-    await Linking.openURL(url).then(supported => {
-      alert(supported);
-    }).catch(err => {
-      console.error(err);
-    });
-  };
 
   return (
     <SafeAreaView bgYellowTheme>
       <View flex={1}>
         <ImageAbsolute source={holdingImage} width={'100%'} height={'100%'} />
-        <Image source={startImage} height={'90%'} resizeMode={'center'} />
+        <Image source={startImage} height={'90%'} resizeMode={'contain'} />
       </View>
       <ViewRadiusCustom
         flex={1}
@@ -41,7 +31,7 @@ const IndexScreen = () => {
           <Image source={mainLogo} height={'70%'} resizeMode={'contain'} />
         </View>
         <View flex={1} alignItems={'center'} justifyContent={'center'}>
-          <Text ftBlueGray>Experience your future finance.</Text>
+          <Text ftBlueGray>Experience your future Finance.</Text>
         </View>
         <View flex={4} alignItems={'center'} justifyContent={'center'}>
           <ButtonRadius
@@ -52,9 +42,9 @@ const IndexScreen = () => {
             marginBottom={10}
             marginLeft={'auto'}
             marginRight={'auto'}
-            onPress={login}>
+            onPress={Actions.GenerateMnemonic}>
             <Text ftFontNavy bold fontSize={16}>
-              Create Mnemonic
+              Create Wallet
             </Text>
           </ButtonRadius>
           <ButtonBorderRadius

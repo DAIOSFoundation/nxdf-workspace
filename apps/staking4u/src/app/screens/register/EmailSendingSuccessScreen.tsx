@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import useSWR from 'swr';
 import env from 'react-native-config';
-import { useDispatch } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import {useDispatch} from 'react-redux';
+import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as authsActions from '../../store/modules/auths/actions';
 import * as globalActions from '../../store/modules/global/actions';
 import * as modalActions from '../../store/modules/modal/actions';
-import { SafeAreaView, View } from '../../components/styled/View';
-import { Text } from '../../components/styled/Text';
-import { ButtonRadius } from '../../components/styled/Button';
+import {SafeAreaView, View} from '../../components/styled/View';
+import {Text} from '../../components/styled/Text';
+import {ButtonRadius} from '../../components/styled/Button';
 import TopBar from '../../components/bar/TopBar';
-import { useDisableBackhandler } from '../../hooks';
-import { fetcher, getData, storeData } from '../../utils/functions';
+import {useDisableBackhandler} from '../../hooks';
+import {fetcher, getData, storeData} from '../../utils/functions';
 
 const EmailSendingSuccessScreen = () => {
   const [publicMnemonicHash, setPublicMnemonicHash] = useState('');
@@ -24,12 +24,12 @@ const EmailSendingSuccessScreen = () => {
     getStorage();
   }, []);
 
-  const { data: checkData, error: checkDataError } = useSWR(
+  const {data: checkData, error: checkDataError} = useSWR(
     `${env.SERVER_URL}/users/auths/${publicMnemonicHash}`,
     fetcher,
     {
       refreshInterval: 5000,
-    }
+    },
   );
 
   useEffect(() => {
@@ -41,17 +41,6 @@ const EmailSendingSuccessScreen = () => {
 
   const dispatch = useDispatch();
 
-  // 개발단계에서의 백도어버튼
-  const onPressBack = () => {
-    // 이전 스크린(이메일 인증 스크린)으로 이동
-    Actions.emailVerificationScreen();
-  };
-  // 개발단계에서의 백도어버튼
-  const onPressNext = () => {
-    // 인증 확인을 true로 변경 후 회원가입 성공 스크린으로 자동 이동
-    Actions.registerSuccessScreen();
-  };
-
   const onPressResend = async () => {
     // 이메일 전송 API 호출
     const param = {
@@ -61,8 +50,8 @@ const EmailSendingSuccessScreen = () => {
     dispatch(authsActions.post_email_auth(param));
     dispatch(
       globalActions.change_toast_message(
-        'The verification mail has been sent to you.'
-      )
+        'The verification mail has been sent to you.',
+      ),
     );
   };
 
@@ -75,7 +64,9 @@ const EmailSendingSuccessScreen = () => {
   const onPressRefresh = () => {
     // 니모닉 리셋 호출 (db에 현재 해당 user를 삭제할 것인지 그냥 두고 진행할 것인지는 결정해야함)
     dispatch(
-      modalActions.change_modal_message('Do you want to go to the home screen?')
+      modalActions.change_modal_message(
+        'Do you want to go to the home screen?',
+      ),
     );
     dispatch(modalActions.change_modal_one_button(false));
     dispatch(modalActions.change_modal_on_press_ok(onPressModalOK));
@@ -104,8 +95,7 @@ const EmailSendingSuccessScreen = () => {
           marginBottom={20}
           marginLeft={'auto'}
           marginRight={'auto'}
-          onPress={onPressResend}
-        >
+          onPress={onPressResend}>
           <Text ftFontNavy bold fontSize={13}>
             Did you not receive the e-mail? 🤔
           </Text>
@@ -118,8 +108,7 @@ const EmailSendingSuccessScreen = () => {
           marginBottom={20}
           marginLeft={'auto'}
           marginRight={'auto'}
-          onPress={onPressRefresh}
-        >
+          onPress={onPressRefresh}>
           <Text ftNavyTheme bold fontSize={13}>
             Did you not back-up your mnemonic? 😱
           </Text>
@@ -130,7 +119,6 @@ const EmailSendingSuccessScreen = () => {
           Make sure to save your mnemonic!{'\n'}
         </Text>
       </View>
-      <View flex={1}></View>
     </SafeAreaView>
   );
 };

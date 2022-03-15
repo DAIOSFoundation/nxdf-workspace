@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import * as authsActions from '../../store/modules/auths/actions';
 import * as registerActions from '../../store/modules/register/actions';
 import {
@@ -8,28 +8,21 @@ import {
   ViewBorderRadius,
 } from '../../components/styled/View';
 import TopBar from '../../components/bar/TopBar';
-import { Text } from '../../components/styled/Text';
+import {Text} from '../../components/styled/Text';
 import BottomButton from '../../components/buttons/BottomButton';
-
-import { NBTextareaRadius } from '../../components/styled/Input';
+import {NBTextareaRadius} from '../../components/styled/Input';
 import I18n from 'react-native-i18n';
-
-import { Actions } from 'react-native-router-flux';
-import {
-  shallowEqual,
-  useDispatch,
-  useSelector,
-  RootStateOrAny,
-} from 'react-redux';
-import { AESKey, mnemonicEncrypt, storeData } from '../../utils/functions';
+import {Actions} from 'react-native-router-flux';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import {AESKey, mnemonicEncrypt, storeData} from '../../utils/functions';
 
 const MnemonicInputScreen = () => {
-  const { getMnemonicVerification, jwt } = useSelector(
-    (state: RootStateOrAny) => ({
-      jwt: state.auths.jwt,
-      getMnemonicVerification: state.register.getMnemonicVerification,
+  const {getMnemonicVerification, jwt} = useSelector(
+    (state) => ({
+      jwt: 200,
+      getMnemonicVerification: true,
     }),
-    shallowEqual
+    shallowEqual,
   );
 
   const [mnemonic, setMnemonic] = useState();
@@ -57,24 +50,24 @@ const MnemonicInputScreen = () => {
   }, [jwt]);
 
   const onPressNext = async () => {
-    if (getMnemonicVerification) {
-      const param = {
-        publicMnemonicHash: await mnemonicEncrypt(mnemonic),
-      };
+    // if (getMnemonicVerification) {
+    //   const param = {
+    //     publicMnemonicHash: await mnemonicEncrypt(mnemonic),
+    //   };
 
-      dispatch(authsActions.post_login(param));
-    }
+    //   dispatch(authsActions.post_login(param));
+    // }
+    Actions.mainScreen();
   };
 
   const onChangeText = (text) => {
     setMnemonic(text);
-    dispatch(registerActions.get_mnemonic_verification(text));
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView bgNavyTheme>
       <TopBar isLeftButton />
-      <ScrollView bgNavyTheme>
+      <ScrollView>
         <View paddingLeft={15} paddingRight={15} marginTop={50}>
           <Text ftWhite ftBigLarge>
             Enter mnemonic
@@ -87,12 +80,11 @@ const MnemonicInputScreen = () => {
             width={'100%'}
             bgDarkGray
             brLightGray
-            marginTop={30}
-          >
+            marginTop={30}>
             <NBTextareaRadius
               {...(getMnemonicVerification
-                ? { brSuccess: true }
-                : { brDanger: true })}
+                ? {brSuccess: true}
+                : {brDanger: true})}
               paddingLeft={10}
               paddingRight={10}
               paddingTop={10}
@@ -108,8 +100,8 @@ const MnemonicInputScreen = () => {
       </ScrollView>
       <BottomButton
         {...(getMnemonicVerification
-          ? { bgYellowTheme: true }
-          : { bgBlueGray: true })}
+          ? {bgYellowTheme: true}
+          : {bgBlueGray: true})}
         text={'Next'}
         onPress={onPressNext}
       />

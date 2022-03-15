@@ -1,11 +1,11 @@
 import React from 'react';
 // Styled Component
-import {View} from '../styled/View';
-import {Text} from '../styled/Text';
-import {NBInputBorderRadius} from '../styled/Input';
+import { View } from '../styled/View';
+import { Text } from '../styled/Text';
+import { NBInputBorderRadius } from '../styled/Input';
 import * as Common from '../styled/Common';
 // utils
-import {isEmpty} from '../../utils/functions';
+import { isEmpty } from '../../utils/functions';
 
 /* value값의 초기값은 무조건 string 형태일 것 */
 /*

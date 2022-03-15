@@ -11,6 +11,7 @@ import checkGrayIcon from '../../assets/register/icon_check_gray.png';
 const ServiceAgreenmentScreen = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [isNext, setIsNext] = useState(false);
+
   const onPressToggleAgreement = () => {
     setIsChecked(!isChecked);
     setIsNext(!isNext);
