@@ -10,8 +10,8 @@ function MoreGrid(){
         <GridTitle>Collections</GridTitle>
       </TopDiv>
       <Grid>
-        { data.map((data) => 
-          <MoreEle img={data.image} header={data.name} text={data.description}/>
+        {data.map((data, index) =>
+          <MoreEle key={index} img={data.image} header={data.name} text={data.description}/>
         )}
       </Grid>
     </GridDiv>

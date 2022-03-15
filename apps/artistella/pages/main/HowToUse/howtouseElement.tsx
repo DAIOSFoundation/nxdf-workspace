@@ -1,4 +1,3 @@
-import styled from "styled-components"
 import {Div,UseNumber,UseGridTitle,UseSummary} from './style';
 
 function UseEle({number,title,summary}){

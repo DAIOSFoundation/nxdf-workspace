@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export function SubElm({img,header,text}){
   return(
-    <Link href='/CollectionInfo'>
+    <Link href='/collectionInfo'>
     <EleDivS>
       <SubImgDiv>
         <GridImage src={img}></GridImage>

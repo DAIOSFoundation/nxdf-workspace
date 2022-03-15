@@ -6,7 +6,7 @@ import Link from 'next/link'
 function GridElm({img,header,text,date}){
 
     return(
-      <Link href='/CollectionInfo'>
+      <Link href='/collectionInfo'>
       <EleDivM>
           <GridImgDiv>
             <GridImage src={img} />
