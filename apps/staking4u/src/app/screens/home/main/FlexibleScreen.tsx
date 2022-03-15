@@ -7,49 +7,16 @@ import { Text } from '../../../components/styled/Text';
 import { Image } from '../../../components/styled/Image';
 import { products } from '../../../utils/dummy';
 import iconDownGray from '../../../assets/main/icon_down_gray.png';
+import RenderListHeader from '../../../components/renderListHeader/RenderListHeader';
 
 const FlexibleScreen = () => {
-  const renderListHeader = () => {
-    return (
-      <ViewRow flex={1} marginBottom={10} justifyContent={'space-between'}>
-        <ViewRow flex={2.5} alignItems={'center'} paddingLeft={10}>
-          <Text fontSize={13} ftBlueGray bold>
-            Product
-          </Text>
-          <Image source={iconDownGray} width={10} height={8} marginLeft={5} />
-        </ViewRow>
-        <ViewRow
-          flex={1}
-          justifyContent={'flex-end'}
-          alignItems={'center'}
-          paddingRight={20}
-        >
-          <Image source={iconDownGray} width={10} height={8} marginRight={5} />
-          <Text fontSize={13} ftBlueGray bold>
-            Price
-          </Text>
-        </ViewRow>
-        <ViewRow
-          flex={2}
-          justifyContent={'flex-end'}
-          alignItems={'center'}
-          paddingRight={20}
-        >
-          <Image source={iconDownGray} width={10} height={8} marginRight={5} />
-          <Text fontSize={13} ftBlueGray bold>
-            APR
-          </Text>
-        </ViewRow>
-      </ViewRow>
-    );
-  };
+
 
   const renderProducts = ({ item }) => {
     const onPressItem = () => {
       Actions.flexibleDetailScreen({ item });
     };
-
-    return <Product {...item} onPress={onPressItem} />;
+    return <Product {...item} onPress={onPressItem}/>;
   };
 
   return (
@@ -63,18 +30,20 @@ const FlexibleScreen = () => {
         <View height={50} marginTop={20} marginLeft={10}>
           
         </View>
-        <View flex={6} marginBottom={10}>
+        <View flex={6} marginBottom={10} marginTop={30}>
           <FlatList
+            ListHeaderComponent={RenderListHeader("Product","Price", "APR") }
             data={products}
+            ItemSeparatorComponent={() => <View height={5} />}
             renderItem={renderProducts}
             contentContainerStyle={
               products.length === 0 && {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
+                marginTop: '20px',
               }
             }
-            ListHeaderComponent={renderListHeader}
             keyExtractor={(item) => String(item.id)}
           />
         </View>

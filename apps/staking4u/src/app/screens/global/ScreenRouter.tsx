@@ -49,7 +49,8 @@ import iconInvestmentNormal from '../../assets/tabBar/icon_investment_normal.png
 import iconInvestmentPressed from '../../assets/tabBar/icon_investment_pressed.png';
 import iconMyInfoNormal from '../../assets/tabBar/icon_my_info_normal.png';
 import iconMyInfoPressed from '../../assets/tabBar/icon_my_info_pressed.png';
-import iconSwap from '../../assets/tabBar/icon_swap.svg';
+import iconSwapNormal from '../../assets/tabBar/icon_swap_normal.png';
+import iconSwapPressed from '../../assets/tabBar/icon_swap_pressed.png';
 
 import { colors } from '../../components/styled/Common';
 import UnstakingCompleteScreen from '../home/investment/UnstakingCompleteScreen';
@@ -103,7 +104,7 @@ const ScreenRouter = (props) => {
       case 'myInfo':
         return tabBarIconGenerator(iconMyInfoPressed, iconMyInfoNormal);
       case 'Swap':
-        return tabBarIconGenerator(iconSwap, iconSwap);
+        return tabBarIconGenerator(iconSwapPressed, iconSwapNormal);
     }
   };
 
@@ -117,9 +118,9 @@ const ScreenRouter = (props) => {
             hideTabBar
             hideNavBar
           />
-        </Scene>
+        </Scene> */}
 
-        <Scene key={'GetMnemonic'}>
+        {/* <Scene key={'GetMnemonic'}>
           <Scene
             key="mnemonicInputScreen"
             component={MnemonicInputScreen}

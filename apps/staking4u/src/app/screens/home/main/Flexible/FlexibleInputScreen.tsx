@@ -1,29 +1,30 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import * as modalActions from '../../../store/modules/modal/actions';
-import * as stakeRayActions from '../../../store/modules/stake/ray/actions';
+import * as modalActions from '../../../../store/modules/modal/actions';
+import * as stakeRayActions from '../../../../store/modules/stake/ray/actions';
 import {
   SafeAreaView,
   View,
   ViewRow,
   ScrollView,
   ViewRowBorderRadius,
-} from '../../../components/styled/View';
-import { Text } from '../../../components/styled/Text';
-import Topbar from '../../../components/bar/TopBar';
-import Line from '../../../components/line/Line';
+} from '../../../../components/styled/View';
+import { Text } from '../../../../components/styled/Text';
+import Topbar from '../../../../components/bar/TopBar';
+import Line from '../../../../components/line/Line';
 import {
   ButtonRadius,
   ButtonBorderRadius,
   Button,
-} from '../../../components/styled/Button';
+} from '../../../../components/styled/Button';
 import CheckBox from '@react-native-community/checkbox';
-import InputBorderWith from '../../../components/input/InputBorderWith';
-import { colors } from '../../../components/styled/Common';
-import { ERC20_TOKENS, SOL_TOKENS } from '../../../utils/constants';
+import InputBorderWith from '../../../../components/input/InputBorderWith';
+import { colors } from '../../../../components/styled/Common';
+import { ERC20_TOKENS, SOL_TOKENS } from '../../../../utils/constants';
 
 const FlexibleInputScreen = ({ item }) => {
+  console.log(item);
   const dispatch = useDispatch();
   const maxAmount = useRef(0);
   const [amount, setAmount] = useState('');
@@ -152,7 +153,7 @@ const FlexibleInputScreen = ({ item }) => {
 
   return (
     <SafeAreaView bgNavyTheme>
-      <Topbar isLeftButton title={`${item.name} Flexible Staking`} />
+      <Topbar isLeftButton title={`${"ray"} Flexible Staking`} />
       <View flex={3} justifyContent={'center'} alignItems={'center'}>
         <View width={'96%'} alignSelf={'center'}>
           <ViewRow

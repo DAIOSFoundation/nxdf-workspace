@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Actions} from 'react-native-router-flux';
 import {
   SafeAreaView,
@@ -12,7 +12,10 @@ import startImage from '../../assets/index/start.png';
 import holdingImage from '../../assets/index/holding.png';
 import mainLogo from '../../assets/common/main_logo.png';
 
+
+
 const IndexScreen = () => {
+
   return (
     <SafeAreaView bgYellowTheme>
       <View flex={1}>
@@ -41,7 +44,7 @@ const IndexScreen = () => {
             marginRight={'auto'}
             onPress={Actions.GenerateMnemonic}>
             <Text ftFontNavy bold fontSize={16}>
-              Create Mnemonic
+              Create Wallet
             </Text>
           </ButtonRadius>
           <ButtonBorderRadius

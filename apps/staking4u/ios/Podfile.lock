@@ -408,7 +408,7 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.12.1):
     - React-Core
-  - RNCCheckbox (0.5.9):
+  - RNCCheckbox (0.5.12):
     - React-Core
   - RNCClipboard (1.8.5):
     - React-Core
@@ -423,7 +423,7 @@ PODS:
     - React-Core
   - RNI18n (2.0.15):
     - React
-  - RNReanimated (1.13.3):
+  - RNReanimated (1.13.4):
     - React-Core
   - RNScreens (3.10.2):
     - React-Core
@@ -678,18 +678,18 @@ SPEC CHECKSUMS:
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
-  RNCCheckbox: 6369808337432cdbd5025d62ceced2480b4c51df
+  RNCCheckbox: ed1b4ca295475b41e7251ebae046360a703b6eb5
   RNCClipboard: cc054ad1e8a33d2a74cd13e565588b4ca928d8fd
   RNFBApp: 9c90f9d576861947ba75fe0830567c570bcbcf6d
   RNFBMessaging: c873e6c37f69d22de22cab134413030a9c6330a9
   RNGestureHandler: bf572f552ea324acd5b5464b8d30755b2d8c1de6
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
-  RNReanimated: 514a11da3a2bcc6c3dfd9de32b38e2b9bf101926
+  RNReanimated: c1b56d030d1616239861534d9adb531f8cffab68
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 9cb89623114021b2a6755629610ae0536ba4ddb5
+PODFILE CHECKSUM: 5b88210403a833e18057bd49ea0890f343918c87
 
 COCOAPODS: 1.11.2

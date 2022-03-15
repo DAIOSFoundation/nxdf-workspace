@@ -11,6 +11,7 @@ import { LiquidityData, products } from '../../../utils/dummy';
 
 import iconSeacrh from '../../../assets/main/icon_search_grey.png';
 import LiquiditiyProduct from '../../../components/items/LiqudityPool/LiquidityProducts';
+import RenderListHeader from '../../../components/renderListHeader/RenderListHeader';
 
 
 const InputView = styled(View)`
@@ -30,46 +31,11 @@ const Input = styled.TextInput`
   color: white;
   background-color:rgb(49,56,103) ;
   width: 80%;
-  
 `
 
 
 
 const LiquidityScreen = () => {
-  const renderListHeader = () => {
-    return (
-      <ViewRow flex={1} marginBottom={10} justifyContent={'space-between'}>
-        <ViewRow flex={2.5} alignsItems={'center'} paddingLeft={10}>
-          <Text fontSize={13} ftBlueGray bold>
-            Pool
-          </Text>
-          <Image source={iconDownGray} width={10} height={8} marginLeft={5} marginTop={5} />
-        </ViewRow>
-        <ViewRow
-          flex={1}
-          justifyContent={'flex-end'}
-          alignItems={'center'}
-          paddingRight={20}
-        >
-          <Image source={iconDownGray} width={10} height={8} marginRight={5} marginTop={5}/>
-          <Text fontSize={13} ftBlueGray bold>
-            Price
-          </Text>
-        </ViewRow>
-        <ViewRow
-          flex={2}
-          justifyContent={'flex-end'}
-          alignItems={'center'}
-          paddingRight={20}
-        >
-          <Image source={iconDownGray} width={10} height={8} marginRight={5} marginTop={5}/>
-          <Text fontSize={13} ftBlueGray bold>
-            APR
-          </Text>
-        </ViewRow>
-      </ViewRow>
-    );
-  };
 
   const renderProducts = ({ item }) => {
     const onPressItem = () => {
@@ -97,6 +63,7 @@ const LiquidityScreen = () => {
           <FlatList
             data={LiquidityData}
             renderItem={renderProducts}
+            ItemSeparatorComponent={() => <View height={5} />}
             contentContainerStyle={
               products.length === 0 && {
                 flex: 1,
@@ -104,7 +71,7 @@ const LiquidityScreen = () => {
                 alignItems: 'center',
               }
             }
-            ListHeaderComponent={renderListHeader}
+            ListHeaderComponent={RenderListHeader("Pool","Price", "APR") }
             keyExtractor={(item) => String(item.id)}
           />
         </View>

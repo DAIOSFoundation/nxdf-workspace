@@ -5,77 +5,76 @@ import { GestureButton } from '../../styled/GestureButton';
 import { Text } from '../../styled/Text';
 import { Image } from '../../styled/Image';
 import { convertPrice } from '../../../utils/price';
+import { useQuery } from "react-query";
+import { getCoin } from '../../../api/coinStaking';
+import { Actions } from 'react-native-router-flux';
 
-const Product = ({ name, symbol, annualInteresetRate, logo, onPress }) => {
-  // close = 장 마감 가격
-  const tickers = {
-    AAVE: { close: 1.2 },
-    ORBS: { close: 12.45 },
-    SOL: { close: 123.45 },
-    RAY: { close: 67.8 },
-  };
+const Product = ({ name}) => {
+  const { isLoading: infoLoading, data: infoData } = useQuery(["info", name], getCoin.info);
+  const rate = infoData?.market_data?.price_change_24h.toFixed(2);
+  const price = infoData?.tickers[0].last 
+  const image = infoData?.image.thumb
+  const onPressItem = () => {
+      Actions.flexibleDetailScreen(name);
+    };
 
-  const usdExchangeRate = 1;
-
-  return (
-    <>
-      <Line width={'100%'} height={1} />
-      <GestureButton onPress={onPress}>
-        <ViewRow flex={1} paddingTop={15} paddingBottom={15}>
-          <ViewRow flex={2.5} alignItems={'center'} paddingLeft={10}>
-            <Image
-              source={logo}
-              resizeMode={'contain'}
-              width={25}
-              height={25}
-            />
-            <View marginLeft={10}>
-              <Text ftLightWhite fontSize={15} bold>
-                {symbol}
-              </Text>
-              <Text ftLightWhite fontSize={12}>
-                {name}
+  return infoLoading ? null : (
+     
+      <>
+        <Line width={'100%'} height={1} />
+        <GestureButton onPress={onPressItem}>
+          <ViewRow flex={1} paddingTop={15} paddingBottom={15}>
+            <ViewRow flex={2.5} alignItems={'center'} paddingLeft={10}>
+              <Image
+                source={{uri: image}}
+                resizeMode={'contain'}
+                width={25}
+                height={25}
+              />
+              <View marginLeft={10}>
+                <Text ftLightWhite fontSize={15} bold>
+                  {infoData.name.length > 9 ? `${infoData.name.substring(0, 9)}...` : infoData.name}
+                </Text>
+                <Text ftLightWhite fontSize={12}>
+                  {infoData.symbol}
+                </Text>
+              </View>
+            </ViewRow>
+            <View
+              flex={1.2}
+              alignItems={'flex-end'}
+              justifyContent={'center'}
+              paddingRight={20}
+              marginrLeft={10}
+            >
+              <Text ftLightWhite fontSize={name === "next-defi-protocol" ? 12 : 14}>
+                { ` $${name === "next-defi-protocol" ? price.toFixed(6) : price.toFixed(2)}`}
               </Text>
             </View>
-          </ViewRow>
-          <View
-            flex={1}
-            alignItems={'flex-end'}
-            justifyContent={'center'}
-            paddingRight={20}
-          >
-            <Text ftLightWhite fontSize={14}>
-              {tickers && tickers[symbol]
-                ? tickers[symbol].symbol !== 'ORBS/KRW' // TODO 하드코딩 이 부분 ORBS/KRW가 아닌 경우(환율 계산)에 대한 것 추후 수정 필요
-                  ? `$${convertPrice(tickers[symbol].close)}`
-                  : `$${convertPrice(tickers[symbol].close / usdExchangeRate)}`
-                : `$0`}
-            </Text>
-          </View>
-          <View
-            flex={2}
-            justifyContent={'center'}
-            alignItems={'flex-end'}
-            paddingRight={20}
-          >
-            <ViewBorderRadius
-              bgMint
-              width={80}
-              paddingTop={7}
-              paddingBottom={7}
-              paddingRight={10}
-              paddingLeft={10}
+            <View
+              flex={2}
+              justifyContent={'center'}
+              alignItems={'flex-end'}
+              paddingRight={20}
             >
-              <Text
-                textAlign={'center'}
-                ftLightWhite
-                fontSize={13}
-              >{`${annualInteresetRate}%`}</Text>
-            </ViewBorderRadius>
-          </View>
-        </ViewRow>
-      </GestureButton>
-    </>
+              <ViewBorderRadius
+                bgMint
+                width={80}
+                paddingTop={7}
+                paddingBottom={7}
+                paddingRight={10}
+                paddingLeft={10}
+              >
+                <Text
+                  textAlign={'center'}
+                  ftLightWhite
+                  fontSize={13}
+                >{`${rate}%`}</Text>
+              </ViewBorderRadius>
+            </View>
+          </ViewRow>
+        </GestureButton>
+      </> 
   );
 };
 
