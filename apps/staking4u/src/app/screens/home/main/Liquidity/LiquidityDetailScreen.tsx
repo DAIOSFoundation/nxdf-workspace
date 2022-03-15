@@ -1,233 +1,168 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
-import * as modalActions from '../../../store/modules/modal/actions';
-import * as stakeRayActions from '../../../store/modules/stake/ray/actions';
-import {
-  SafeAreaView,
-  View,
-  ViewRow,
-  ScrollView,
-  ViewRowBorderRadius,
-} from '../../../components/styled/View';
-import { Text } from '../../../components/styled/Text';
-import Topbar from '../../../components/bar/TopBar';
-import Line from '../../../components/line/Line';
-import {
-  ButtonRadius,
-  ButtonBorderRadius,
-  Button,
-} from '../../../components/styled/Button';
+import React, { useEffect, useState } from 'react';
+import { View, SafeAreaView, ViewRow, ScrollView } from '../../../../components/styled/View';
+import { Text } from '../../../../components/styled/Text';
+import Topbar from '../../../../components/bar/TopBar';
+import styled from 'styled-components/native';
+import { Button, ButtonRadius } from '../../../../components/styled/Button';
+import iconPlus from "../../../assets/main/icon_Plus.png"
+import { Image } from '../../../../components/styled/Image';
+import Line from '../../../../components/line/Line';
 import CheckBox from '@react-native-community/checkbox';
-import InputBorderWith from '../../../components/input/InputBorderWith';
-import { colors } from '../../../components/styled/Common';
-import { ERC20_TOKENS, SOL_TOKENS } from '../../../utils/constants';
+import { colors } from '../../../../components/styled/Common';
 
-const FlexibleInputScreen = ({ item }) => {
-  const dispatch = useDispatch();
-  const maxAmount = useRef(0);
-  const [amount, setAmount] = useState('');
+const SwapView = styled.View`
+  width: 80%;
+  flex: 1;
+  justify-self: center;
+  align-self: center;
+  justify-content: center;
+  margin-bottom: 10px;
+`;
+
+
+const TopView = styled(SwapView)`
+  margin-top: 20px;
+`
+
+const FromView = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+
+`;
+
+
+const FromText = styled.Text`
+  color: white;
+  
+`
+
+const SwapBox = styled.View`
+  height: 50%;
+  border: 1px solid white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(49,56,103);
+`;
+
+const LiquidCoin = styled.View`
+  width: 15%;
+  height: 80%;
+  background: rgb(49,56,103);
+  justify-content: center;
+  align-items: center;
+`
+
+const SwapPrice = styled.View`
+  width: 70%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  background: rgb(49,56,103);
+`;
+
+const Input = styled.TextInput`
+  width: 30%;
+  justify-content: flex-end;
+  color: white;
+  text-align: right;
+`;
+
+const MaxBtn = styled.TouchableOpacity`
+  background-color: white;
+  padding: 4px;
+  border-radius: 5px;
+`;
+
+const IconView = styled.View`
+  align-self: center;
+`
+
+const ToText = styled(FromText)`
+  margin-top: 5px;
+  align-self: flex-end;
+`;
+
+
+//설명 부분 
+const DesView = styled(View)`
+ padding: 10px;
+
+`
+
+
+const BtnView = styled(ViewRow)`
+`
+
+
+
+const LiquiditiyDetailScreen = ({ item }) => {
+  const [fInput, setFinput] = useState(0);
+  const [sInput, setSinput] = useState(0);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
-
-  const solSecret = '';
-  const solNetworkMode = '';
-  const erc20Tokens = {
-    AAVE: { balance: 100 },
-    ORBS: { balance: 200 },
-    SOL: { balance: 300 },
-    RAY: { balance: 400 },
-  };
-  const solTokens = {
-    AAVE: { amount: 100 },
-    ORBS: { amount: 200 },
-    SOL: { amount: 300 },
-    RAY: { amount: 400 },
-  };
-  const stakingRayInfo: any = {
-    responseStatus: 200,
-    responseMessage: 'S0000',
-    data: {
-      result: [
-        {
-          publicKey: 'DJ2bHMbS2GpnzcE5Y8rgTRiRjgv3vXUNSLBjR1FXLmQG',
-          decimals: 6,
-          name: 'RAY-SOL',
-          rewardDebt: '0.009426878429478',
-          depositBalance: '0.168719',
-          poolTotalReward: '1066212.39',
-        },
-        {
-          publicKey: '9T1DZ7kgPKkLPr1Jq5u4TDCWdVwhQoJ8qKaUjS3HAFZX',
-          decimals: 6,
-          name: 'RAY',
-          rewardDebt: '0.002720706183536',
-          depositBalance: '0.505136',
-          poolTotalReward: '1947851.7',
-        },
-      ],
-    },
-  };
-  const [message, setMessage] = useState('');
-
-  const depositBalance = 100;
-
-  useEffect(() => {
-    if (message === 'ray staking success') {
-      Actions.stakingCompleteScreen({
-        amount,
-        annualInteresetRate: item.annualInteresetRate,
-        symbol: item.symbol,
-      });
-      dispatch(stakeRayActions.reset_message(''));
-    } else if (message === 'ray staking failure') {
-      dispatch(
-        modalActions.change_modal_message(
-          'A problem occurred during the staking process. Contact to manager'
-        )
-      );
-      dispatch(modalActions.change_modal_one_button(true));
-    }
-  }, [message]);
-
-  const renderBalance = useCallback(() => {
-    if (ERC20_TOKENS.includes(item.symbol)) {
-      maxAmount.current = erc20Tokens?.[item.symbol].balance;
-      return erc20Tokens
-        ? `Balance : ${erc20Tokens?.[item.symbol].balance} ${item.symbol}`
-        : `Balance : 0 ${item.symbol}`;
-    } else if (SOL_TOKENS.includes(item.symbol)) {
-      maxAmount.current = solTokens?.[item.symbol].amount;
-      return solTokens
-        ? `Balance : ${erc20Tokens?.[item.symbol].balance} ${item.symbol}`
-        : `Balance : 0 ${item.symbol}`;
-    }
-  }, [erc20Tokens, solTokens]);
-
-  const onPressToggle = () => {
-    setToggleCheckBox(!toggleCheckBox);
-  };
-
-  const onPressMax = () => {
-    setAmount(String(maxAmount.current));
-  };
-
-  const startStaking = (symbol) => {
-    switch (symbol) {
-      case 'RAY': {
-        const body = {
-          networkMode: solNetworkMode,
-          solSecret,
-          amount,
-        };
-        //dispatch(stakeRayActions.post_ray_staking(body));
-        setMessage('ray staking success');
-        break;
+  const Schange = (event) => {
+      const {text} = event.nativeEvent;
+      setSinput(text.replace(/[^0-9]/g, ''));
       }
-      default: {
+  const Fchange = (event) => {
+    const { text } = event.nativeEvent;
+    const num = text.replace(/[^0-9]/g, '')
+      setFinput(num);
       }
-    }
-  };
-
-  const onPressStart = () => {
-    setAmount('0.1'); // input not working
-
-    if (amount && toggleCheckBox) {
-      if (Number(amount) > maxAmount.current) {
-        dispatch(
-          modalActions.change_modal_message(
-            'There are not enough assets in your balance.'
-          )
-        );
-        dispatch(modalActions.change_modal_one_button(true));
-      } else {
-        startStaking(item.symbol);
-      }
-    } else {
-      dispatch(
-        modalActions.change_modal_message(
-          'Please enter amount or check agreement of notices.'
-        )
-      );
-      dispatch(modalActions.change_modal_one_button(true));
-    }
+const onPressToggle = () => {
+    console.log("시작")
   };
 
   return (
-    <SafeAreaView bgNavyTheme>
-      <Topbar isLeftButton title={`${item.name} Flexible Staking`} />
-      <View flex={3} justifyContent={'center'} alignItems={'center'}>
-        <View width={'96%'} alignSelf={'center'}>
-          <ViewRow
-            width={'96%'}
-            alignItems={'center'}
-            justifyContent={'space-between'}
-            marginBottom={10}
-            alignSelf={'center'}
-          >
-            <Text fontSize={15} ftWhite>
-              {stakingRayInfo.length > 0 &&
-              stakingRayInfo[0].depositBalance !== '0'
-                ? 'Additional Staking Amount'
-                : 'Staking Amount'}
-            </Text>
-            <Text fontSize={12} ftBlueGray textAlign={'right'}>
-              {renderBalance()}
-            </Text>
-          </ViewRow>
-          <InputBorderWith // Not working
-            width={'96%'}
-            value={amount}
-            placeholder={
-              item.minimumLockedAmount > 0
-                ? `Min ${item.minimumLockedAmount} ${item.symbol}`
-                : '0'
-            }
-            isOnlyNumber
-            onChangeText={(text) => setAmount(text)}
-          >
-            <ButtonBorderRadius
-              alignSelf={'center'}
-              onPress={onPressMax}
-              borderRadius={6}
-              width={55}
-              height={35}
-              paddingLeft={10}
-              paddingRight={10}
-              paddingTop={5}
-              paddingBottom={5}
-              bgWhite
-              activeOpacity={0.8}
-            >
-              <Text ftFontNavy fontSize={13} bold>
-                MAX
-              </Text>
-            </ButtonBorderRadius>
-          </InputBorderWith>
-        </View>
-        {stakingRayInfo.length > 0 &&
-        stakingRayInfo[0].depositBalance !== '0' ? (
-          <ViewRowBorderRadius
-            justifyContent={'space-between'}
-            width={'94%'}
-            bgLineNavy
-            borderRadius={6}
-            marginTop={20}
-            paddingTop={10}
-            paddingBottom={10}
-          >
-            <Text ftBlueGray fontSize={13} paddingLeft={15}>
-              Existing Deposit
-            </Text>
-            <Text ftBlueGray fontSize={13} paddingRight={15}>
-              {`${depositBalance} ${item.symbol}`}
-            </Text>
-          </ViewRowBorderRadius>
-        ) : (
-          <></>
-        )}
-      </View>
-      <Line width={'100%'} height={3} />
-      <View flex={3} justifyContent={'center'} alignItems={'center'}>
+     <SafeAreaView bgNavyTheme>
+      <Topbar isLeftButton title={item.symbol} />
+      <TopView>
+        <FromView>
+          <FromText>Input</FromText>
+          <FromText>{`Balance: ${fInput} ETH`}</FromText>
+        </FromView>
+        <SwapBox>
+          <LiquidCoin>
+            <Image source={item.logo[0]} height={20} width={20} />
+          </LiquidCoin>
+          <SwapPrice>
+            <Input value={fInput} placeholder={'0'} onChange={Fchange} />
+            <Text ftWhite marginLeft={5} marginRight={5}>ETH</Text>
+            <MaxBtn><Text>Max</Text></MaxBtn>
+          </SwapPrice>
+        </SwapBox>
+      </TopView>
+      {/* 이미지 */}
+        <IconView>
+          <Image source={iconPlus} height={30} width={30} />
+        </IconView>
+    {/* to */}
+      <SwapView>
+        <FromView>
+          <FromText>Input</FromText>
+          <FromText>{`Balance: ${sInput} ETH`}</FromText>
+        </FromView>
+        <SwapBox>
+          <LiquidCoin>
+            <Image source={item.logo[1]} height={20} width={20} />
+          </LiquidCoin>
+          <SwapPrice>
+            <Input value={sInput} placeholder={'0'} onChange={Schange} />
+            <Text ftWhite marginLeft={5} marginRight={5}>ETH</Text>
+            <MaxBtn><Text>Max</Text></MaxBtn>
+          </SwapPrice>
+        </SwapBox>
+      </SwapView>
+      {/* 상세 정보 창 */}
+      <View flex={2} justifyContent={'center'} alignItems={'center'}>
         <View width={'94%'} alignSelf={'center'}>
           <Text fontSize={15} ftYellowTheme bold marginBottom={10}>
             Product Outline
@@ -247,25 +182,30 @@ const FlexibleInputScreen = ({ item }) => {
               ftWhite
               bold
               textAlign={'right'}
-            >{`${item.name} Flexible Staking`}</Text>
+            >{`${item.name} Liquidity pool`}</Text>
           </ViewRow>
           <ViewRow marginBottom={8}>
             <Text fontSize={14} ftBlueGray width={'60%'}>
-              Minimum Locked Amount
+              TVL
             </Text>
             <Text width={'40%'} fontSize={14} ftWhite textAlign={'right'}>
-              {' '}
-              {item.minimumLockedAmount > 0
-                ? `Min ${item.minimumLockedAmount} ${item.symbol}`
-                : 'None'}
+              {item.poolPrice}$
             </Text>
           </ViewRow>
           <ViewRow marginBottom={8}>
             <Text width={'50%'} fontSize={14} ftBlueGray>
-              Due Date
+             Exchange Rate
             </Text>
             <Text width={'50%'} fontSize={14} ftWhite textAlign={'right'}>
-              Withdrawal any time
+              0
+            </Text>
+          </ViewRow>
+          <ViewRow marginBottom={8}>
+            <Text width={'50%'} fontSize={14} ftBlueGray>
+              Share Ratio
+            </Text>
+            <Text width={'50%'} fontSize={14} ftWhite textAlign={'right'}>
+              {`${0}%`}
             </Text>
           </ViewRow>
           <ViewRow marginBottom={8}>
@@ -280,7 +220,7 @@ const FlexibleInputScreen = ({ item }) => {
       </View>
       <Line width={'100%'} height={3} />
       <ScrollView
-        flex={2}
+        flex={1}
         width={'94%'}
         alignSelf={'center'}
         marginTop={20}
@@ -416,7 +356,8 @@ const FlexibleInputScreen = ({ item }) => {
           I have read and agree to all notices
         </Text>
       </Button>
-      <View flex={1.5} justifyContent={'flex-end'}>
+      {/* 스위치 */}
+      <View flex={1} justifyContent={'flex-end'}>
         <ButtonRadius
           bgYellowTheme
           width={'94%'}
@@ -426,15 +367,18 @@ const FlexibleInputScreen = ({ item }) => {
           marginBottom={20}
           marginLeft={'auto'}
           marginRight={'auto'}
-          onPress={onPressStart}
+          onPress={""}
         >
           <Text ftNavyTheme bold fontSize={16}>
-            Stake Now
+            Enter an amount
           </Text>
         </ButtonRadius>
       </View>
     </SafeAreaView>
-  );
+  )
 };
 
-export default FlexibleInputScreen;
+
+
+
+export default LiquiditiyDetailScreen;

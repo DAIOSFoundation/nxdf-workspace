@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { ViewRow, View } from '../../components/styled/View';
-import { Text } from '../../components/styled/Text';
-import { ButtonRadius } from '../../components/styled/Button';
-import { GestureButton } from '../../components/styled/GestureButton';
+import React, {useState} from 'react';
+import {ViewRow, View} from '../../components/styled/View';
+import {Text} from '../../components/styled/Text';
+import {ButtonRadius} from '../../components/styled/Button';
+import {GestureButton} from '../../components/styled/GestureButton';
 
 /*
 ** props
@@ -11,19 +11,7 @@ isPressable : boolean
 setMnemonic : setter(function) : 상위 컴퍼넌트(MnemonicConfirmationScreen) 랜더링을 위해서 사용
 */
 
-interface MnemonicListProps {
-  mnemonic: string[];
-  isPressable?: boolean; // nullable
-  setMnemonic?: (string) => void; // nullable
-  realMnemonic?: string; // nullable
-}
-
-const MnemonicList = ({
-  mnemonic,
-  isPressable,
-  setMnemonic,
-  realMnemonic,
-}: MnemonicListProps) => {
+const MnemonicList = ({mnemonic, isPressable, setMnemonic, realMnemonic}) => {
   const [_clickedMnemonic, _setClickedMnemonic] = useState([]); // 클릭한 니모닉 문구를 담는 배열
 
   // 개발단계에서의 백도어버튼
@@ -36,7 +24,7 @@ const MnemonicList = ({
     let filteredMnemonic;
     if (_clickedMnemonic.includes(phrase)) {
       filteredMnemonic = _clickedMnemonic.filter(
-        (_phrase) => phrase !== _phrase
+        (_phrase) => phrase !== _phrase,
       );
     } else {
       filteredMnemonic = [..._clickedMnemonic, phrase];
@@ -51,8 +39,8 @@ const MnemonicList = ({
         mnemonic.length > 0 &&
         mnemonic.map((phrase, index) => (
           <ButtonRadius
-            {...(isPressable ? { activeOpacity: 0.4 } : { activeOpacity: 1 })}
-            {...(isPressable ? { onPress: () => onPressToggle(phrase) } : null)}
+            {...(isPressable ? {activeOpacity: 0.4} : {activeOpacity: 1})}
+            {...(isPressable ? {onPress: () => onPressToggle(phrase)} : null)}
             key={index}
             width={'26%'}
             paddingTop={7}
@@ -62,15 +50,13 @@ const MnemonicList = ({
             marginTop={7}
             marginBottom={7}
             {...(_clickedMnemonic.includes(phrase)
-              ? { bgLightWhite: true }
-              : { bgLightNavy: true })}
-          >
+              ? {bgLightWhite: true}
+              : {bgLightNavy: true})}>
             <Text
               {...(_clickedMnemonic.includes(phrase)
-                ? { ftFontNavy: true }
-                : { ftLightWhite: true })}
-              fontSize={15}
-            >
+                ? {ftFontNavy: true}
+                : {ftLightWhite: true})}
+              fontSize={15}>
               {phrase}
             </Text>
           </ButtonRadius>
@@ -83,8 +69,7 @@ const MnemonicList = ({
           width={100}
           onPress={onPressBackdoor}
           borderRadius={10}
-          activeOpacity={1}
-        >
+          activeOpacity={1}>
           <Text ftNavyTheme>backdoor</Text>
         </GestureButton>
       ) : null}

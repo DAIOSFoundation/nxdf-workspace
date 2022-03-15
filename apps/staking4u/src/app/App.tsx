@@ -13,8 +13,11 @@ import AndroidBackHandle from './screens/global/AndroidBackHanlder';
 // import { SafeAreaView } from './src/components/styled/View';
 import Push from './screens/global/Push';
 import SplashScreen from 'react-native-splash-screen';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const store = configure();
+
+const queryClient = new QueryClient();
 
 const App = () => {
   useEffect(() => {
@@ -24,12 +27,14 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <ScreenRouter />
-      <ToastMessage />
-      <GlobalModal />
-      <AndroidBackHandle />
-      {/* <Push /> */}
-      <Loading />
+       <QueryClientProvider client={queryClient} >
+          <ScreenRouter />
+          <ToastMessage />
+          <GlobalModal />
+          <AndroidBackHandle />
+          {/* <Push /> */}
+            <Loading />
+        </QueryClientProvider>
     </Provider>
   );
 };

@@ -1,28 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import {
-  shallowEqual,
-  useDispatch,
-  useSelector,
-  RootStateOrAny,
-} from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import React, {useEffect, useState} from 'react';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import {Actions} from 'react-native-router-flux';
 import * as authsActions from '../../store/modules/auths/actions';
 import * as modalActions from '../../store/modules/modal/actions';
-import { SafeAreaView, View } from '../../components/styled/View';
-import { ButtonRadius } from '../../components/styled/Button';
-import { Text } from '../../components/styled/Text';
+import {SafeAreaView, View} from '../../components/styled/View';
+import {ButtonRadius} from '../../components/styled/Button';
+import {Text} from '../../components/styled/Text';
 import TopBar from '../../components/bar/TopBar';
 import InputBorderRadius from '../../components/input/InputBorderRadius';
-import { regEmail } from '../../utils/regExp';
-import { getData, storeData } from '../../utils/functions';
+import {regEmail} from '../../utils/regExp';
+import {getData, storeData} from '../../utils/functions';
 
 const EmailVerificationScreen = () => {
   const dispatch = useDispatch();
-  const { postEmailAuth } = useSelector(
-    (state: RootStateOrAny) => ({
+  const {postEmailAuth} = useSelector(
+    (state) => ({
       postEmailAuth: state.auths.postEmailAuth,
     }),
-    shallowEqual
+    shallowEqual,
   );
 
   const [email, setEmail] = useState('');
@@ -77,7 +72,7 @@ const EmailVerificationScreen = () => {
           marginLeft={'auto'}
           marginRight={'auto'}
           label={'Enter e-mail address'}
-          labelColor={{ ftLightWhite: true }}
+          labelColor={{ftLightWhite: true}}
           placeholder={'Please enter your e-mail address.'}
           onChangeText={OnChangeText}
           value={email}
@@ -89,7 +84,7 @@ const EmailVerificationScreen = () => {
       </View>
       <View flex={1} justifyContent={'flex-end'}>
         <ButtonRadius
-          {...(isValidEmail ? { bgYellowTheme: true } : { bgBlueGray: true })}
+          {...(isValidEmail ? {bgYellowTheme: true} : {bgBlueGray: true})}
           width={'88%'}
           paddingTop={10}
           paddingBottom={10}
@@ -97,14 +92,12 @@ const EmailVerificationScreen = () => {
           marginBottom={20}
           marginLeft={'auto'}
           marginRight={'auto'}
-          onPress={onPressNext}
-        >
+          onPress={onPressNext}>
           <Text
-            {...(isValidEmail ? { bgYellowTheme: true } : { bgBlueGray: true })}
+            {...(isValidEmail ? {bgYellowTheme: true} : {bgBlueGray: true})}
             ftFontNavy
             bold
-            fontSize={16}
-          >
+            fontSize={16}>
             Send verification mail
           </Text>
         </ButtonRadius>
