@@ -1,7 +1,7 @@
 //https://react-table.tanstack.com/docs/examples/pagination
 import React from 'react'
 import {DivTable,Option,Span,Select,Styles} from './style'
-import TablePagination from './tablePagination'
+import TablePagination from './TablePagination'
 import { useTable, usePagination } from 'react-table'
 
 
@@ -39,10 +39,10 @@ function Table({ columns, data }) {
     <DivTable>
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+          {headerGroups.map((headerGroup,index) => (
+            <tr key={`${index}+tr`} {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                <th key={`${index}+th`} {...column.getHeaderProps()}>{column.render('Header')}</th>
               ))}
             </tr>
           ))}
@@ -51,9 +51,9 @@ function Table({ columns, data }) {
             {page.map((row, i) => {
               prepareRow(row)
               return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map(cell => {
-                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                <tr key={`${i}+intr`} {...row.getRowProps()}>
+                  {row.cells.map((cell,index) => {
+                    return <td key={`${index}+td`} {...cell.getCellProps()}>{cell.render('Cell')}</td>
                   })}
                 </tr>
               )

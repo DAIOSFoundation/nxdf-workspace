@@ -12,8 +12,8 @@ import { Router, Stack, Scene } from 'react-native-router-flux';
 // import MnemonicInputScreen from '../login/MnemonicInputScreen';
 
 import MainScreen from '../home/main/MainScreen';
-import FlexibleDetailScreen from '../home/main/FlexibleDetailScreen';
-import FlexibleInputScreen from '../home/main/FlexibleInputScreen';
+import FlexibleDetailScreen from '../home/main/Flexible/FlexibleDetailScreen';
+import FlexibleInputScreen from '../home/main/Flexible/FlexibleInputScreen';
 import StakingCompleteScreen from '../home/main/StakingCompleteScreen';
 // import ProductDetailScreen from '../home/main/ProductDetailScreen';
 // import ProductOperationHistory from '../home/main/ProductOperationHistory';
@@ -21,6 +21,7 @@ import StakingCompleteScreen from '../home/main/StakingCompleteScreen';
 // import AutonomousDetailScreen from '../home/main/AutonomousDetailScreen';
 
 import WalletScreen from '../home/wallet/WalletScreen';
+import SwapScreen from '../home/swap/SwapScreen';
 import WalletDetailScreen from '../home/wallet/WalletDetailScreen';
 import ReceiveScreen from '../home/wallet/receive/ReceiveScreen';
 import SendAddressScreen from '../home/wallet/send/SendAddressScreen';
@@ -48,11 +49,27 @@ import iconInvestmentNormal from '../../assets/tabBar/icon_investment_normal.png
 import iconInvestmentPressed from '../../assets/tabBar/icon_investment_pressed.png';
 import iconMyInfoNormal from '../../assets/tabBar/icon_my_info_normal.png';
 import iconMyInfoPressed from '../../assets/tabBar/icon_my_info_pressed.png';
+import iconSwapNormal from '../../assets/tabBar/icon_swap_normal.png';
+import iconSwapPressed from '../../assets/tabBar/icon_swap_pressed.png';
 
 import { colors } from '../../components/styled/Common';
 import UnstakingCompleteScreen from '../home/investment/UnstakingCompleteScreen';
 import HarvestCompleteScreen from '../home/investment/HarvestCompleteScreen';
 import SolSendAmountScreen from '../home/wallet/send/SolSendAmountScreen';
+import LiquidityDetailScreen from '../home/main/Liquidity/LiquidityDetailScreen';
+import IndexScreen from '../index/IndexScreen';
+import MnemonicInputScreen from '../login/MnemonicInputScreen';
+import ServiceAgreenmentScreen from '../register/ServiceAgreementScreen';
+import MnemonicGuideScreen from '../register/MnemonicGuideScreen';
+import MnemonicGenerationScreen from '../register/MnemonicGenerationScreen';
+import MnemonicConfirmationScreen from '../register/MnemonicConfirmationScreen';
+import EmailVerificationScreen from '../register/EmailVerificationScreen';
+import EmailSendingSuccessScreen from '../register/EmailSendingSuccessScreen';
+import RegisterSuccessScreen from '../register/RegisterSuccessScreen';
+import WalletNftDetailScreen from '../home/wallet/WalletNftDetailScreen';
+import NftSellScreen from '../home/wallet/nft/nftSell';
+import NftSendScreen from '../home/wallet/nft/nftSend';
+import NftSendDetailScreen from '../home/wallet/nft/nftSendDetail';
 // import TermsOfServiceScreen from './TermsOfServiceScreen';
 // import PrivacyScreen from './PrivacyScreen';
 
@@ -69,6 +86,8 @@ const ScreenRouter = (props) => {
             height={iconSize}
             resizeMode={'contain'}
             source={focused ? pressedImg : normalImg}
+            bgYellowTheme={focused}
+            color={focused ? colors.White : colors.Black}
           />
         </TabWrapperBar>
       ),
@@ -84,12 +103,78 @@ const ScreenRouter = (props) => {
         return tabBarIconGenerator(iconInvestmentPressed, iconInvestmentNormal);
       case 'myInfo':
         return tabBarIconGenerator(iconMyInfoPressed, iconMyInfoNormal);
+      case 'Swap':
+        return tabBarIconGenerator(iconSwapPressed, iconSwapNormal);
     }
   };
 
   return (
     <Router>
       <Stack hideNavBar key="root">
+        {/* <Scene key={'Index'}>
+          <Scene
+            key="indexScreen"
+            component={IndexScreen}
+            hideTabBar
+            hideNavBar
+          />
+        </Scene> */}
+
+        {/* <Scene key={'GetMnemonic'}>
+          <Scene
+            key="mnemonicInputScreen"
+            component={MnemonicInputScreen}
+            hideTabBar
+            hideNavBar
+          />
+        </Scene>
+
+        <Scene key={'GenerateMnemonic'}>
+          <Scene
+            key="serviceAgreementScreen"
+            component={ServiceAgreenmentScreen}
+            hideTabBar
+            hideNavBar
+          />
+          <Scene
+            key="mnemonicGuideScreen"
+            component={MnemonicGuideScreen}
+            hideTabBar
+            hideNavBar
+          />
+          <Scene
+            key="mnemonicGenerationScreen"
+            component={MnemonicGenerationScreen}
+            hideTabBar
+            hideNavBar
+          />
+          <Scene
+            key="mnemonicConfirmationScreen"
+            component={MnemonicConfirmationScreen}
+            hideTabBar
+            hideNavBar
+          />
+          <Scene
+            key="emailVerificationScreen"
+            component={EmailVerificationScreen}
+            hideTabBar
+            hideNavBar
+          />
+          <Scene
+            key="emailSendingSuccessScreen"
+            component={EmailSendingSuccessScreen}
+            hideTabBar
+            hideNavBar
+          />
+          <Scene
+            key="registerSuccessScreen"
+            component={RegisterSuccessScreen}
+            hideTabBar
+            hideNavBar
+          />
+        </Scene> */}
+
+
         <Scene
           key={'tabBar'}
           tabs
@@ -109,6 +194,7 @@ const ScreenRouter = (props) => {
             initial
           >
             <Scene key="mainScreen" component={MainScreen} />
+            {/* 시세창 이동 */}
             <Scene
               hideNavBar
               hideTabBar
@@ -121,6 +207,13 @@ const ScreenRouter = (props) => {
               key="flexibleInputScreen"
               component={FlexibleInputScreen}
             />
+            {/* 유동성풀 이동 */}
+             <Scene
+              hideNavBar
+              hideTabBar
+              key="LiquidityDetailScreen"
+              component={LiquidityDetailScreen}
+            />
             <Scene
               hideNavBar
               hideTabBar
@@ -131,28 +224,48 @@ const ScreenRouter = (props) => {
           {/* 지갑 */}
           <Scene hideNavBar key={'Wallet'} title={'wallet'} icon={tabBarIcon}>
             <Scene key="walletScreen" component={WalletScreen} />
-            <Scene
-              hideTabBar
-              key="walletDetailScreen"
-              component={WalletDetailScreen}
-            />
-            <Scene key={'receiveScreen'} component={ReceiveScreen} hideTabBar />
-            <Scene
-              key={'sendAddressScreen'}
-              component={SendAddressScreen}
-              hideTabBar
-            />
-            {/* <Scene
-              key={'ethSendAmountScreen'}
-              component={EthSendAmountScreen}
-              hideTabBar
-            /> */}
-            <Scene
-              key={'solSendAmountScreen'}
-              component={SolSendAmountScreen}
-              hideTabBar
-            />
-          </Scene>
+              <Scene
+                hideTabBar
+                key="walletDetailScreen"
+                component={WalletDetailScreen}
+              />
+              <Scene
+                hideTabBar
+                key="walletNftDetailScreen"
+                component={WalletNftDetailScreen}
+              />
+                <Scene
+                  key={'sellNftScreen'}
+                  component={NftSellScreen}
+                  hideTabBar
+                />
+                <Scene
+                  key={'sendNftScreen'}
+                  component={NftSendScreen}
+                  hideTabBar
+                />
+                <Scene
+                  key={'sendNftDetailScreen'}
+                  component={NftSendDetailScreen}
+                  hideTabBar
+                />
+              <Scene key={'receiveScreen'} component={ReceiveScreen} hideTabBar />
+                <Scene
+                  key={'sendAddressScreen'}
+                  component={SendAddressScreen}
+                  hideTabBar
+                />
+                {/* <Scene
+                  key={'ethSendAmountScreen'}
+                  component={EthSendAmountScreen}
+                  hideTabBar
+                /> */}
+                <Scene
+                  key={'solSendAmountScreen'}
+                  component={SolSendAmountScreen}
+                  hideTabBar
+                />
+            </Scene>
           {/* 투자내역 */}
           <Scene
             hideNavBar
@@ -189,6 +302,10 @@ const ScreenRouter = (props) => {
               key="investmentHistoryDetailScreen"
               component={InvestmentHistoryDetailScreen}
             />
+          </Scene>
+          {/* swap */}
+           <Scene hideNavBar key={'Swap'} title={'Swap'} icon={tabBarIcon}>
+            <Scene hideNavBar key="SwapScreen" component={SwapScreen} />
           </Scene>
           {/* 나의 정보 */}
           <Scene hideNavBar key={'MyInfo'} title={'myInfo'} icon={tabBarIcon}>

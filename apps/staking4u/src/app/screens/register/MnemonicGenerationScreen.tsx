@@ -1,17 +1,12 @@
-import React, { useEffect } from 'react';
-import {
-  shallowEqual,
-  useSelector,
-  useDispatch,
-  RootStateOrAny,
-} from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import React, {useEffect} from 'react';
+import {shallowEqual, useSelector, useDispatch} from 'react-redux';
+import {Actions} from 'react-native-router-flux';
 import * as registerActions from '../../store/modules/register/actions';
 import * as globalActions from '../../store/modules/global/actions';
-import { SafeAreaView, View } from '../../components/styled/View';
-import { Text } from '../../components/styled/Text';
-import { ButtonRadius } from '../../components/styled/Button';
-import { Image } from '../../components/styled/Image';
+import {SafeAreaView, View} from '../../components/styled/View';
+import {Text} from '../../components/styled/Text';
+import {ButtonRadius} from '../../components/styled/Button';
+import {Image} from '../../components/styled/Image';
 import TopBar from '../../components/bar/TopBar';
 import MnemonicList from './MnemonicList';
 import copyIcon from '../../assets/register/icon_copy_grey.png';
@@ -19,11 +14,11 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 const MnemonicGenerationScreen = () => {
   const dispatch = useDispatch();
-  const { mnemonic } = useSelector(
-    (state: RootStateOrAny) => ({
+  const {mnemonic} = useSelector(
+    (state) => ({
       mnemonic: state.register.mnemonic,
     }),
-    shallowEqual
+    shallowEqual,
   );
 
   useEffect(() => {
@@ -62,8 +57,7 @@ const MnemonicGenerationScreen = () => {
           marginTop={20}
           marginLeft={'auto'}
           marginRight={'auto'}
-          onPress={onPressCopy}
-        >
+          onPress={onPressCopy}>
           <Image width={24} height={24} source={copyIcon} />
           <Text ftTheme bold fontSize={14}>
             Copy
@@ -80,8 +74,7 @@ const MnemonicGenerationScreen = () => {
           marginBottom={20}
           marginLeft={'auto'}
           marginRight={'auto'}
-          onPress={onPressNext}
-        >
+          onPress={onPressNext}>
           <Text ftNavyTheme bold fontSize={16}>
             Next
           </Text>

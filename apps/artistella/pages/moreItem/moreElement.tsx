@@ -4,8 +4,9 @@ import {EleDivS,SubImgDiv,GridImage,SubContentDiv,ImageHeadS,ImageSummary} from 
 
 export function MoreEle({img,header,text}){
   return(
-    <Link href='/ItemDetail'>
-      <EleDivS>
+    <Link href="/ItemDetail">
+      <a>
+        <EleDivS>
         <SubImgDiv>
           <GridImage src={img}></GridImage>
         </SubImgDiv>
@@ -13,7 +14,8 @@ export function MoreEle({img,header,text}){
           <ImageHeadS>{header}</ImageHeadS>
           <ImageSummary>{text}</ImageSummary>
         </SubContentDiv>
-      </EleDivS>
+        </EleDivS>
+        </a>
     </Link>
   )
 }

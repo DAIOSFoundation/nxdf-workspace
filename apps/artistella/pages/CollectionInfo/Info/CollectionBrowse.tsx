@@ -1,5 +1,5 @@
 import React from 'react';
-import InfoNumber from './collectionInfoNumber';
+import InfoNumber from './CollectionInfoNumber';
 import {Div,PhotoDiv,Photo,Name,ArtistGrid,Content} from '../style';
 
 

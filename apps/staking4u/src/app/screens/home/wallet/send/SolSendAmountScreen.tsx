@@ -104,7 +104,6 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
   };
 
   const onPressSend = () => {
-    setWithdrawalAmount('10');
     if (
       withdrawalAmount === '0' ||
       withdrawalAmount === '' ||

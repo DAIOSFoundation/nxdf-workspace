@@ -1,40 +1,42 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { FlatList } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import { format } from 'date-fns';
-import { useDispatch } from 'react-redux';
-import Line from '../../../components/line/Line';
-import Coin from '../../../components/items/wallet/Coin';
-import {
-  SafeAreaView,
-  View,
-  ViewAbsolute,
-  ViewRow,
-} from '../../../components/styled/View';
+import { SceneMap, TabView } from 'react-native-tab-view';
+import { SafeAreaView, View, ViewAbsolute, ViewRow } from '../../../components/styled/View';
+import TabViewBar from '../../../components/bar/TabViewBar';
+import WalletCoinScreen from './WalletCoinScreen';
+import WalletNftScreen from './WalletNftScreen';
 import { Text } from '../../../components/styled/Text';
-import { Button } from '../../../components/styled/Button';
+import Line from '../../../components/line/Line';
 import { Image } from '../../../components/styled/Image';
-import { localeString } from '../../../utils/functions';
+
 import dollarIcon from '../../../assets/common/dollar.png';
 import checkPressed from '../../../assets/common/iconOvalCheckPressed.png';
-import orbsLogo from '../../../assets/logos/orbs.png';
-import aaveLogo from '../../../assets/logos/aave.png';
-import rayLogo from '../../../assets/logos/ray.png';
-import atlasLogo from '../../../assets/logos/atlas.png';
-import solLogo from '../../../assets/logos/sol.png';
+import { useDispatch } from 'react-redux';
+import { localeString } from '../../../utils/functions';
+import { format } from 'date-fns';
+import { Button } from '../../../components/styled/Button';
+import { tickers } from '../../../utils/dummy';
+import { Actions } from 'react-native-router-flux';
+import Coin from '../../../components/items/wallet/Coin';
 
-// 나의 지갑
-const WalletScreen = (props) => {
-  const solTokens = [];
-  const tickers = {
-    AAVE: { info: { priceChangePercent: -1.2 }, close: 1.2 },
-    ORBS: { info: { signed_change_rate: 0.1 }, close: 12.45 },
-    SOL: { info: { priceChangePercent: -3.14 }, close: 123.45 },
-    RAY: { info: { priceChangePercent: 2.23 }, close: 67.8 },
-    ATLAS: { info: { priceChangePercent: 10.01 }, close: 10.0 },
-  };
-  const usdExchangeRate = 1;
 
+
+
+
+const WalletScreen = () => {
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: 'first', title: 'First' },
+    { key: 'second', title: 'Second' },
+  ]);
+  const [tabItems] = useState(['Token', 'Collection']);
+
+  // 탭뷰 스크린
+  const renderScene = SceneMap({
+    first: WalletCoinScreen,
+    second: WalletNftScreen,
+  });
+
+  
   const aaveAmount = { data: { balance: 1 } };
   const orbsAmount = { data: { balance: 2 } };
   const solAmount = { data: { balance: 3 } };
@@ -88,6 +90,8 @@ const WalletScreen = (props) => {
     }
   };
 
+  const usdExchangeRate = 1;
+
   const totalBalances = useMemo(() => {
     return totalBalanceCalculation(
       usdExchangeRate,
@@ -104,49 +108,7 @@ const WalletScreen = (props) => {
     );
   }, []);
 
-  const coins = [
-    {
-      name: 'Aave', // 코인명
-      symbol: 'AAVE', // 단위
-      logo: aaveLogo, // 로고 이미지
-      ticker: tickers?.['AAVE']?.close, // 현재 시장 가격 (시세)
-      amount: aaveAmount?.data.balance, //  보유 코인 개수
-      price: tickers?.['AAVE']?.close * aaveAmount?.data.balance, // 현재 시장 가 * 보유 코인 갯수 ( $ )
-    },
-    {
-      name: 'Orbs',
-      symbol: 'ORBS',
-      logo: orbsLogo,
-      ticker: tickers?.['ORBS']?.close,
-      amount: orbsAmount?.data.balance,
-      price:
-        (tickers?.['ORBS']?.close * orbsAmount?.data.balance) / usdExchangeRate,
-    },
-    {
-      name: 'Solana',
-      symbol: 'SOL',
-      logo: solLogo,
-      ticker: tickers?.['SOL']?.close,
-      amount: solAmount?.data.balance,
-      price: tickers?.['SOL']?.close * solAmount?.data.balance,
-    },
-    {
-      name: 'Raydium',
-      symbol: 'RAY',
-      logo: rayLogo,
-      ticker: tickers?.['RAY']?.close,
-      amount: rayBalance,
-      price: tickers?.['RAY']?.close * rayBalance,
-    },
-    {
-      name: 'Star Atlas',
-      symbol: 'ATLAS',
-      logo: atlasLogo,
-      ticker: tickers?.['ATLAS']?.close,
-      amount: atlasBalance,
-      price: tickers?.['ATLAS']?.close * atlasBalance,
-    },
-  ];
+  
 
   const renderCoin = ({ item }) => {
     let solTokenPublicKey;
@@ -180,14 +142,17 @@ const WalletScreen = (props) => {
     );
   };
 
+
+
   return (
     <SafeAreaView bgNavyTheme>
       <View
         flex={1}
+        width={'96%'}
         justifyContent={'center'}
         alignSelf={'center'}
-        width={'96%'}
       >
+       
         <View height={50} marginTop={20} marginLeft={10}>
           <Text ftWhite bold fontSize={24}>
             My Wallet
@@ -228,23 +193,26 @@ const WalletScreen = (props) => {
           </View>
         </View>
         <Line width={'100%'} height={3} />
-        <View marginTop={5} marginBottom={5} width={'96%'} alignSelf={'center'}>
-          <ViewRow justifyContent={'flex-end'} alignItems={'center'}>
-            <Button width={30} height={30}>
-              <Image width={24} height={24} source={checkPressed} />
-            </Button>
-            <Text ftBlueGray fontSize={12}>
-              Show all assets
-            </Text>
+         <View width={"90%"} height={50} marginTop={10} marginLeft={10}>
+          <ViewRow  justifyContent={'space-between'} alignItems={'center'}>
+            <TabViewBar ftsize={"16"} index={index} tabItems={tabItems} setIndex={setIndex} />
+            <View marginLeft={"10"}  flexDirection={"row"} alignItems={'center'} >
+              <Button width={30} height={30}>
+                <Image width={24} height={24} source={checkPressed} />
+              </Button>
+              <Text ftBlueGray fontSize={12}>
+                Show all assets
+              </Text>
+            </View>
           </ViewRow>
         </View>
-        <View flex={5}>
-          <FlatList
-            data={coins}
-            renderItem={renderCoin}
-            keyExtractor={(item) => item.name}
-          />
-        </View>
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          renderTabBar={() => null}
+          onIndexChange={setIndex}
+          initialLayout={{ width: 10, height: 100 }}
+        />
       </View>
     </SafeAreaView>
   );

@@ -1,30 +1,25 @@
-import React, { useState, useRef } from 'react';
-import {
-  useSelector,
-  useDispatch,
-  shallowEqual,
-  RootStateOrAny,
-} from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import React, {useState, useRef} from 'react';
+import {useSelector, useDispatch, shallowEqual} from 'react-redux';
+import {Actions} from 'react-native-router-flux';
 import * as modalActions from '../../store/modules/modal/actions';
 import {
   SafeAreaView,
   View,
   ViewBorderRadius,
 } from '../../components/styled/View';
-import { Text } from '../../components/styled/Text';
-import { ButtonRadius } from '../../components/styled/Button';
+import {Text} from '../../components/styled/Text';
+import {ButtonRadius} from '../../components/styled/Button';
 import TopBar from '../../components/bar/TopBar';
 import MnemonicList from './MnemonicList';
-import { AESKey, shuffleArray } from '../../utils/functions';
+import {AESKey, shuffleArray} from '../../utils/functions';
 
 const MnemonicConfirmationScreen = () => {
   const dispatch = useDispatch();
-  const { mnemonic } = useSelector(
-    (state: RootStateOrAny) => ({
+  const {mnemonic} = useSelector(
+    (state) => ({
       mnemonic: state.register.mnemonic,
     }),
-    shallowEqual
+    shallowEqual,
   );
   const [clickedMnemonic, setClickedMnemonic] = useState([]);
   const shuffledMnemonic = useRef(shuffleArray(mnemonic.split(' ')));
@@ -33,8 +28,8 @@ const MnemonicConfirmationScreen = () => {
     if (mnemonic !== clickedMnemonic.join(' ')) {
       dispatch(
         modalActions.change_modal_message(
-          '입력하신 단어의 순서와 니모닉이 다릅니다.'
-        )
+          '입력하신 단어의 순서와 니모닉이 다릅니다.',
+        ),
       );
     } else {
       await AESKey(mnemonic);
@@ -61,16 +56,14 @@ const MnemonicConfirmationScreen = () => {
           width={'88%'}
           marginBottom={10}
           marginLeft={'auto'}
-          marginRight={'auto'}
-        >
+          marginRight={'auto'}>
           <Text
             ftLightWhite
             ftSmall
             paddingTop={20}
             paddingBottom={20}
             paddingLeft={15}
-            paddingRight={15}
-          >
+            paddingRight={15}>
             {clickedMnemonic.join(' ')}
           </Text>
         </ViewBorderRadius>
@@ -93,8 +86,7 @@ const MnemonicConfirmationScreen = () => {
           marginBottom={20}
           marginLeft={'auto'}
           marginRight={'auto'}
-          onPress={onPressNext}
-        >
+          onPress={onPressNext}>
           <Text ftFontNavy bold fontSize={16}>
             Next
           </Text>

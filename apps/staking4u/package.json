@@ -39,6 +39,9 @@
     "react-native-pdf": "*",
     "react-native-chart-kit": "*",
     "react-native-collapsible": "*",
-    "redux": "*"
+    "redux": "*",
+    "openlogin-react-native-sdk": "*",
+    "react-query": "*",
+    "@web3auth/react-native-sdk": "*"
   }
 }
