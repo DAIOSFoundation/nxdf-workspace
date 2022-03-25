@@ -29,7 +29,7 @@ export function Main(props: MainProps) {
 
   const { publicKey } = useWallet();
   const isMobile = useIsMobile();
-
+  console.log(isMobile);
   const handleSubmit = async () => {
     const isValidAddress = getIsValidSolanaAddress(address);
 

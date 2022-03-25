@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import {
   ref,child,get
 } from "@firebase/database"
-import {dbService} from "./firebase"
+import { dbService } from "./firebase"
+import LayoutProps from '../interface'
 
-const BuyerDiv=styled.div`
+const BuyerDiv=styled.div<{isMobile:boolean}>`
   height:100%;
-  width:100vw;
+  width:${({isMobile}) => isMobile ? `auto` : `100%`   };
   background-color:#524880;
   display:flex;
   flex-direction:column;
@@ -42,7 +43,7 @@ const Table=styled.table`
 
 `
 
-function LotteryBuyers() {
+function LotteryBuyers({isMobile}:LayoutProps) {
   const [buyers,setBuyers]=useState<any[]>([])
 
   useEffect(()=>{
@@ -59,7 +60,7 @@ function LotteryBuyers() {
   },[])
 
   return (
-    <BuyerDiv id='Buyers'>
+    <BuyerDiv id='Buyers' isMobile={isMobile} >
       <Title>Lottery Ticket Buyers</Title>
       <Table>
         <thead>

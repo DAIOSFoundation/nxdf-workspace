@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import LayoutProps from '../interface'
 
 import {
   ref,child,get
 } from "@firebase/database"
 import {dbService} from "./firebase"
 
-const WinnersDiv=styled.div`
+const WinnersDiv=styled.div<{isMobile: boolean}>`
   height:100%;
-  width:100vw;
+  width:${({ isMobile }) => isMobile ? "auto" : "100vw"};
   background-color:#524880;
   display:flex;
   flex-direction:column;
@@ -65,7 +66,7 @@ const Table=styled.table`
   }
 `
 
-function Winners() {
+function Winners({isMobile}:LayoutProps) {
   interface WinnersData{
     date:string,
     lottoNumber:string,
@@ -89,7 +90,7 @@ function Winners() {
   //console.log(winners[0]["winningTicket"][0])
 
   return (
-    <WinnersDiv id='winners'>
+    <WinnersDiv id='winners' isMobile={isMobile}>
       <Title>HALL OF WINNERS</Title>
       <Table>
         <thead>
