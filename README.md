@@ -42,6 +42,5 @@ android: `yarn start:staking4u:android`
 `rm -rf Pods`
 
 ### Airdrop
-`nx build nxdf-airdrop && nx export nxdf-airdrop`
-`cd apps/nxdf-airdrop`
-`firebase deploy --only hosting`
+`yarn build:nxdf-airdrop`
+`yarn deploy:nxdf-airdrop`

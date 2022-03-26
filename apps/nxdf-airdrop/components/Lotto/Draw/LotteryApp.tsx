@@ -12,6 +12,7 @@ import firebase from "firebase/compat";
 import database = firebase.database;
 import {increment} from "firebase/database";
 import router from 'next/router';
+import { useIsMobile } from '../../../hooks/useIsMobile';
 
 const Div=styled.div`
   width:100vw;
@@ -29,7 +30,7 @@ export interface LottoProps {
 
 const LotteryApp = (props:LottoProps) => {
   const router = useRouter();
-
+  const isMobile = useIsMobile();
     const { connection } = useConnection();
     const { publicKey, signTransaction } = useWallet();
     const [ walletPublicKey, setWalletPublicKey] = useState<PublicKey>(null);

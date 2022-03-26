@@ -18,6 +18,7 @@ import {WalletMultiButton} from "@nxdf/shared/services";
 /* eslint-disable-next-line */
 export interface LottoProps {
   userId: string;
+  isMobile: boolean;
 };
 
 function Main(props: LottoProps) {
@@ -27,7 +28,7 @@ function Main(props: LottoProps) {
   const [current,setCurrent]=useState(0)
   const [noftic,setNoftic]=useState(1)
   const [multiple, setMultiple] = useState(false)
-
+  console.log(props.isMobile);
   const {publicKey}=useWallet()
 
   async function ToUsd(){
@@ -77,9 +78,9 @@ function Main(props: LottoProps) {
       router.push(`/events/lotto/draw/?user_id=${props.userId}`)
     }
   }
-  console.log(props.userId==='')
+  // console.log(props.userId==='')
   return (
-    <MainLayout id="Main">
+    <MainLayout id="Main" isMobile={props.isMobile}>
         <PotContainer>
           <CurrentJackpot>CURRENT<br/>JACKPOT</CurrentJackpot>
           <PotSolContainer>{current} NXDF</PotSolContainer>
@@ -116,13 +117,13 @@ function Main(props: LottoProps) {
 
 export default Main;
 
-const MainLayout = styled.div`
+const MainLayout = styled.div<{isMobile:boolean}>`
   display:flex;
   align-items:center;
   justify-content: center;
   flex-direction: column;
-  height:100%a;
-  width:100vw;
+  height:100%;
+  width: ${({ isMobile }) => isMobile ? "auto" : "100vw"};
   margin-top:5rem;
   background-color: #453C70;
   background-image:url('/img/img-lottomen.svg'), url('/img/img-lottobox.svg');
