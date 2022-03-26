@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import LayoutProps from '../interface'
 
-const AboutDiv=styled.div`
+const AboutDiv=styled.div<{isMobile: boolean}>`
   text-align:center;
   height:100%;
-  widht:100%;
+  width:${({ isMobile }) => isMobile ? "auto" : "100%"};
   padding-top: 60px;
   background-color:#453C70;
 `
@@ -79,10 +80,10 @@ const Img=styled.img`
   margin-left:100px;
 `
 
-function About() {
+function About({isMobile}:LayoutProps) {
   return (
-    <AboutDiv id="About">
-      <Welcome>WELCOMT TO NXDF LOTTO</Welcome>
+    <AboutDiv id="About" isMobile={isMobile}>
+      <Welcome>WELCOME TO NXDF LOTTO</Welcome>
       <div style={{width:'80%', margin:'0 auto'}}>
       <TopDiv>
         <LottoInfoDiv>

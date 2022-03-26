@@ -9,11 +9,28 @@ ${reset}
    padding:0;
  }
  body{
+  background-color: #141722;
   font-family: 'Roboto';
+  color: white ;
  }
  @font-face {
   font-family: 'Roboto';
   src: url('fonts/Roboto-Regular.ttf');
+}
+
+a{
+  :visited{
+    color:white;
+    text-decoration: none;
+  }
+  :link{
+    color:white;
+    text-decoration: none;
+  }
+  :hover{
+    color:white;
+    text-decoration: none;
+  }
 }
 
 input{

@@ -1,23 +1,22 @@
+import type { NextPage } from 'next'
 import styled from 'styled-components';
-import Main from "./main";
+import  MainLayout  from '../components/MainLayout';
+import MetaContent from '../components/Home/MetaContent';
+import Universe from '../components/Home/Universe';
+import Layout from '../components/Layout';
 
 
-const StyledPage = styled.div`
-  .page {
-  }
-`;
 
-export function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.styled-components file.
-   */
+
+const Home: NextPage = () => {
   return (
-    <StyledPage>
-      <Main />
-    </StyledPage>
+    <Layout>
+      <MainLayout><h1>hello</h1></MainLayout>
+       <Universe />
+      <MetaContent />
+    </Layout>
   );
 }
 
-export default Index;
+
+export default Home
