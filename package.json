@@ -8,7 +8,9 @@
     "start:staking4u:ios": "npx nx run-ios staking4u",
     "start:staking4u:android": "npx nx run-android staking4u",
     "start:soldrops": "npx nx serve soldrops",
-    "start:nxdf-api": "npx nx serve nxdf-api"
+    "start:nxdf-api": "npx nx serve nxdf-api",
+    "build:nxdf-airdrop": "nx build nxdf-airdrop && nx export nxdf-airdrop",
+    "deploy:nxdf-airdrop": "cd apps/nxdf-airdrop && firebase deploy --only hosting"
   },
   "private": true,
   "dependencies": {
