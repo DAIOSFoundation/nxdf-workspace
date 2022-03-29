@@ -111,7 +111,7 @@ export const GetTicketContainer = styled.div<{isMobile:boolean}>`
   margin: 0 auto;
   margin-bottom:50px;
   position: relative;
-  width: ${(props) => props.isMobile ? `80%` : "40%"};
+  width: ${(props) => props.isMobile ? `100%` : "40%"};
   height:${(props) => props.isMobile ? `20%` : "auto"};
   background-color: #352F58;
   border-radius:6px;

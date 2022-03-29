@@ -1,10 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import { useIsMobile } from '../../hooks/useIsMobile';
+import styled from 'styled-components';
 
-function Timer() {
+
+
+
+
+function Timer(){
+  const isMobile = useIsMobile();
+
+   const TimerDiv = styled.div<{isMobile:boolean}>` 
+    font-size: ${({isMobile}) => isMobile ? "2rem"  :  "1.5rem"  }  ;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+  `;
+
+
 
   const TimeLeft=()=>{
-    let drawtime=new Date("March 26, 2022 14:00:00 UTC").getTime()/1000;
+    let drawtime=new Date("Aprill 2, 2022 14:00:00 UTC").getTime()/1000;
     let now=new Date().getTime()/1000;
     let lefttime=drawtime-now;
     let duration=moment.duration(lefttime,'seconds');
@@ -16,17 +32,20 @@ function Timer() {
     return (duration.days()+' Days '+duration.hours()+' Hours '+duration.minutes()+' Min '+duration.seconds()+' Sec ')
   }
 
-  const [timeLeft,setTimeleft]=useState(TimeLeft());
+  const [timeLeft, setTimeleft] = useState(TimeLeft());
+  
   useEffect(()=>{
     setTimeout(()=>{
       setTimeleft(TimeLeft());
     },1000)
   })
 
+ 
+
   return (
-    <div style={{fontSize:'1.5rem', fontWeight:'bold',textAlign:'center',color:'white'}}>
+    <TimerDiv isMobile={isMobile} >
       {timeLeft}
-    </div>
+    </TimerDiv>
   );
 }
 
