@@ -127,7 +127,7 @@ const MainLayout = styled.div<{isMobile:boolean}>`
   background-color: #453C70;
   background-image: url('/img/img-lottomen.svg') , url('/img/img-lottobox.svg');
   background-repeat:no-repeat,no-repeat;
-  background-size:${(props) => props.isMobile ? `50%, 70%  ` : "380px, 38%"};
+  background-size:${(props) => props.isMobile ? `50%, 70%  ` : "28%, 38%"};
   background-position:${(props) => props.isMobile ? `top left, right bottom` : "left,right"};
   //padding-top:5rem;
 `;
