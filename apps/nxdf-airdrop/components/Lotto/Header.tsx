@@ -30,8 +30,8 @@ const MenuSpan=styled.span`
     color:rgb(220, 52, 141);
   }
 `
-const NextDraw=styled.p`
-  font-size:1.4rem;
+const NextDraw=styled.p<{isMobile: boolean}>`
+  font-size:${({ isMobile }) => isMobile ? "0.8rem" : "1.4rem"};
   font-weight:bold;
   color:rgb(220, 52, 141);
 `
@@ -76,7 +76,7 @@ function Header({isMobile}:LayoutProps) {
           <MenuSpan>Winners</MenuSpan>
         </Link>
       </MenuDiv>
-      <NextDraw>Next Draw Saturday 2:00 PM UTC</NextDraw>
+      <NextDraw isMobile={isMobile} >Next Draw Saturday 2:00 PM UTC</NextDraw>
     </HeaderNav>
   );
 }

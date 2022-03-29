@@ -23,12 +23,10 @@ export interface LottoProps {
 
 function Main(props: LottoProps) {
   const [loading,setloading] = useState(false);
-
   const [nxdfInfo,setNxdfInfo]=useState({})
   const [current,setCurrent]=useState(0)
   const [noftic,setNoftic]=useState(1)
   const [multiple, setMultiple] = useState(false)
-  console.log(props.isMobile);
   const {publicKey}=useWallet()
 
   async function ToUsd(){
@@ -86,15 +84,15 @@ function Main(props: LottoProps) {
           <PotSolContainer>{current} NXDF</PotSolContainer>
           <PotUsdContainer>( { loading ?  (Number(nxdfInfo)*current).toFixed(2) : 0 } $)</PotUsdContainer>
         </PotContainer>
-        <GetTicketContainer>
+        <GetTicketContainer isMobile={props.isMobile}>
           <HourGlass src='/img/img-hourglass.svg'/>
           <BackgroundDiv>
           {/* 남은 시간 계산해주는 타이머 */}
             <TimerContainer>
                 <Timer></Timer>
             </TimerContainer>
-            <WalletMultiButton className="btn btn-ghost" />
-              <GetTicket onClick={BuyTicketClick}>
+            <WalletConnectBtn className="btn btn-ghost" />
+              <GetTicket isMobile={props.isMobile} onClick={BuyTicketClick}>
                 GET {noftic} TICKET
               </GetTicket>
             </BackgroundDiv>
@@ -122,16 +120,23 @@ const MainLayout = styled.div<{isMobile:boolean}>`
   align-items:center;
   justify-content: center;
   flex-direction: column;
-  height:100%;
+  padding: 10px;
+  height:${(props) => props.isMobile ? `${window.innerHeight-90}px ` : "100vh"};
   width: ${({ isMobile }) => isMobile ? "auto" : "100vw"};
   margin-top:5rem;
   background-color: #453C70;
-  background-image:url('/img/img-lottomen.svg'), url('/img/img-lottobox.svg');
+  background-image: url('/img/img-lottomen.svg') , url('/img/img-lottobox.svg');
   background-repeat:no-repeat,no-repeat;
-  background-size:380px, 38%;
-  background-position:left, right;
+  background-size:${(props) => props.isMobile ? `50%, 70%  ` : "380px, 38%"};
+  background-position:${(props) => props.isMobile ? `top left, right bottom` : "left,right"};
   //padding-top:5rem;
 `;
+
+
+const WalletConnectBtn = styled(WalletMultiButton)`
+  margin-bottom:30px;
+  font-size: 1.5rem ;
+`
 
 const HourGlass = styled.img`
   width: 11%;

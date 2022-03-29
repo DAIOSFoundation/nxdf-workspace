@@ -4,7 +4,7 @@ import LayoutProps from '../interface'
 
 const AboutDiv=styled.div<{isMobile: boolean}>`
   text-align:center;
-  height:100%;
+  height: ${({ isMobile }) => isMobile ? `${window.innerHeight}px` : "100%"};
   width:${({ isMobile }) => isMobile ? "auto" : "100%"};
   padding-top: 60px;
   background-color:#453C70;
@@ -19,13 +19,14 @@ const Welcome=styled.h1`
   text-shadow: 0 0 10px rgb(220, 52, 141), 0 0 10px #e6469b;
 
 `
-const TopDiv=styled.div`
+const TopDiv=styled.div<{isMobile: boolean}>`
   display:flex;
+  flex-direction:${({ isMobile }) => isMobile ? "column" : "row"};
   justify-content:center;
   margin-top:40px;
   line-height:1.3;
 `
-const BottomDiv=styled.div`
+const BottomDiv=styled.div<{isMobile: boolean}>`
   padding:90px 0;
 `
 const LottoInfoDiv=styled.div`
@@ -74,7 +75,8 @@ const TextDiv=styled.div`
   text-align:left;
   display:flex;
 `
-const Img=styled.img`
+const Img = styled.img<{ isMobile: boolean }>`
+  display: ${({ isMobile }) => isMobile ? "none" : "block"};
   object-fit:contain;
   width:400px;
   margin-left:100px;
@@ -85,7 +87,7 @@ function About({isMobile}:LayoutProps) {
     <AboutDiv id="About" isMobile={isMobile}>
       <Welcome>WELCOME TO NXDF LOTTO</Welcome>
       <div style={{width:'80%', margin:'0 auto'}}>
-      <TopDiv>
+      <TopDiv isMobile={isMobile} >
         <LottoInfoDiv>
           <p>NXDF LOTTO is the premiere lottery of Solana. You can buy lotto tickets everyday for a price of 5,000 NXDF. Every Monday, Saturday we will announce the winners of our lotto in a live draw.</p>
           <LottoInfoImg src='/img/img-lottoticket.png'></LottoInfoImg>
@@ -97,7 +99,7 @@ function About({isMobile}:LayoutProps) {
           <WhenDiv>You can buy lotto tickets every day, but winners will be picked only on Saturday at 2:00PM UTC. Example: you buy tickets on Monday and on Friday so your tickets will be valid on the Saturday's lotto.</WhenDiv>
         </div>
       </TopDiv>
-      <BottomDiv>
+      <BottomDiv isMobile={isMobile} >
         <Title>How will the lottery work?</Title>
         <TextDiv>
           <div>
@@ -108,7 +110,7 @@ function About({isMobile}:LayoutProps) {
           <Text><Numbering>5.</Numbering>Wait for your prize to get sent to your wallet</Text>
           <Text><Numbering>6.</Numbering>Repeat</Text>
           </div>
-          <Img src='/img/LottoImage.gif'></Img>
+          <Img isMobile={isMobile} src='/img/LottoImage.gif'></Img>
         </TextDiv>
       </BottomDiv>
       </div>
