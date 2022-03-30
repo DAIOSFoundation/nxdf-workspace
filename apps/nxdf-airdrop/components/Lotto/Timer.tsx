@@ -11,10 +11,13 @@ function Timer(){
   const isMobile = useIsMobile();
 
    const TimerDiv = styled.div<{isMobile:boolean}>` 
-    font-size: ${({isMobile}) => isMobile ? "2rem"  :  "1.5rem"  }  ;
+    font-size: ${({isMobile}) => isMobile ? "2rem"  :  "2rem"  }  ;
     font-weight: bold;
     text-align: center;
     color: white;
+    @media(max-height: 1280px){
+      font-size: ${({isMobile}) => isMobile ? "2rem"  :  "1.5rem"  }  ;
+    }
   `;
 
 

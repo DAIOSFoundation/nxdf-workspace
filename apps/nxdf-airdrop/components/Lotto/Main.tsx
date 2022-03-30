@@ -121,7 +121,7 @@ const MainLayout = styled.div<{isMobile:boolean}>`
   justify-content: center;
   flex-direction: column;
   padding: 10px;
-  height:${(props) => props.isMobile ? `${window.innerHeight-90}px ` : "100vh"};
+  height:${({ isMobile }) => isMobile ? `${window.innerHeight-90}px ` : `${window.innerHeight-90}px`};
   width: ${({ isMobile }) => isMobile ? "auto" : "100vw"};
   margin-top:5rem;
   background-color: #453C70;
