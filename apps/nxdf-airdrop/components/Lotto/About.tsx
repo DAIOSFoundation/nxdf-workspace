@@ -94,7 +94,7 @@ function About({isMobile}:LayoutProps) {
           <Title>How many lotto tickets can I buy?</Title>
           <HowDiv>Unlimited per person. Unfortunately, right now you need to mint one ticket at a time.</HowDiv>
           <Title>When will Lotto take place?</Title>
-          <WhenDiv>You can buy lotto tickets every day, but winners will be picked only on Saturday at 2:00PM UTC. Example: you buy tickets on Monday and on Friday so your tickets will be valid on the Saturday's lotto.</WhenDiv>
+          <WhenDiv>{`ou can buy lotto tickets every day, but winners will be picked only on Saturday at 2:00PM UTC. Example: you buy tickets on Monday and on Friday so your tickets will be valid on the Saturday's lotto.s`}</WhenDiv>
         </div>
       </TopDiv>
       <BottomDiv>

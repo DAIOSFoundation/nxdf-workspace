@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useWallet } from '@nxdf/shared/services';
 import styled from 'styled-components';
 import Slider from 'react-input-slider';
 import Timer from '../Lotto/Timer';
 import {
-  ref, child, get, update
+  ref, child, get, update,push
 } from "@firebase/database";
 import {dbService} from "./firebase";
 import {PotContainer,PotSolContainer,PotUsdContainer,CurrentJackpot,GetTicket,BuyMultipleTicket,TimerContainer,GetTicketContainer, BackgroundDiv} from "./css/MainCenter/maincss";
@@ -23,13 +23,16 @@ export interface LottoProps {
 
 function Main(props: LottoProps) {
   const [loading,setloading] = useState(false);
-
+  const [Adminloading,setAdminloading] = useState(false);
   const [nxdfInfo,setNxdfInfo]=useState({})
   const [current,setCurrent]=useState(0)
+  const [adminData, setAdminData] = useState<any[]>([]);
+  // const [adminLoading, setAdminLoading] = useState(false);
   const [noftic,setNoftic]=useState(1)
   const [multiple, setMultiple] = useState(false)
-  console.log(props.isMobile);
-  const {publicKey}=useWallet()
+  const { publicKey } = useWallet()
+  
+  
 
   async function ToUsd(){
     await fetch('https://api.coingecko.com/api/v3/coins/next-defi-protocol/',{
@@ -48,7 +51,6 @@ function Main(props: LottoProps) {
       console.log(e)
     })
   }
-
   async function CurrentJackpotDB(){
     const dbRef=ref(dbService);
     await get(child(dbRef,'/currentJackpot/value')).then((snapshot)=>{
@@ -60,24 +62,58 @@ function Main(props: LottoProps) {
     }).catch((error)=>{
       console.error(error);
     });
-  }
 
+    await get(child(dbRef, '/adminTest')).then((data) => {
+      if (data.exists()) {
+        setAdminData(Object.entries(data.val()));
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error)=>{
+      console.error(error);
+    }); 
+  }
   useEffect(()=>{
     CurrentJackpotDB();
     ToUsd();
-  },[]);
+  }, []);
+    
+  const Admin = adminData?.map(data => data[1].userId === props.userId).includes(true) ? true : false;
 
   function BuyTicketClick(){
     if(props.userId===null || props.userId===''){
       alert('Please log in through the Discord chatbot!')
     }
-    else if(publicKey===null){
+    else if (publicKey === null) {
       alert('Please connect your wallet!')
-    }
-    else{
+    }else{
       router.push(`/events/lotto/draw/?user_id=${props.userId}`)
     }
   }
+
+  function GoToPick() {
+    if(props.userId===null || props.userId===''){
+      alert('Please log in through the Discord chatbot!')
+    }
+    else if(publicKey===null){
+      alert('Please connect your wallet!')
+    }else if(Admin){
+      router.push(`/events/lotto/pick/?user_id=${props.userId}`)
+    }
+    else{
+      alert('You are not an admin!')
+    }
+  }
+
+  // const Onclick = async() => {
+  //   const Ref = ref(dbService, 'adminTest/');
+    
+  //   await push(Ref, {
+  //     userId: props.userId,
+  //     publicKey: publicKey,
+  //   });
+  // }
+
   // console.log(props.userId==='')
   return (
     <MainLayout id="Main" isMobile={props.isMobile}>
@@ -94,9 +130,19 @@ function Main(props: LottoProps) {
                 <Timer></Timer>
             </TimerContainer>
             <WalletMultiButton className="btn btn-ghost" />
+          {Admin ?
+              <AdiminSelect>
+                <GetTicket onClick={BuyTicketClick}>
+                  GET {noftic} TICKET
+                </GetTicket>
+                <GetTicket onClick={GoToPick}>
+                  Go To Pick
+                </GetTicket>
+              </AdiminSelect>
+              :
               <GetTicket onClick={BuyTicketClick}>
                 GET {noftic} TICKET
-              </GetTicket>
+              </GetTicket>  }
             </BackgroundDiv>
         </GetTicketContainer>
         {/* <BuyMultipleTicket onClick={()=>setMultiple(!multiple)}>Buy Multiple Tickets</BuyMultipleTicket>
@@ -139,6 +185,15 @@ const HourGlass = styled.img`
   position:absolute;
   top:-50%;
   left:3%;
+`;
+
+const AdiminSelect = styled.div`
+  display:flex;
+  margin: 10px;
+
+  button {
+    margin: 10px;
+  }
 `;
 
 const SliderDiv=styled.div`

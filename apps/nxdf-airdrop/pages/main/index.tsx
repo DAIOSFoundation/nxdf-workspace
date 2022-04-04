@@ -148,7 +148,7 @@ export function Main(props: MainProps) {
           </Flex>
           <Flex>
             <Flex flexDirection="column" width={isMobile ? '100%' : 'inherit'}>
-              <div className="label">Retweet NXDF's tweet to your followers then, enter your retweet link</div>
+              <div className="label">{`Retweet NXDF's tweet to your followers then, enter your retweet link`}</div>
               <Flex>
                 <input type="text" className="full" value={retweetLink} onChange={(e) => setRetweetLink(e.target.value)} />
               </Flex>
