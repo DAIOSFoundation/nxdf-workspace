@@ -1,12 +1,15 @@
 import styled from 'styled-components'
 
 
-export const PotContainer=styled.div`
+export const PotContainer = styled.div`
   font-weight:bold;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media(max-height: 1280px){
+    margin-top: 2rem;
+  }
 
 `
 export const PotSolContainer=styled.div`
@@ -17,6 +20,7 @@ export const PotUsdContainer=styled.div`
   font-size:65px;
   margin-bottom:60px;
   color:white;
+ 
 `
 export const CurrentJackpot=styled.h1`
   font-size:8em;
@@ -26,15 +30,18 @@ export const CurrentJackpot=styled.h1`
   text-align: center;
   font-family: 'neoneon';
   text-shadow: 0 0 10px rgb(220, 52, 141), 0 0 10px #e6469b;
-  :last-of-type{
-    margin-bottom: 60px;
+  margin-bottom: 30px;
+   @media(max-height: 1280px){
+    :last-of-type{
+    margin-bottom: 0px;
   }
-  font-family:'neon'
+  }
+  font-family:'neon';
 `
-export const GetTicket=styled.button`
+export const GetTicket = styled.button<{isMobile:boolean}>`
   width:80%;
   min-width:250px;
-  height:50px;
+  height:${({isMobile})=> isMobile ? "150px" : "200px"};
   border-radius:2px;
   background-color:#C5BAFA;
   font-size:20px;
@@ -54,7 +61,7 @@ export const BuyMultipleTicket=styled.button`
   color:#DC348C;
   font-size:18px;
   font-weight:800;
-  margin-top:40px;
+  margin-top:30px;
   border-bottom:8px solid #B75BB7;
   border-radius:2px;
 `
@@ -77,7 +84,7 @@ export const SlideInput=styled.input`
 export const TimerContainer = styled.div`
   height: 100%;
   width: 100%;
-  padding-bottom:20px;
+  padding-bottom:10px;
   z-index: 10;
 `
 export const TimerBox = styled.div`
@@ -104,17 +111,22 @@ export const TimerBox = styled.div`
 
 `
 
-export const GetTicketContainer = styled.div`
+export const GetTicketContainer = styled.div<{isMobile:boolean}>`
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  width: ${(props) => props.isMobile ? `100%` : "40%"};
+  height: ${(props) => props.isMobile ? `20%` : "auto"};
   margin-bottom:50px;
   position: relative;
-  width: 40%;
   background-color: #352F58;
   border-radius:6px;
   min-width:400px;
+  @media(min-height:768px) {
+    width: ${(props) => props.isMobile ? `100%` : "40%"};
+    height: ${(props) => props.isMobile ? `15%` : "30%"};
+  }
 `
 
 export const BackgroundDiv = styled.div`
@@ -124,6 +136,7 @@ export const BackgroundDiv = styled.div`
   flex-direction: column;
   align-items: center;
   padding:20px 0;
+  
 `
 
 export const BtnDiv = styled.div`
