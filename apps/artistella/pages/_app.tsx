@@ -1,19 +1,9 @@
-import { AppProps } from 'next/app';
-import Head from 'next/head';
-import { GlobalStyle } from './globalstyle';
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import 'bootstrap/dist/css/bootstrap.css';
 
-function CustomApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      <GlobalStyle />
-      <Head>
-        <title>Welcome to artistella!</title>
-      </Head>
-      <main className="app">
-        <Component {...pageProps} />
-      </main>
-    </>
-  );
+function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
 }
 
-export default CustomApp;
+export default MyApp;
