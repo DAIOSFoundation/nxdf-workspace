@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useWallet } from '@nxdf/shared/services';
+import { useWallet } from '@solana/wallet-adapter-react';
 import styled from 'styled-components';
 import Slider from 'react-input-slider';
 import Timer from '../Lotto/Timer';
 import {
-  ref, child, get, update,push
+  ref, child, get, update
 } from "@firebase/database";
 import {dbService} from "./firebase";
 import {PotContainer,PotSolContainer,PotUsdContainer,CurrentJackpot,GetTicket,BuyMultipleTicket,TimerContainer,GetTicketContainer, BackgroundDiv} from "./css/MainCenter/maincss";
@@ -23,16 +23,11 @@ export interface LottoProps {
 
 function Main(props: LottoProps) {
   const [loading,setloading] = useState(false);
-  const [Adminloading,setAdminloading] = useState(false);
   const [nxdfInfo,setNxdfInfo]=useState({})
   const [current,setCurrent]=useState(0)
-  const [adminData, setAdminData] = useState<any[]>([]);
-  // const [adminLoading, setAdminLoading] = useState(false);
   const [noftic,setNoftic]=useState(1)
   const [multiple, setMultiple] = useState(false)
-  const { publicKey } = useWallet()
-  
-  
+  const {publicKey}=useWallet()
 
   async function ToUsd(){
     await fetch('https://api.coingecko.com/api/v3/coins/next-defi-protocol/',{
@@ -51,6 +46,7 @@ function Main(props: LottoProps) {
       console.log(e)
     })
   }
+
   async function CurrentJackpotDB(){
     const dbRef=ref(dbService);
     await get(child(dbRef,'/currentJackpot/value')).then((snapshot)=>{
@@ -62,58 +58,24 @@ function Main(props: LottoProps) {
     }).catch((error)=>{
       console.error(error);
     });
-
-    await get(child(dbRef, '/adminTest')).then((data) => {
-      if (data.exists()) {
-        setAdminData(Object.entries(data.val()));
-      } else {
-        console.log("No data available");
-      }
-    }).catch((error)=>{
-      console.error(error);
-    }); 
   }
+
   useEffect(()=>{
     CurrentJackpotDB();
     ToUsd();
-  }, []);
-    
-  const Admin = adminData?.map(data => data[1].userId === props.userId).includes(true) ? true : false;
+  },[]);
 
   function BuyTicketClick(){
     if(props.userId===null || props.userId===''){
       alert('Please log in through the Discord chatbot!')
     }
-    else if (publicKey === null) {
+    else if(publicKey===null){
       alert('Please connect your wallet!')
-    }else{
+    }
+    else{
       router.push(`/events/lotto/draw/?user_id=${props.userId}`)
     }
   }
-
-  function GoToPick() {
-    if(props.userId===null || props.userId===''){
-      alert('Please log in through the Discord chatbot!')
-    }
-    else if(publicKey===null){
-      alert('Please connect your wallet!')
-    }else if(Admin){
-      router.push(`/events/lotto/pick/?user_id=${props.userId}`)
-    }
-    else{
-      alert('You are not an admin!')
-    }
-  }
-
-  // const Onclick = async() => {
-  //   const Ref = ref(dbService, 'adminTest/');
-    
-  //   await push(Ref, {
-  //     userId: props.userId,
-  //     publicKey: publicKey,
-  //   });
-  // }
-
   // console.log(props.userId==='')
   return (
     <MainLayout id="Main" isMobile={props.isMobile}>
@@ -122,27 +84,17 @@ function Main(props: LottoProps) {
           <PotSolContainer>{current} NXDF</PotSolContainer>
           <PotUsdContainer>( { loading ?  (Number(nxdfInfo)*current).toFixed(2) : 0 } $)</PotUsdContainer>
         </PotContainer>
-        <GetTicketContainer>
+        <GetTicketContainer isMobile={props.isMobile}>
           <HourGlass src='/img/img-hourglass.svg'/>
           <BackgroundDiv>
           {/* 남은 시간 계산해주는 타이머 */}
             <TimerContainer>
                 <Timer></Timer>
             </TimerContainer>
-            <WalletMultiButton className="btn btn-ghost" />
-          {Admin ?
-              <AdiminSelect>
-                <GetTicket onClick={BuyTicketClick}>
-                  GET {noftic} TICKET
-                </GetTicket>
-                <GetTicket onClick={GoToPick}>
-                  Go To Pick
-                </GetTicket>
-              </AdiminSelect>
-              :
-              <GetTicket onClick={BuyTicketClick}>
+            <WalletConnectBtn className="btn btn-ghost" />
+              <GetTicket isMobile={props.isMobile} onClick={BuyTicketClick}>
                 GET {noftic} TICKET
-              </GetTicket>  }
+              </GetTicket>
             </BackgroundDiv>
         </GetTicketContainer>
         {/* <BuyMultipleTicket onClick={()=>setMultiple(!multiple)}>Buy Multiple Tickets</BuyMultipleTicket>
@@ -168,16 +120,23 @@ const MainLayout = styled.div<{isMobile:boolean}>`
   align-items:center;
   justify-content: center;
   flex-direction: column;
-  height:100%;
+  padding: 10px;
+  height:${({ isMobile }) => isMobile ? `${window.innerHeight-90}px ` : `${window.innerHeight-90}px`};
   width: ${({ isMobile }) => isMobile ? "auto" : "100vw"};
   margin-top:5rem;
   background-color: #453C70;
-  background-image:url('/img/img-lottomen.svg'), url('/img/img-lottobox.svg');
+  background-image: url('/img/img-lottomen.svg') , url('/img/img-lottobox.svg');
   background-repeat:no-repeat,no-repeat;
-  background-size:380px, 38%;
-  background-position:left, right;
+  background-size:${(props) => props.isMobile ? `50%, 70%  ` : "28%, 38%"};
+  background-position:${(props) => props.isMobile ? `top left, right bottom` : "left,right"};
   //padding-top:5rem;
 `;
+
+
+const WalletConnectBtn = styled(WalletMultiButton)`
+  margin-bottom:30px;
+  font-size: 1.5rem ;
+`
 
 const HourGlass = styled.img`
   width: 11%;
@@ -185,15 +144,6 @@ const HourGlass = styled.img`
   position:absolute;
   top:-50%;
   left:3%;
-`;
-
-const AdiminSelect = styled.div`
-  display:flex;
-  margin: 10px;
-
-  button {
-    margin: 10px;
-  }
 `;
 
 const SliderDiv=styled.div`
