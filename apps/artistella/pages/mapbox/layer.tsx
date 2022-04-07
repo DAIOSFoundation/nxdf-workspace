@@ -45,7 +45,7 @@ const MAPBOX_TOKEN = 'pk.eyJ1Ijoia3NkZjcyMzUiLCJhIjoiY2wwdGFxczcyMDk5MzNjbWg5bGN
         style={{width: 600, height: 400}}
       >
         <Source  type="geojson" data={data}>
-          <divㅋ></divㅋ>
+          <Layer {...dataLayer} />
         </Source>
       </Map>
 
