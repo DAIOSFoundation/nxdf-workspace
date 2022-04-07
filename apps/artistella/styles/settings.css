@@ -721,7 +721,18 @@ img.tp-slider-alternative-image {
   width: 100%;
   z-index: 3;
 }
-
+/* .tp-dottedoverlay.twoxtwo {
+  background: url(../assets/gridtile.png);
+}
+.tp-dottedoverlay.twoxtwowhite {
+  background: url(../assets/gridtile_white.png);
+}
+.tp-dottedoverlay.threexthree {
+  background: url(../assets/gridtile_3x3.png);
+}
+.tp-dottedoverlay.threexthreewhite {
+  background: url(../assets/gridtile_3x3_white.png);
+} */
 .tp-shadowcover {
   width: 100%;
   background: #fff;
@@ -1128,6 +1139,7 @@ img.tp-slider-alternative-image {
 }
 .tp-loader.spinner0,
 .tp-loader.spinner5 {
+  background-repeat: no-repeat;
 }
 .tp-shape {
   width: 100%;

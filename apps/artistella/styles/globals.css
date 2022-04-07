@@ -1,5 +1,15 @@
-@import "layers.css";
-@import "theme.css";
-@import "dark.css";
-@import "responsive.css";
-@import "settings.css";
+@import 'icofont.min.css';
+@import 'linearicons.min.css';
+@import 'magnific-popup.min.css';
+/*@import "animsition.min.css";*/
+@import 'swiper.min.css';
+@import 'bootstrap.min.css';
+
+@import 'revolution.addon.panorama.css';
+
+@import 'settings.css';
+@import 'layers.css';
+@import 'theme.css';
+@import 'responsive.css';
+
+/*@import "dark.css";*/

@@ -183,7 +183,7 @@ pre {
 }
 
 q {
-  quotes: "\201C""\201D""\2018""\2019";
+  quotes: '\201C''\201D''\2018''\2019';
 }
 
 img {
@@ -209,9 +209,9 @@ button {
 }
 
 button,
-html input[type="button"],
-input[type="reset"],
-input[type="submit"] {
+html input[type='button'],
+input[type='reset'],
+input[type='submit'] {
   -webkit-appearance: button;
   cursor: pointer;
 }
@@ -221,23 +221,23 @@ html input[disabled] {
   cursor: default;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
+input[type='checkbox'],
+input[type='radio'] {
   box-sizing: border-box;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   height: auto;
 }
 
-input[type="search"] {
+input[type='search'] {
   -webkit-appearance: textfield;
   box-sizing: content-box;
 }
 
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -311,7 +311,7 @@ base styles
 */
 
 body {
-  font-family: "Roboto", Helvetica, sans-serif;
+  font-family: 'Roboto', Helvetica, sans-serif;
   font-weight: 400;
   line-height: 1.714285714285714;
   font-size: 14px;
@@ -381,7 +381,7 @@ article-item
 
 .article-item__item-title {
   display: block;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   transition: color 0.3s;
   line-height: 1;
@@ -415,7 +415,7 @@ article-item
 }
 
 .article-item__date:after {
-  content: "";
+  content: '';
   position: absolute;
   background: currentColor;
   width: 3px;
@@ -493,7 +493,7 @@ article-listing-item
 }
 
 .article-listing-item__date:after {
-  content: "";
+  content: '';
   position: absolute;
   background: currentColor;
   width: 3px;
@@ -505,7 +505,7 @@ article-listing-item
 
 .article-listing-item__title {
   display: block;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 36px;
   line-height: 1;
   margin-bottom: 32px;
@@ -593,7 +593,7 @@ articles-block
 
 .articles-block__item-title {
   display: block;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   transition: color 0.3s;
   line-height: 1;
@@ -616,7 +616,7 @@ articles-block
 }
 
 .articles-block__date:after {
-  content: "";
+  content: '';
   position: absolute;
   background: currentColor;
   width: 3px;
@@ -708,7 +708,7 @@ awards-block
 .awards-block__year {
   width: 25%;
   min-width: 25%;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   padding-right: 40px;
   margin-bottom: 30px;
@@ -782,7 +782,7 @@ cards-block
 .cards-block__title {
   font-size: 48px;
   line-height: 1.25;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-bottom: 20px;
 }
 
@@ -821,7 +821,7 @@ cards
 }
 
 .cards__item-inner:before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 0;
@@ -833,7 +833,7 @@ cards
 }
 
 .cards__item-inner:after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 0;
@@ -863,7 +863,7 @@ cards
 .cards__item-title {
   font-size: 48px;
   line-height: 1.25;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   display: block;
   margin-bottom: 28px;
 }
@@ -964,7 +964,7 @@ collapse-block
 .collapse-block__title {
   font-size: 48px;
   line-height: 1.25;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-bottom: 34px;
 }
 
@@ -983,7 +983,7 @@ collapse-list
 .collapse-list__title {
   font-size: 48px;
   line-height: 1.25;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-bottom: 34px;
 }
 
@@ -1211,7 +1211,7 @@ contact-block
 .contact-block__place {
   font-size: 48px;
   line-height: 1.25;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-top: 74px;
   margin-bottom: 20px;
 }
@@ -1347,7 +1347,7 @@ counter-block
 
 .counter-block__card {
   padding: 55px 52px;
-  background-image: url("../img/dot.jpg");
+  background-image: url('../assets/img/dot.jpg');
   border-top: 5px solid #f24a00;
   text-transform: uppercase;
   margin-bottom: 80px;
@@ -1356,7 +1356,7 @@ counter-block
 .counter-block__card-title {
   color: #999;
   font-size: 30px;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   line-height: 1;
   margin-bottom: 96px;
 }
@@ -1365,7 +1365,7 @@ counter-block
   color: #f24a00;
   font-size: 250px;
   line-height: 1;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-left: -7px;
   margin-bottom: -25px;
 }
@@ -1386,7 +1386,7 @@ counter-block
 }
 
 .counter-block__item-value {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 100px;
   line-height: 1;
   margin-bottom: 11px;
@@ -1484,7 +1484,7 @@ error-block
 .error-block__title {
   font-size: 48px;
   line-height: 1.25;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-bottom: 10px;
 }
 
@@ -1546,7 +1546,7 @@ featured-block
 */
 
 .featured-block {
-  background-image: url("../img/dot-gray.jpg");
+  background-image: url('../assets/img/dot-gray.jpg');
   padding-top: 125px;
   padding-bottom: 138px;
   overflow: hidden;
@@ -1623,7 +1623,7 @@ featured-block
 }
 
 .featured-block__item-inner:after {
-  content: "";
+  content: '';
   opacity: 0;
   width: 100%;
   height: 100%;
@@ -1676,7 +1676,7 @@ featured-block
 }
 
 .featured-block__date:after {
-  content: "";
+  content: '';
   position: absolute;
   background: currentColor;
   width: 3px;
@@ -1706,7 +1706,7 @@ features-block
 .features-block__title {
   font-size: 48px;
   line-height: 1.25;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-bottom: 26px;
 }
 
@@ -1761,7 +1761,7 @@ footer-default
 }
 
 .footer-default__head:after {
-  content: "";
+  content: '';
   width: 35px;
   height: 2px;
   background: #f24a00;
@@ -1806,7 +1806,7 @@ footer-default
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -1859,7 +1859,7 @@ footer-default
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -1930,7 +1930,7 @@ footer-default
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -2014,7 +2014,7 @@ footer-interior
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -2071,7 +2071,7 @@ footer-interior
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -2271,7 +2271,7 @@ footer-interior
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -2358,7 +2358,7 @@ footer-minimal
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -2415,7 +2415,7 @@ footer-minimal
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -2615,7 +2615,7 @@ footer-minimal
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -2699,7 +2699,7 @@ footer-studio
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -2756,7 +2756,7 @@ footer-studio
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -2959,7 +2959,7 @@ footer-studio
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -3052,7 +3052,7 @@ full-screen-block
 }
 
 .full-screen-block__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 120px;
   line-height: 0.875;
   -ms-flex-positive: 1;
@@ -3094,7 +3094,7 @@ full-screen-block
   background: none;
   border: none;
   cursor: pointer;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   line-height: 1.4;
 }
@@ -3103,7 +3103,7 @@ full-screen-block
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -3140,7 +3140,7 @@ full-screen-block
 }
 
 .full-screen-block__counter {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 48px;
   position: absolute;
   right: -12px;
@@ -3221,7 +3221,7 @@ full-screen-block
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -3326,7 +3326,7 @@ grid-block
 }
 
 .grid-block__year {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   line-height: 1;
   position: absolute;
@@ -3341,7 +3341,7 @@ grid-block
 
 .grid-block__title {
   display: block;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 48px;
   line-height: 0.75;
 }
@@ -3410,7 +3410,7 @@ header-full-page
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -3571,7 +3571,7 @@ header
 .header__menu-button-inner:after {
   position: absolute;
   right: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 100%;
   background: currentColor;
@@ -3691,7 +3691,7 @@ heading-default
 }
 
 .heading-default__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 80px;
   line-height: 1.2;
   margin-bottom: 11px;
@@ -3713,7 +3713,7 @@ heading-default
 }
 
 .heading-default__breadcrumb-item:not(:first-child):before {
-  content: "/ ";
+  content: '/ ';
 }
 
 .heading-default__breadcrumb-item:not(:last-child) {
@@ -3738,7 +3738,7 @@ heading-default
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -3794,7 +3794,7 @@ heading-group
 .heading-group__title {
   font-size: 48px;
   line-height: 1.25;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-bottom: 26px;
 }
 
@@ -3876,7 +3876,7 @@ info-card-content
 .info-card-content__title {
   font-size: 48px;
   line-height: 1;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-bottom: 28px;
 }
 
@@ -3998,7 +3998,7 @@ a:not([class]):after {
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -4031,7 +4031,7 @@ a:not([class]):hover:after {
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -4114,7 +4114,7 @@ listing-block
 }
 
 .listing-block__item-title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 48px;
   line-height: 0.666666666666667;
   display: block;
@@ -4142,7 +4142,7 @@ logo
 */
 
 .logo {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 36px;
   line-height: 0.555555555555556;
   margin-top: 0.1em;
@@ -4217,7 +4217,7 @@ main-slide
 }
 
 .main-slide__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 180px;
   line-height: 0.75;
   -ms-flex-positive: 1;
@@ -4282,7 +4282,7 @@ main-slide
   background: none;
   border: none;
   cursor: pointer;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   color: #f24a00;
   line-height: 1.4;
@@ -4292,7 +4292,7 @@ main-slide
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -4339,7 +4339,7 @@ main-slide
 }
 
 .main-slide__counter {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 48px;
   letter-spacing: 12px;
   line-height: 1.3;
@@ -4474,7 +4474,7 @@ masonry-item
 }
 
 .masonry-item__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   line-height: 1.066666666666667;
   display: block;
@@ -4521,7 +4521,7 @@ masonry-large-block
 }
 
 .masonry-large-block__item-title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   line-height: 1.066666666666667;
   display: block;
@@ -4600,7 +4600,7 @@ masonry
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -4818,7 +4818,7 @@ menu-panel
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -4862,7 +4862,7 @@ minimal-head-block
 .minimal-head-block__title {
   font-size: 80px;
   line-height: 1.05;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-bottom: 24px;
 }
 
@@ -4871,7 +4871,7 @@ minimal-head-block
 }
 
 .minimal-head-block__label-inner:after {
-  content: "";
+  content: '';
   position: absolute;
   display: block;
   left: 0;
@@ -4958,7 +4958,7 @@ news-masonry-item
 }
 
 .news-masonry-item__date:after {
-  content: "";
+  content: '';
   position: absolute;
   background: currentColor;
   width: 3px;
@@ -4970,7 +4970,7 @@ news-masonry-item
 
 .news-masonry-item__title {
   display: block;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 36px;
   line-height: 1;
   margin-bottom: 22px;
@@ -5099,7 +5099,7 @@ panorama-slider2
 }
 
 .panorama-slider2__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 120px;
   line-height: 0.875;
   -ms-flex-positive: 1;
@@ -5127,7 +5127,7 @@ panorama-slider2
   font-weight: 500;
   line-height: 1;
   margin-top: 20px;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   letter-spacing: 0.25em;
 }
 
@@ -5155,7 +5155,7 @@ panorama-slider2
   background: none;
   border: none;
   cursor: pointer;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   line-height: 1.4;
 }
@@ -5164,7 +5164,7 @@ panorama-slider2
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -5209,7 +5209,7 @@ panorama-slider2
 }
 
 .panorama-slider2__footer:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   height: 100%;
@@ -5358,7 +5358,7 @@ parallax-block
 }
 
 .parallax-block__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 160px;
   line-height: 0.84375;
   -ms-flex-positive: 1;
@@ -5392,7 +5392,7 @@ parallax-block
 }
 
 .parallax-block__play:after {
-  content: "";
+  content: '';
   display: block;
   width: 0;
   height: 0;
@@ -5412,7 +5412,7 @@ parallax-block
 
 .parallax-block__download-link {
   font-size: 30px;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   display: inline-block;
   vertical-align: top;
   text-decoration: none;
@@ -5441,7 +5441,7 @@ parallax-block
 }
 
 .parallax-block__download-text:after {
-  content: "";
+  content: '';
   height: 2px;
   width: 100%;
   position: absolute;
@@ -5487,7 +5487,7 @@ person-block
 }
 
 .person-block__name {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   line-height: 1;
   margin-bottom: 16px;
@@ -5535,7 +5535,7 @@ posts
 }
 
 .posts__item-inner:after {
-  content: "";
+  content: '';
   opacity: 0;
   width: 100%;
   height: 100%;
@@ -5547,7 +5547,7 @@ posts
 }
 
 .posts__item-inner:before {
-  content: "";
+  content: '';
   position: absolute;
   z-index: 1;
   left: 0;
@@ -5611,7 +5611,7 @@ posts
 }
 
 .posts__date:after {
-  content: "";
+  content: '';
   position: absolute;
   background: currentColor;
   width: 3px;
@@ -5685,7 +5685,7 @@ project-block
 }
 
 .project-block__image-wrapper:after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   right: 0;
@@ -5714,7 +5714,7 @@ project-block
 }
 
 .project-block__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 46px;
   line-height: 1.043478260869565;
   margin-bottom: 124px;
@@ -5773,7 +5773,7 @@ project-block
 .project-block__project-title {
   display: block;
   font-size: 48px;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   line-height: 1;
   width: 70%;
   -ms-flex-positive: 1;
@@ -5861,7 +5861,7 @@ project-detail
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -5912,7 +5912,7 @@ project-detail
 .project-detail__title {
   font-size: 48px;
   line-height: 0.625;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-bottom: 70px;
 }
 
@@ -5936,7 +5936,7 @@ project-detail
   cursor: pointer;
   color: #f24a00;
   font-size: 48px;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   line-height: 1.291666666666667;
   margin-top: 115px;
   margin-bottom: 140px;
@@ -5946,7 +5946,7 @@ project-detail
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -6026,7 +6026,7 @@ project-detail
 }
 
 .project-detail__navigation-link-image:after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 0;
@@ -6134,7 +6134,7 @@ projects-block
 }
 
 .projects-block__slide:after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   right: 0;
@@ -6171,7 +6171,7 @@ projects-block
 .projects-block__slide-title {
   display: block;
   font-size: 30px;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   line-height: 1;
   margin-bottom: 4px;
 }
@@ -6262,7 +6262,7 @@ quote
 
 .quote__text:before {
   position: absolute;
-  content: "";
+  content: '';
   width: 4px;
   left: 0;
   top: 9px;
@@ -6287,7 +6287,7 @@ review-slider
 */
 
 .review-slider__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   line-height: 0.875;
   font-size: 80px;
   margin-bottom: 44px;
@@ -6344,7 +6344,7 @@ reviews-block
 */
 
 .reviews-block {
-  background-image: url("../img/dot-gray.jpg");
+  background-image: url('../assets/img/dot-gray.jpg');
   padding-top: 134px;
   padding-bottom: 138px;
   overflow: hidden;
@@ -6411,7 +6411,7 @@ reviews-block
 }
 
 .reviews-block__person-name {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 24px;
   line-height: 1;
   margin-bottom: 2px;
@@ -6484,14 +6484,14 @@ revolution-slider
 
 .revolution-slider .tparrows:before {
   font-size: 44px;
-  font-family: "Linearicons";
+  font-family: 'Linearicons';
   speak: none;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-  font-feature-settings: "liga";
+  font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -6502,7 +6502,7 @@ revolution-slider
 }
 
 .revolution-slider .tparrows.tp-leftarrow:before {
-  content: "\e93b";
+  content: '\e93b';
 }
 
 .revolution-slider .tparrows.tp-rightarrow {
@@ -6511,7 +6511,7 @@ revolution-slider
 }
 
 .revolution-slider .tparrows.tp-rightarrow:before {
-  content: "\e93c";
+  content: '\e93c';
 }
 
 /*
@@ -6531,7 +6531,7 @@ service-block
 .service-block__title {
   font-size: 48px;
   line-height: 1.25;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-bottom: 20px;
 }
 
@@ -6556,7 +6556,7 @@ service-detail
 }
 
 .service-detail__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 60px;
   line-height: 1;
   margin-bottom: 24px;
@@ -6578,7 +6578,7 @@ service-detail
 .service-detail__subtitle {
   font-size: 36px;
   line-height: 1;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   text-transform: uppercase;
   margin-bottom: 0.6em;
 }
@@ -6627,7 +6627,7 @@ show-more
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -6768,7 +6768,7 @@ single-post
 }
 
 .single-post__date:after {
-  content: "";
+  content: '';
   position: absolute;
   background: currentColor;
   width: 3px;
@@ -6779,7 +6779,7 @@ single-post
 }
 
 .single-post__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 60px;
   line-height: 1;
   margin-bottom: 76px;
@@ -6944,7 +6944,7 @@ specialization-block
 
 .specialization-block__item-title {
   font-size: 48px;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   line-height: 1;
   margin-bottom: 14px;
 }
@@ -6973,7 +6973,7 @@ studio-filter
 .studio-filter__title {
   font-size: 48px;
   line-height: 1.25;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
 }
 
 .studio-filter__filter {
@@ -7001,7 +7001,7 @@ studio-filter
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -7083,7 +7083,7 @@ studio-intro-slide
 }
 
 .studio-intro-slide__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 120px;
   line-height: 0.875;
   -ms-flex-positive: 1;
@@ -7111,7 +7111,7 @@ studio-intro-slide
   background: none;
   border: none;
   cursor: pointer;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   line-height: 1.4;
 }
@@ -7120,7 +7120,7 @@ studio-intro-slide
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -7165,7 +7165,7 @@ studio-intro-slide
 }
 
 .Background:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -7175,7 +7175,7 @@ studio-intro-slide
 }
 
 .Background:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -7228,7 +7228,7 @@ studio-main-slide
 }
 
 .studio-main-slide__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 120px;
   line-height: 0.875;
   -ms-flex-positive: 1;
@@ -7256,7 +7256,7 @@ studio-main-slide
   background: none;
   border: none;
   cursor: pointer;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 30px;
   line-height: 1.4;
 }
@@ -7265,7 +7265,7 @@ studio-main-slide
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -7314,7 +7314,7 @@ studio-posts
 */
 
 .studio-posts {
-  background-image: url("../img/dot-gray.jpg");
+  background-image: url('../assets/img/dot-gray.jpg');
   overflow: hidden;
   padding-top: 123px;
   padding-bottom: 150px;
@@ -7341,7 +7341,7 @@ studio-reviews
 .studio-reviews__title {
   font-size: 48px;
   line-height: 1.25;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
 }
 
 .studio-reviews__more-link {
@@ -7367,7 +7367,7 @@ studio-reviews
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -7494,7 +7494,7 @@ studio-reviews
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -7680,7 +7680,7 @@ header-fixed
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -7742,7 +7742,7 @@ header-fixed
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -7814,12 +7814,12 @@ video-block
 
 .video-block:after {
   position: absolute;
-  content: "";
+  content: '';
   width: 100%;
   height: 100%;
   top: -100px;
   right: -20%;
-  background: url("../img/dot.jpg");
+  background: url('../assets/img/dot.jpg');
   z-index: 1;
 }
 
@@ -7856,7 +7856,7 @@ video-block
   border-style: solid;
   border-width: 15px 0 15px 23px;
   border-color: transparent transparent transparent currentColor;
-  content: "";
+  content: '';
 }
 
 /*
@@ -7905,7 +7905,7 @@ zoom-counter
 }
 
 .zoom-counter__card:before {
-  content: "";
+  content: '';
   position: absolute;
   z-index: 1;
   top: 30px;
@@ -7918,7 +7918,7 @@ zoom-counter
 .zoom-counter__card-title {
   color: #000;
   font-size: 30px;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   line-height: 1;
   margin-bottom: 76px;
   position: relative;
@@ -7930,7 +7930,7 @@ zoom-counter
   background: inherit;
   font-size: 250px;
   line-height: 1;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-left: -2px;
   color: #fff;
   -webkit-background-clip: text;
@@ -7975,7 +7975,7 @@ zoom-counter
 .zoom-counter__title {
   font-size: 72px;
   line-height: 0.861111111111111;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   margin-bottom: 50px;
 }
 
@@ -8001,7 +8001,7 @@ zoom-counter
   background: none;
   border: none;
   cursor: pointer;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 24px;
   text-transform: uppercase;
   line-height: 1.4;
@@ -8011,7 +8011,7 @@ zoom-counter
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -8065,7 +8065,7 @@ zoom-counters
 .zoom-counters__value {
   font-size: 72px;
   line-height: 1;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   position: relative;
   margin-right: 28px;
   visibility: hidden;
@@ -8157,7 +8157,7 @@ zoom-image-head
 }
 
 .zoom-image-head__title {
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   font-size: 110px;
   text-transform: uppercase;
   font-weight: 600;
@@ -8234,7 +8234,7 @@ zoom-posts
   position: absolute;
   bottom: 2px;
   left: 0;
-  content: "";
+  content: '';
   width: 100%;
   height: 1px;
   background: currentColor;
@@ -8328,7 +8328,7 @@ zoom-services
 .zoom-services__item-title {
   font-size: 30px;
   line-height: 1;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   display: block;
   text-transform: uppercase;
   margin-bottom: 18px;
@@ -8449,7 +8449,7 @@ zoom-slider
 
 .zoom-slider__slider-wrapper:before,
 .zoom-slider__slider-wrapper:after {
-  content: "";
+  content: '';
   width: 1px;
   top: 0;
   bottom: 0;
@@ -8468,7 +8468,7 @@ zoom-slider
 }
 
 .zoom-slider__slider:after {
-  content: "";
+  content: '';
   width: 1px;
   top: 0;
   bottom: 0;
@@ -8521,7 +8521,7 @@ zoom-slider
 
 .zoom-slider__button-title {
   font-size: 48px;
-  font-family: "Teko", Helvetica, sans-serif;
+  font-family: 'Teko', Helvetica, sans-serif;
   line-height: 0.75;
   margin-top: 9px;
   transition: color 0.3s;
