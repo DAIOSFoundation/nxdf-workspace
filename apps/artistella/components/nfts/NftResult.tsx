@@ -5,26 +5,28 @@ import Img1 from "../../public/images/1.png";
 
 
 const ResultLay = styled.div`
-    background-color: #141722 ;
-    border: 3px solid black ;
+    height: 100%;
+    width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 10px ;
     margin: 20px 10px;
+    border-radius: 10px ;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
 `;
 
 
 const ResultImg = styled.div`
-    width: 90%;
-    height: 80%;
-    background-color: #49547B;
+    width: 100%;
+    height: 50%;
+    background-color: red;
+    border-radius:10px 10px 0px 0px;
 `;
 
 
 const ResultDes = styled.div`
     width: 100%;
-    height: 85%;
+    height: 35%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,10 +42,10 @@ const ResultData = styled.div`
 
 
 const BuyBtn = styled.div`
-    margin-top: 5%;
-    padding: 10px ;
-    height: 10%;
-    width: 100%;
+    padding: 10px;
+    margin: 10px ;
+    height: 15%;
+    width: 90%;
     background-color: #F78F1E ;
     border-radius: 5px;
     display: flex;
@@ -53,9 +55,9 @@ const BuyBtn = styled.div`
 
 const NftResult = () => {
   return (
-    <ResultLay key="">
+    <ResultLay>
+        <ResultImg></ResultImg>
         <ResultDes>
-            <ResultImg></ResultImg>
             <ResultData>
                 <span>land</span>
                 <span>#123123</span>
@@ -67,7 +69,7 @@ const NftResult = () => {
         </ResultDes>
         <BuyBtn>
             <div>
-                <Image alt={"coin"} src={Img1} width={25} height={25}/>
+                {/* <Image alt={"coin"} src={Img1} width={25} height={25}/> */}
                 <span>123123</span>    
             </div>       
             <div><span>Buy</span></div>       

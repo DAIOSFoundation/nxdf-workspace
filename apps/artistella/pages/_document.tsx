@@ -28,6 +28,10 @@ export default class CustomDocument extends Document<{
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Teko:300,400&display=optional"
             rel="stylesheet"
           />
+          <link
+                href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css"
+                rel="stylesheet"
+            />
         </Head>
         <body>
           <Main />
