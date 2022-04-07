@@ -4,52 +4,21 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import cn from 'classnames';
 import Script from 'next/script';
+import Link from 'next/link';
 
 const Home: NextPage = () => {
   const a = cn('header', 'header_white', 'header_fixed');
   const b = cn('top-menu', 'header-fixed__menu');
   return (
     <div>
-      <Head>
-        <meta charSet="utf-8" />
-        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta
-          name="description"
-          content="Web site created using create-react-app"
-        />
-        <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-
-        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-
-        <meta
-          content="Arquito - 3D Architecture & Interior HTML Template"
-          name="description"
-        />
-        <meta content="Paul, Logan Cee, Mikhail Ojereliev" name="author" />
-        <title>Arquito - 3D Architecture &amp; Interior HTML Template</title>
-
-        <title>React App</title>
-      </Head>
-      <div style={{ display: 'none' }}>
-        {/* svg sprite*/}
-        <svg
-          style={{ width: 0, height: 0, visibility: 'hidden' }}
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <symbol id="icon_ion-icon-apps" viewBox="0 0 512 512">
-            <path d="M96 176h80V96H96v80zm120 240h80v-80h-80v80zm-120 0h80v-80H96v80zm0-120h80v-80H96v80zm120 0h80v-80h-80v80zM336 96v80h80V96h-80zm-120 80h80V96h-80v80zm120 120h80v-80h-80v80zm0 120h80v-80h-80v80z" />
-          </symbol>
-        </svg>
-      </div>
-
       <div className="page__inner animsition">
-        <header className={a}>
+        <header className="header header_white header_fixed">
           <div className="header__container">
             <div className="header__wrapper container-fluid">
               <div className="header__inner">
-                <div className="logo header__logo">Arquito</div>
+                <Link href="/">
+                  <a className="logo header__logo">Arquito</a>
+                </Link>
                 <button className="header__menu-button" type="button">
                   <span className="header__menu-button-inner" />
                 </button>
@@ -60,9 +29,11 @@ const Home: NextPage = () => {
                 <ul className="top-menu header-fixed__menu">
                   <li className="top-menu__menu-item">
                     <div className="dropdown">
-                      <div className="dropdown__trigger top-menu__menu-link">
-                        Home
-                      </div>
+                      <Link href="/">
+                        <a className="dropdown__trigger top-menu__menu-link">
+                          Home
+                        </a>
+                      </Link>
                       <div className="dropdown__menu">
                         <div className="dropdown__column">
                           <div className="dropdown__title">Light</div>
@@ -2167,14 +2138,12 @@ const Home: NextPage = () => {
                   </div>
                 </div>
                 <div className="col-12 col-lg-6 offset-lg-1">
-                  <a
-                    className="video-block popup-video"
-                    href="https://vimeo.com/34741214"
-                    target="_blank"
-                  >
-                    <img alt="" src="img/home-studio-video-image.jpg" />
-                    <span className="video-block__play" />
-                  </a>
+                  <Link href="https://vimeo.com/34741214">
+                    <a className="video-block popup-video" target="_blank">
+                      <img alt="" src="img/home-studio-video-image.jpg" />
+                      <span className="video-block__play" />
+                    </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -2825,12 +2794,6 @@ const Home: NextPage = () => {
           </div>
         </footer>
       </div>
-      {/*JS*/}
-      {/*Revolution JS*/}
-      {/*Revolution Panorama Add-On JS*/}
-      {/* Revolution Slicey Add-On JS*/}
-      {/* Revolution Panorama extensions JS (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading)*/}
-      {/*Theme JS*/}
     </div>
   );
 };
