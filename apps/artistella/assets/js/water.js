@@ -66,7 +66,7 @@
 	
 	var textureAlign = { x: 0.5, y: 0.9 };
 	var textures = [{
-	  file: 'assets/img/distortion.jpg',
+	  file: 'assets/img/distortion.jpeg',
 	  name: 'image',
 	  align: textureAlign,
 	  scale: { x: 1, y: 1 }

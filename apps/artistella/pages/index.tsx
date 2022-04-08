@@ -610,7 +610,7 @@ const Home: NextPage = () => {
         <main>
           <div
             className="studio-intro-slide"
-            style={{ backgroundImage: 'url(assets/img/distortion.jpg)' }}
+            style={{ backgroundImage: 'url(assets/img/distortion.jpeg)' }}
           >
             <div className="Background">
               <canvas className="Background-canvas" />
