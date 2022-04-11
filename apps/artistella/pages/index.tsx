@@ -4,130 +4,854 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import cn from 'classnames';
 import Script from 'next/script';
+
 import Link from 'next/link';
+import { BsDiscord, BsTwitter, BsInstagram } from 'react-icons/bs';
+import styled from 'styled-components';
+import media from '../styles/media';
+import { SideSheet, Paragraph, Button } from 'evergreen-ui';
+import { useCallback, useState, useRef, useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectFade, Navigation, Pagination } from 'swiper';
+
+import { GrClose } from 'react-icons/gr';
+import { getScrollTop } from '../lib/getScroll';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import 'swiper/css/effect-fade';
+
+import { Collapse } from 'react-collapse';
+import Header from '../components/Header';
+
+import ReactPlayer from 'react-player';
+
+const EN = ['HOME', 'NFT', 'ROADMAP', 'TEAM ', 'DOCS'];
+const KR = ['홈', '옌에프티', '로드맵', '팀', '문서'];
 
 const Home: NextPage = () => {
-  const a = cn('header', 'header_white', 'header_fixed');
-  const b = cn('top-menu', 'header-fixed__menu');
+  const [isShown, setIsShown] = useState(false);
+  const [getLanguage, setLanguage] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const blockRef = useRef<HTMLDivElement>(null);
+  const [getHeight, setHeight] = useState(0);
+  const [marginTop, setMarginTop] = useState(0);
+
+  useEffect(() => {
+    if (!blockRef.current) return;
+    setHeight(blockRef.current.clientHeight);
+    setMarginTop(-1 * blockRef.current.clientHeight);
+  }, []);
+
+  const prevScrollTop = useRef(0);
+  const direction = useRef<'UP' | 'DOWN'>('DOWN');
+  const transitionPoint = useRef(0);
+
+  const onScroll = useCallback(() => {
+    const scrollTop = getScrollTop();
+    if (scrollTop > 64) {
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('scroll', onScroll);
+    return () => {
+      document.removeEventListener('scroll', onScroll);
+    };
+  }, [onScroll]);
+
+  const height = 10;
+
+  const accessibilityIds = {
+    checkbox: 'accessible-marker-example1',
+    button: 'accessible-marker-example2',
+  };
+
+  const [prevEl, setPrevEl] = useState<HTMLElement | null>(null);
+  const [nextEl, setNextEl] = useState<HTMLElement | null>(null);
+
+  const [isCheckboxCollapseOpen, setIsCheckboxCollapseOpen] = useState(false);
+  const [isButtonCollapseOpen, setIsButtonCollapseOpen] = useState(false);
+  const [isButtonCollapseOpen2, setIsButtonCollapseOpen2] = useState(false);
+  const [isButtonCollapseOpen3, setIsButtonCollapseOpen3] = useState(false);
+  const [isButtonCollapseOpen4, setIsButtonCollapseOpen4] = useState(false);
+
+  const onChange = useCallback(
+    ({ target: { checked } }) => setIsCheckboxCollapseOpen(checked),
+    [setIsCheckboxCollapseOpen]
+  );
+
+  const onClick = useCallback(
+    () => setIsButtonCollapseOpen(!isButtonCollapseOpen),
+    [isButtonCollapseOpen]
+  );
+  const onClick2 = useCallback(
+    () => setIsButtonCollapseOpen2(!isButtonCollapseOpen2),
+    [isButtonCollapseOpen2]
+  );
+  const onClick3 = useCallback(
+    () => setIsButtonCollapseOpen3(!isButtonCollapseOpen3),
+    [isButtonCollapseOpen3]
+  );
+  const onClick4 = useCallback(
+    () => setIsButtonCollapseOpen4(!isButtonCollapseOpen4),
+    [isButtonCollapseOpen4]
+  );
+
   return (
     <div>
       <div className="page__inner animsition">
         <header className="header header_white header_fixed">
-          <div className="header__container">
-            <div className="header__wrapper container-fluid">
-              <div className="header__inner">
-                <Link href="/">
-                  <a className="logo header__logo">Arquito</a>
-                </Link>
-                <button className="header__menu-button" type="button">
-                  <span className="header__menu-button-inner" />
-                </button>
+          {visible ? (
+            <Block>
+              <div className="header__container">
+                <div className="header__wrapper container-fluid">
+                  <div className="header__inner">
+                    <Link href="/">
+                      <a className="logo header__logo">
+                        <img alt="" src="assets/img/logo.png" />
+                      </a>
+                    </Link>
+                    {isShown ? (
+                      <button
+                        style={{ marginRight: '2rem' }}
+                        className="header__menu-button"
+                        type="button"
+                      >
+                        <MediumWidth>
+                          <div style={{ marginLeft: '2rem' }}>
+                            <BsDiscord size="24" style={{ color: 'black' }} />
+                          </div>
+                          <div style={{ marginLeft: '2rem', color: 'black' }}>
+                            <BsTwitter size="24" />
+                          </div>
+                          <div>
+                            <BsInstagram
+                              size="24"
+                              style={{ marginLeft: '2rem', color: 'black' }}
+                            />
+                          </div>
+                        </MediumWidth>
+
+                        <>
+                          <SideSheet
+                            isShown={isShown}
+                            onCloseComplete={() => setIsShown(false)}
+                            preventBodyScrolling={true}
+                          >
+                            <div
+                              style={{
+                                display: 'flex',
+                                padding: '4rem',
+                                flexDirection: 'column',
+                                height: '80%',
+                              }}
+                            >
+                              <SideSheetHeader>
+                                <Paragraph style={{ marginRight: '1.4rem' }}>
+                                  EN
+                                </Paragraph>
+                                <Paragraph></Paragraph>
+                                <Paragraph style={{ marginLeft: 'auto' }}>
+                                  <GrClose onClick={() => setIsShown(false)} />
+                                </Paragraph>
+                              </SideSheetHeader>
+                              <div
+                                style={{
+                                  marginTop: '3rem',
+                                }}
+                              >
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                    color: 'black',
+                                  }}
+                                >
+                                  HOME
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                    color: '#999',
+                                  }}
+                                >
+                                  NFT
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  ROADMAP
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  TEAM
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1ren',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  DOCS
+                                </Paragraph>
+                              </div>
+                              <div
+                                style={{ display: 'flex', marginTop: 'auto' }}
+                              >
+                                <BsTwitter
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsDiscord
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsInstagram
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </SideSheet>
+
+                          <MInMediumWidth>
+                            <div
+                              className="header__menu-button-inner"
+                              style={{ color: 'black' }}
+                            />
+                          </MInMediumWidth>
+                        </>
+                      </button>
+                    ) : (
+                      <button
+                        style={{ marginRight: '2rem' }}
+                        className="header__menu-button"
+                        type="button"
+                        onClick={() => {
+                          setIsShown(true);
+                        }}
+                      >
+                        <MediumWidth>
+                          <div style={{ marginLeft: '2rem' }}>
+                            <BsDiscord size="24" style={{ color: 'black' }} />
+                          </div>
+                          <div style={{ marginLeft: '2rem', color: 'black' }}>
+                            <BsTwitter size="24" />
+                          </div>
+                          <div>
+                            <BsInstagram
+                              size="24"
+                              style={{ marginLeft: '2rem', color: 'black' }}
+                            />
+                          </div>
+                        </MediumWidth>
+
+                        <>
+                          <SideSheet
+                            isShown={isShown}
+                            onCloseComplete={() => setIsShown(false)}
+                            preventBodyScrolling={true}
+                          >
+                            <div
+                              style={{
+                                display: 'flex',
+                                padding: '4rem',
+                                flexDirection: 'column',
+                                height: '80%',
+                              }}
+                            >
+                              <SideSheetHeader>
+                                <Paragraph style={{ marginRight: '1.4rem' }}>
+                                  KR
+                                </Paragraph>
+                                <Paragraph>EN</Paragraph>
+                                <Paragraph style={{ marginLeft: 'auto' }}>
+                                  <GrClose onClick={() => setIsShown(false)} />
+                                </Paragraph>
+                              </SideSheetHeader>
+                              <div
+                                style={{
+                                  marginTop: '3rem',
+                                }}
+                              >
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                    color: 'black',
+                                  }}
+                                >
+                                  HOME
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                    color: '#999',
+                                  }}
+                                >
+                                  NFT
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  ROADMAP
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  TEAM
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1ren',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  DOCS
+                                </Paragraph>
+                              </div>
+                              <div
+                                style={{ display: 'flex', marginTop: 'auto' }}
+                              >
+                                <BsTwitter
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsDiscord
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsInstagram
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </SideSheet>
+
+                          <MInMediumWidth>
+                            <div
+                              className="header__menu-button-inner"
+                              style={{ color: 'black' }}
+                            />
+                          </MInMediumWidth>
+                        </>
+                      </button>
+                    )}
+                  </div>
+                </div>
+                <div className="header-fixed">
+                  <div className="header-fixed__bottom container">
+                    <ul className="top-menu header-fixed__menu">
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <Link href="/">
+                            <a
+                              className="dropdown__trigger top-menu__menu-link"
+                              style={{ color: 'black' }}
+                            >
+                              Home
+                            </a>
+                          </Link>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__title">Light</div>
+                              <div className="dropdown__item">
+                                <a className="dropdown__link" href="index.html">
+                                  Default
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-parallax-piling.html"
+                                >
+                                  Parallax Piling
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-zoom-parallax.html"
+                                >
+                                  Zoom Parallax
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-3d-panorama.html"
+                                >
+                                  3D Panorama
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link dropdown__link dropdown__link_active"
+                                  href="home-studio.html"
+                                >
+                                  Studio
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-minimal.html"
+                                >
+                                  Minimal
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-grid-background.html"
+                                >
+                                  Grid Background
+                                </a>
+                              </div>
+                            </div>
+                            <div className="dropdown__column">
+                              <div className="dropdown__title">Dark</div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-default-dark.html"
+                                >
+                                  Default Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-zoom-parallax-dark.html"
+                                >
+                                  Zoom Parallax Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-3d-panorama-dark.html"
+                                >
+                                  3D Panorama Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-studio-dark.html"
+                                >
+                                  Studio Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-minimal-dark.html"
+                                >
+                                  Minimal Dark
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: 'black' }}
+                          >
+                            NFT
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="work-grid.html"
+                                >
+                                  Grid
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="work-carousel.html"
+                                >
+                                  Carousel
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="work-listing.html"
+                                >
+                                  Listing
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="project-detail-image.html"
+                                >
+                                  Project Detail Image
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="project-detail-slider.html"
+                                >
+                                  Project Detail Slider
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="project-detail-panorama.html"
+                                >
+                                  Project Detail Panorama
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: 'black' }}
+                          >
+                            ROADMAP
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-grid.html"
+                                >
+                                  Grid
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-listing.html"
+                                >
+                                  Listing
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-masonry.html"
+                                >
+                                  Masonry
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-single-post.html"
+                                >
+                                  Single Post
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: 'black' }}
+                          >
+                            TEAM
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-about.html"
+                                >
+                                  About
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services.html"
+                                >
+                                  Services
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services-detail.html"
+                                >
+                                  Services Detail
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-contact.html"
+                                >
+                                  Contact
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-404.html"
+                                >
+                                  404
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: 'black' }}
+                          >
+                            DOCS
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-about.html"
+                                >
+                                  About
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services.html"
+                                >
+                                  Services
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services-detail.html"
+                                >
+                                  Services Detail
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-contact.html"
+                                >
+                                  Contact
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-404.html"
+                                >
+                                  404
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="header-fixed">
-              <div className="header-fixed__bottom container">
-                <ul className="top-menu header-fixed__menu">
-                  <li className="top-menu__menu-item">
-                    <div className="dropdown">
-                      <Link href="/">
-                        <a className="dropdown__trigger top-menu__menu-link">
-                          Home
-                        </a>
-                      </Link>
-                      <div className="dropdown__menu">
-                        <div className="dropdown__column">
-                          <div className="dropdown__title">Light</div>
-                          <div className="dropdown__item">
-                            <a className="dropdown__link" href="index.html">
+              <div className="header__overlay" />
+              <div className="menu-panel header__menu">
+                <div className="menu-panel__inner">
+                  <button
+                    className="header__menu-button header__menu-button_fixed"
+                    type="button"
+                  >
+                    <span className="header__menu-button-inner" />
+                  </button>
+                  <div className="menu-panel__locales">
+                    <div className="menu-panel__locale link link link_active">
+                      En
+                    </div>
+                    <div className="menu-panel__locale link">Fr</div>
+                    <div className="menu-panel__locale link">De</div>
+                  </div>
+                  <div className="menu-panel__menu">
+                    <div className="menu-panel__menu-item">
+                      <a
+                        className="menu-panel__menu-link menu-panel__menu-link menu-panel__menu-link_active"
+                        data-toggle="collapse"
+                        href="#submenu1"
+                      >
+                        Home
+                      </a>
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu1"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="index.html"
+                            >
                               Default
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-parallax-piling.html"
                             >
                               Parallax Piling
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-zoom-parallax.html"
                             >
                               Zoom Parallax
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-3d-panorama.html"
                             >
                               3D Panorama
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link dropdown__link dropdown__link_active"
+                              className="menu-panel__submenu-link menu-panel__submenu-link menu-panel__submenu-link_active"
                               href="home-studio.html"
                             >
                               Studio
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-minimal.html"
                             >
                               Minimal
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-grid-background.html"
                             >
                               Grid Background
                             </a>
                           </div>
-                        </div>
-                        <div className="dropdown__column">
-                          <div className="dropdown__title">Dark</div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-default-dark.html"
                             >
                               Default Dark
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-zoom-parallax-dark.html"
                             >
                               Zoom Parallax Dark
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-3d-panorama-dark.html"
                             >
                               3D Panorama Dark
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-studio-dark.html"
                             >
                               Studio Dark
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-minimal-dark.html"
                             >
                               Minimal Dark
@@ -136,57 +860,62 @@ const Home: NextPage = () => {
                         </div>
                       </div>
                     </div>
-                  </li>
-                  <li className="top-menu__menu-item">
-                    <div className="dropdown">
+                    <div className="menu-panel__menu-item">
                       <a
-                        className="dropdown__trigger top-menu__menu-link"
-                        href="#"
+                        className="menu-panel__menu-link collapsed"
+                        data-toggle="collapse"
+                        href="#submenu2"
                       >
                         Work
                       </a>
-                      <div className="dropdown__menu">
-                        <div className="dropdown__column">
-                          <div className="dropdown__item">
-                            <a className="dropdown__link" href="work-grid.html">
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu2"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="work-grid.html"
+                            >
                               Grid
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="work-carousel.html"
                             >
                               Carousel
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="work-listing.html"
                             >
                               Listing
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="project-detail-image.html"
                             >
                               Project Detail Image
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="project-detail-slider.html"
                             >
                               Project Detail Slider
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="project-detail-panorama.html"
                             >
                               Project Detail Panorama
@@ -195,41 +924,46 @@ const Home: NextPage = () => {
                         </div>
                       </div>
                     </div>
-                  </li>
-                  <li className="top-menu__menu-item">
-                    <div className="dropdown">
+                    <div className="menu-panel__menu-item">
                       <a
-                        className="dropdown__trigger top-menu__menu-link"
-                        href="#"
+                        className="menu-panel__menu-link collapsed collapsed"
+                        data-toggle="collapse"
+                        href="#submenu3"
                       >
                         News
                       </a>
-                      <div className="dropdown__menu">
-                        <div className="dropdown__column">
-                          <div className="dropdown__item">
-                            <a className="dropdown__link" href="news-grid.html">
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu3"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="news-grid.html"
+                            >
                               Grid
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="news-listing.html"
                             >
                               Listing
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="news-masonry.html"
                             >
                               Masonry
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="news-single-post.html"
                             >
                               Single Post
@@ -238,375 +972,96 @@ const Home: NextPage = () => {
                         </div>
                       </div>
                     </div>
-                  </li>
-                  <li className="top-menu__menu-item">
-                    <div className="dropdown">
+                    <div className="menu-panel__menu-item">
                       <a
-                        className="dropdown__trigger top-menu__menu-link"
-                        href="#"
+                        className="menu-panel__menu-link collapsed collapsed"
+                        data-toggle="collapse"
+                        href="#submenu4"
                       >
                         Page
                       </a>
-                      <div className="dropdown__menu">
-                        <div className="dropdown__column">
-                          <div className="dropdown__item">
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu4"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="page-about.html"
                             >
                               About
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="page-services.html"
                             >
                               Services
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="page-services-detail.html"
                             >
                               Services Detail
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="page-contact.html"
                             >
                               Contact
                             </a>
                           </div>
-                          <div className="dropdown__item">
-                            <a className="dropdown__link" href="page-404.html">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="page-404.html"
+                            >
                               404
                             </a>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="header__overlay" />
-          <div className="menu-panel header__menu">
-            <div className="menu-panel__inner">
-              <button
-                className="header__menu-button header__menu-button_fixed"
-                type="button"
-              >
-                <span className="header__menu-button-inner" />
-              </button>
-              <div className="menu-panel__locales">
-                <div className="menu-panel__locale link link link_active">
-                  En
-                </div>
-                <div className="menu-panel__locale link">Fr</div>
-                <div className="menu-panel__locale link">De</div>
-              </div>
-              <div className="menu-panel__menu">
-                <div className="menu-panel__menu-item">
-                  <a
-                    className="menu-panel__menu-link menu-panel__menu-link menu-panel__menu-link_active"
-                    data-toggle="collapse"
-                    href="#submenu1"
-                  >
-                    Home
-                  </a>
-                  <div className="menu-panel__menu-list collapse" id="submenu1">
-                    <div className="menu-panel__bottom-submenu">
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="index.html"
-                        >
-                          Default
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-parallax-piling.html"
-                        >
-                          Parallax Piling
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-zoom-parallax.html"
-                        >
-                          Zoom Parallax
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-3d-panorama.html"
-                        >
-                          3D Panorama
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link menu-panel__submenu-link menu-panel__submenu-link_active"
-                          href="home-studio.html"
-                        >
-                          Studio
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-minimal.html"
-                        >
-                          Minimal
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-grid-background.html"
-                        >
-                          Grid Background
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-default-dark.html"
-                        >
-                          Default Dark
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-zoom-parallax-dark.html"
-                        >
-                          Zoom Parallax Dark
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-3d-panorama-dark.html"
-                        >
-                          3D Panorama Dark
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-studio-dark.html"
-                        >
-                          Studio Dark
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-minimal-dark.html"
-                        >
-                          Minimal Dark
-                        </a>
-                      </div>
-                    </div>
                   </div>
-                </div>
-                <div className="menu-panel__menu-item">
-                  <a
-                    className="menu-panel__menu-link collapsed"
-                    data-toggle="collapse"
-                    href="#submenu2"
-                  >
-                    Work
-                  </a>
-                  <div className="menu-panel__menu-list collapse" id="submenu2">
-                    <div className="menu-panel__bottom-submenu">
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="work-grid.html"
-                        >
-                          Grid
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="work-carousel.html"
-                        >
-                          Carousel
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="work-listing.html"
-                        >
-                          Listing
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="project-detail-image.html"
-                        >
-                          Project Detail Image
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="project-detail-slider.html"
-                        >
-                          Project Detail Slider
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="project-detail-panorama.html"
-                        >
-                          Project Detail Panorama
-                        </a>
-                      </div>
+
+                  <div className="menu-panel__footer">
+                    <div className="socials menu-panel__socials">
+                      <a className="socials__social icofont-facebook" href="#">
+                        <div className="visually-hidden">facebook</div>
+                      </a>
+                      <a
+                        className="socials__social icofont-google-plus"
+                        href="#"
+                      >
+                        <div className="visually-hidden">google plus</div>
+                      </a>
                     </div>
-                  </div>
-                </div>
-                <div className="menu-panel__menu-item">
-                  <a
-                    className="menu-panel__menu-link collapsed collapsed"
-                    data-toggle="collapse"
-                    href="#submenu3"
-                  >
-                    News
-                  </a>
-                  <div className="menu-panel__menu-list collapse" id="submenu3">
-                    <div className="menu-panel__bottom-submenu">
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="news-grid.html"
-                        >
-                          Grid
-                        </a>
+                    <div className="menu-panel__bottom">
+                      <div className="menu-panel__copyright">
+                        © 2019
+                        <strong>ARQUITO.</strong>
+                        All Rights Reserved.
                       </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="news-listing.html"
-                        >
-                          Listing
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="news-masonry.html"
-                        >
-                          Masonry
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="news-single-post.html"
-                        >
-                          Single Post
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="menu-panel__menu-item">
-                  <a
-                    className="menu-panel__menu-link collapsed collapsed"
-                    data-toggle="collapse"
-                    href="#submenu4"
-                  >
-                    Page
-                  </a>
-                  <div className="menu-panel__menu-list collapse" id="submenu4">
-                    <div className="menu-panel__bottom-submenu">
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="page-about.html"
-                        >
-                          About
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="page-services.html"
-                        >
-                          Services
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="page-services-detail.html"
-                        >
-                          Services Detail
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="page-contact.html"
-                        >
-                          Contact
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="page-404.html"
-                        >
-                          404
-                        </a>
+                      <div className="menu-panel__author">
+                        Design by
+                        <a href="#">Logan Cee</a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="menu-panel__footer">
-                <div className="socials menu-panel__socials">
-                  <a className="socials__social icofont-twitter" href="#">
-                    <div className="visually-hidden">twitter</div>
-                  </a>
-                  <a className="socials__social icofont-facebook" href="#">
-                    <div className="visually-hidden">facebook</div>
-                  </a>
-                  <a className="socials__social icofont-google-plus" href="#">
-                    <div className="visually-hidden">google plus</div>
-                  </a>
-                </div>
-                <div className="menu-panel__bottom">
-                  <div className="menu-panel__copyright">
-                    © 2019
-                    <strong>ARQUITO.</strong>
-                    All Rights Reserved.
-                  </div>
-                  <div className="menu-panel__author">
-                    Design by
-                    <a href="#">Logan Cee</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            </Block>
+          ) : (
+            <Header />
+          )}
         </header>
+
         <main>
           <div
             className="studio-intro-slide"
@@ -617,12 +1072,11 @@ const Home: NextPage = () => {
             </div>
             <div className="faded-block studio-intro-slide__container container">
               <div className="studio-intro-slide__inner">
-                <div className="studio-intro-slide__subtitle">Architecture</div>
+                <div className="studio-intro-slide__subtitle">METAVERSE</div>
                 <div className="studio-intro-slide__title-wrapper">
                   <div className="studio-intro-slide__title">
-                    Capri Ocean
+                    ARTISTELLA
                     <br />
-                    Museum
                   </div>
                 </div>
                 <div className="studio-intro-slide__text">
@@ -672,23 +1126,36 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
+          <Player>
+            <ReactPlayer
+              url="youtube.com/watch?v=6RdXQYqXdvo"
+              width="100%"
+              height="100vh"
+              config={{
+                youtube: {
+                  playerVars: { showinfo: 1 },
+                },
+              }}
+            />
+          </Player>
           <div className="cards-block">
             <div className="cards-block__head">
               <div className="container">
                 <div className="row">
                   <div className="col-12 col-lg-6 col-xl-5">
-                    <div className="cards-block__title">
-                      We provide best solutions for your dream
+                    <div
+                      className="cards-block__title"
+                      style={{ fontWeight: 600 }}
+                    >
+                      METAVERSE CONTENT
                     </div>
                   </div>
                   <div className="col-12 col-lg-6 offset-xl-1">
                     <div className="cards-block__text">
-                      When an unknown printer took a galley of type and
-                      scrambled it to make a type specimen book. It has survived
-                      not only five centuries. When an unknown printer took a
-                      galley of type and scrambled it to make a type specimen
-                      book. When an unknown printer took a galley of type and
-                      scrambled it to make a type specimen book.
+                      아티스텔라는 크게 네가지의 키워드를 가지고 있다 각
+                      키워드에 따라 사람들의 방문도가 결정되고 누군가에게는
+                      힐링의 공간, 또 다른 누군가에게는 게임의공간, 사람들 간의
+                      소통공간, 예술의 공간으로 나뉘어진다.
                     </div>
                   </div>
                 </div>
@@ -701,7 +1168,7 @@ const Home: NextPage = () => {
                     <a
                       className="cards__item-inner"
                       href="#"
-                      style={{ backgroundImage: 'url("img/card-image-1.jpg")' }}
+                      style={{ backgroundImage: 'url("img/1.png")' }}
                     >
                       <span className="cards__item-content">
                         <span className="cards__item-index">01</span>
@@ -720,7 +1187,7 @@ const Home: NextPage = () => {
                     <a
                       className="cards__item-inner"
                       href="#"
-                      style={{ backgroundImage: 'url("img/card-image-2.jpg")' }}
+                      style={{ backgroundImage: 'url("img/2.png")' }}
                     >
                       <span className="cards__item-content">
                         <span className="cards__item-index">02</span>
@@ -741,7 +1208,7 @@ const Home: NextPage = () => {
                     <a
                       className="cards__item-inner"
                       href="#"
-                      style={{ backgroundImage: 'url("img/card-image-3.jpg")' }}
+                      style={{ backgroundImage: 'url("img/3.png")' }}
                     >
                       <span className="cards__item-content">
                         <span className="cards__item-index">03</span>
@@ -759,7 +1226,7 @@ const Home: NextPage = () => {
                     <a
                       className="cards__item-inner"
                       href="#"
-                      style={{ backgroundImage: 'url("img/card-image-4.jpg")' }}
+                      style={{ backgroundImage: 'url("img/4.png")' }}
                     >
                       <span className="cards__item-content">
                         <span className="cards__item-index">04</span>
@@ -777,7 +1244,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="features-block">
+          {/* <div className="features-block">
             <div className="container">
               <div className="features-block__subtitle">Why Choose Us</div>
               <div className="features-block__title">Why we are different?</div>
@@ -837,7 +1304,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="studio-filter">
             <div className="container">
               <div className="studio-filter__inner">
@@ -850,13 +1317,13 @@ const Home: NextPage = () => {
                     All
                   </a>
                   <a className="studio-filter__filter-link" href="#">
-                    Architecture
+                    Land
                   </a>
                   <a className="studio-filter__filter-link" href="#">
-                    Interior Design
+                    Building
                   </a>
                   <a className="studio-filter__filter-link" href="#">
-                    Landscape
+                    Interior
                   </a>
                 </div>
               </div>
@@ -867,21 +1334,18 @@ const Home: NextPage = () => {
               <div
                 className="revolution-slider__slider rev rev_slider fullwidthabanner revolution-slider__slider revolution-slider__slider_autoheight"
                 data-version="5.4.6"
-                style={{ display: 'none' }}
               >
-                <ul>
-                  <li
-                    data-easein="default"
-                    data-easeout="default"
-                    data-hideafterloop={0}
-                    data-hideslideonmobile="off"
-                    data-masterspeed={600}
-                    data-rotate={0}
-                    data-saveperformance="off"
-                    data-slicey_shadow="0px 0px 0px 0px transparent"
-                    data-slotamount="default"
-                    data-transition="fade"
-                  >
+                <Swiper
+                  slidesPerView={1}
+                  spaceBetween={30}
+                  effect={'fade'}
+                  loop={true}
+                  navigation={true}
+                  modules={[Pagination, Navigation, EffectFade]}
+                  className="mySwiper"
+                >
+                  <SwiperSlide>
+                    {' '}
                     <img
                       alt=""
                       className="rev-slidebg"
@@ -898,8 +1362,71 @@ const Home: NextPage = () => {
                       data-rotatestart={0}
                       data-scaleend={120}
                       data-scalestart={100}
-                      src="img/home-slide-2.jpg"
+                      src="img/distortion.jpg"
                     />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    {' '}
+                    <img
+                      alt=""
+                      className="rev-slidebg"
+                      data-bgposition="center center"
+                      data-blurend={0}
+                      data-blurstart={20}
+                      data-duration={5000}
+                      data-ease="Power2.easeInOut"
+                      data-kenburns="on"
+                      data-no-retina="data-no-retina"
+                      data-offsetend="0 0"
+                      data-offsetstart="0 0"
+                      data-rotateend={0}
+                      data-rotatestart={0}
+                      data-scaleend={120}
+                      data-scalestart={100}
+                      src="img/full-screen-image-2.jpg"
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <img
+                      alt=""
+                      className="rev-slidebg"
+                      data-bgposition="center center"
+                      data-blurend={0}
+                      data-blurstart={20}
+                      data-duration={5000}
+                      data-ease="Power2.easeInOut"
+                      data-kenburns="on"
+                      data-no-retina="data-no-retina"
+                      data-offsetend="0 0"
+                      data-offsetstart="0 0"
+                      data-rotateend={0}
+                      data-rotatestart={0}
+                      data-scaleend={120}
+                      data-scalestart={100}
+                      src="img/distortion.jpg"
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>Slide 4</SwiperSlide>
+                  <SwiperSlide>Slide 5</SwiperSlide>
+                  <SwiperSlide>Slide 6</SwiperSlide>
+                  <SwiperSlide>Slide 7</SwiperSlide>
+                  <SwiperSlide>Slide 8</SwiperSlide>
+                  <SwiperSlide>Slide 9</SwiperSlide>
+                </Swiper>
+
+                <ul>
+                  <li
+                    data-easein="default"
+                    data-easeout="default"
+                    data-hideafterloop={0}
+                    data-hideslideonmobile="off"
+                    data-masterspeed={600}
+                    data-rotate={0}
+                    data-saveperformance="off"
+                    data-slicey_shadow="0px 0px 0px 0px transparent"
+                    data-slotamount="default"
+                    data-transition="fade"
+                  >
                     <div
                       className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
                       data-frames='[{"delay":300,"speed":1000,"frame":"0","from":"rX:0deg;rY:0deg;rZ:0deg;sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3700","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
@@ -2052,25 +2579,37 @@ const Home: NextPage = () => {
                   </div>
                   <div className="collapse-list">
                     <div className="collapse-list__collapse">
+                      <div className="accessible"></div>
                       <a
                         className="collapse-list__collapse-head collapsed"
                         data-toggle="collapse"
                         href="#collapse1"
                       >
                         1. Concept
-                        <span className="collapse-list__collapse-head-icon icon-chevron-up" />
+                        <span
+                          className="collapse-list__collapse-head-icon icon-chevron-up"
+                          aria-controls={accessibilityIds.button}
+                          aria-expanded={isButtonCollapseOpen}
+                          onClick={onClick}
+                        />
                       </a>
                       <div
                         className="collapse-list__collapse-text collapse"
                         id="collapse1"
-                      >
+                      ></div>
+                      <Collapse isOpened={isButtonCollapseOpen}>
+                        <div
+                          style={{ height }}
+                          id={accessibilityIds.button}
+                          className="blob"
+                        />
                         <div className="collapse-list__collapse-text-inner">
                           Light. God in she’d thing Night itself. There signs
                           him divided tree heaven over also that open seasons
                           doesn’tliving isn’t god. Abundantly together life
                           heaven.
                         </div>
-                      </div>
+                      </Collapse>
                     </div>
                     <div className="collapse-list__collapse">
                       <a
@@ -2079,7 +2618,12 @@ const Home: NextPage = () => {
                         href="#collapse2"
                       >
                         2. design &amp; development
-                        <span className="collapse-list__collapse-head-icon icon-chevron-up" />
+                        <span
+                          className="collapse-list__collapse-head-icon icon-chevron-up"
+                          aria-controls={accessibilityIds.button}
+                          aria-expanded={isButtonCollapseOpen2}
+                          onClick={onClick2}
+                        />
                       </a>
                       <div
                         className="collapse-list__collapse-text collapse"
@@ -2092,6 +2636,19 @@ const Home: NextPage = () => {
                           heaven.
                         </div>
                       </div>
+                      <Collapse isOpened={isButtonCollapseOpen2}>
+                        <div
+                          style={{ height }}
+                          id={accessibilityIds.button}
+                          className="blob"
+                        />
+                        <div className="collapse-list__collapse-text-inner">
+                          Light. God in she’d thing Night itself. There signs
+                          him divided tree heaven over also that open seasons
+                          doesn’tliving isn’t god. Abundantly together life
+                          heaven.
+                        </div>
+                      </Collapse>
                     </div>
                     <div className="collapse-list__collapse">
                       <a
@@ -2140,7 +2697,7 @@ const Home: NextPage = () => {
                 <div className="col-12 col-lg-6 offset-lg-1">
                   <Link href="https://vimeo.com/34741214">
                     <a className="video-block popup-video" target="_blank">
-                      <img alt="" src="img/home-studio-video-image.jpg" />
+                      <img alt="" src="img/1.png" />
                       <span className="video-block__play" />
                     </a>
                   </Link>
@@ -2148,7 +2705,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="studio-reviews">
+          {/* <div className="studio-reviews">
             <div className="container">
               <div className="studio-reviews__head">
                 <div className="studio-reviews__title">
@@ -2266,7 +2823,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="team-block">
             <div className="container">
               <div className="team-block__body team-block__body team-block__body_bordered">
@@ -2281,238 +2838,86 @@ const Home: NextPage = () => {
                     fruit whose isn’t. Meat seed you’re. Seed so days creature
                     seed, i whales creature make.
                   </div>
-                </div>
-                <div className="team-block__slider-wrapper">
-                  <button
-                    className="team-block__control team-block__control_prev icon-chevron-left"
-                    type="button"
+
+                  <Swiper
+                    slidesPerView={4}
+                    spaceBetween={30}
+                    slidesPerGroup={4}
+                    loop={true}
+                    loopFillGroupWithBlank={true}
+                    navigation={true}
+                    modules={[Pagination, Navigation]}
+                    className="mySwiper"
                   >
-                    <span className="visually-hidden">prev</span>
-                  </button>
-                  <button
-                    className="team-block__control team-block__control_next icon-chevron-right"
-                    type="button"
-                  >
-                    <span className="visually-hidden">next</span>
-                  </button>
-                  <div className="team-block__slider swiper-container">
-                    <div className="swiper-wrapper">
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-1.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="team-block__person-name">
-                          Alex Fergurson
-                        </div>
-                        <div className="team-block__person-role">
-                          CEO Founder
-                        </div>
-                      </div>
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-2.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="team-block__person-name">
-                          Laura Jefferson
-                        </div>
-                        <div className="team-block__person-role">
-                          CO Founder
-                        </div>
-                      </div>
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-3.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="team-block__person-name">
-                          Kylian Mbappe
-                        </div>
-                        <div className="team-block__person-role">
-                          Project Management
-                        </div>
-                      </div>
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-4.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="team-block__person-name">
-                          Jenifer Johanson
-                        </div>
-                        <div className="team-block__person-role">
-                          3D Visualization
-                        </div>
-                      </div>
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-2.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="team-block__person-name">
-                          Laura Jefferson
-                        </div>
-                        <div className="team-block__person-role">
-                          CO Founder
-                        </div>
-                      </div>
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-3.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="team-block__person-name">
-                          Kylian Mbappe
-                        </div>
-                        <div className="team-block__person-role">
-                          Project Management
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                  </Swiper>
                 </div>
               </div>
             </div>
           </div>
+
           <div className="awards-block">
             <div className="container">
               <div className="heading-group heading-group heading-group_centered">
@@ -2605,7 +3010,7 @@ const Home: NextPage = () => {
                       <img
                         alt=""
                         className="posts__image"
-                        src="img/studio-post-image-1.jpg"
+                        src="img/studio-post-image-2.jpg"
                       />
                       <span className="posts__item-content">
                         <span className="posts__item-footer">
@@ -2799,3 +3204,45 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+const MediumWidth = styled.div`
+  display: flex;
+
+  ${media.custom(1200)} {
+    display: none;
+  }
+`;
+
+const MInMediumWidth = styled.div`
+  display: flex;
+  ${media.minCustom(1201)} {
+    display: none;
+  }
+`;
+
+const SideSheetHeader = styled.div`
+  display: flex;
+  width: 100%;
+  ${media.custom(576)} {
+    width: 50%;
+  }
+  font-size: 1rem;
+
+  text-transform: uppercase;
+`;
+
+const Block = styled.div`
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0px 0 8px rgba(0, 0, 0, 0.08);
+  transition: background-color 2s ease-out;
+`;
+
+const Player = styled.div`
+  width: 100%;
+  margin-top: 4rem;
+  height: auto;
+`;

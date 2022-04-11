@@ -10,6 +10,16 @@
   }
 }
 
+@media (max-width: 1200px) {
+  .header-fixed__bottom {
+    display: none;
+  }
+
+  .header-full-page__bottom {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 1629px) {
   .cards__item-inner {
     padding: 35px 35px;
@@ -453,14 +463,6 @@
     min-height: 220px;
   }
 
-  .header-fixed__bottom {
-    display: none;
-  }
-
-  .header-full-page__bottom {
-    display: none;
-  }
-
   .info-card-content__list-item-text {
     font-size: 14px;
   }
@@ -838,7 +840,7 @@
   }
 
   .studio-intro-slide__title {
-    font-size: 70px;
+    font-size: 50px;
   }
 
   .studio-main-slide__title {
