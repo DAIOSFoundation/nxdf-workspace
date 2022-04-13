@@ -42,17 +42,15 @@ const Mapbox: NextPage = () => {
   // const [zoom, setZoom] = useState(7.4);
   const [modal, setModal] = useState(false);
   const [ viewport, setViewport ] = useState({
-      latitude: 37.532600,
-      longitude: 127.024612,
-      zoom: 12
+      latitude: 34.55448787561973,
+      longitude: 18.068940276632784,
+      zoom: 5
     });
-
 
   const onClick = () => {
   setModal(!modal)
   }
 
-  
   return <Map
     ref={map}
     onClick={(data)=>{ console.log(data.target)}}
@@ -60,11 +58,29 @@ const Mapbox: NextPage = () => {
     {...viewport}
     onMove={evt => { console.log(evt.viewState.zoom); return setViewport(evt.viewState)}}
     style={{width: "100%", height: "100vh" ,display: "flex" ,alignItems: "center"}}
-    mapStyle="mapbox://styles/mapbox/streets-v9"
+    mapStyle="mapbox://styles/mapbox/streets-v11"
   >
     <Sta onClick={onClick} />
     <Nft modal={modal} setModal={setModal} />
     <Control viewport={viewport} setViewport={setViewport} />
+
+    <Source
+      id="map-source"
+      type="image"
+      url="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/f4/54/37/wilson-island.jpg?w=1400&h=-1&s=1"
+      coordinates={[
+        [18.2870007, 34.8267332],
+        [18.6605358, 34.8267332],
+        [18.6605358, 34.5647822],
+        [18.2870007, 34.5647822],
+      ]}
+    />
+    <Layer
+      id="overlay"
+      source="map-source"
+      type="raster"
+      paint={{ "raster-opacity": 0.85 }}
+    />
   </Map>;
 }
 
