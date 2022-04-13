@@ -2660,6 +2660,10 @@ footer-studio
   color: #fff;
   font-size: 16px;
   line-height: 1.875;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .footer-studio__column {
@@ -3520,7 +3524,7 @@ header
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: start;
-  align-items: flex-start;
+  align-items: center;
   position: relative;
 }
 
@@ -7070,7 +7074,7 @@ studio-intro-slide
 }
 
 .studio-intro-slide__subtitle {
-  font-size: 24px;
+  font-size: 1.8rem;
   margin-bottom: 17px;
 }
 
@@ -7084,7 +7088,7 @@ studio-intro-slide
 
 .studio-intro-slide__title {
   font-family: 'Gowun Dodum', sans-serif;
-  font-size: 120px;
+  font-size: 5.5rem;
   line-height: 0.875;
   -ms-flex-positive: 1;
   flex-grow: 1;

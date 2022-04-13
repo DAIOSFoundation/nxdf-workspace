@@ -4,130 +4,987 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import cn from 'classnames';
 import Script from 'next/script';
+
 import Link from 'next/link';
+import { BsDiscord, BsTwitter, BsInstagram } from 'react-icons/bs';
+import styled from 'styled-components';
+import media from '../styles/media';
+import { SideSheet, Paragraph, Button } from 'evergreen-ui';
+import { useCallback, useState, useRef, useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectFade, Navigation, Pagination } from 'swiper';
+
+import { GrClose } from 'react-icons/gr';
+import { getScrollTop } from '../lib/getScroll';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import 'swiper/css/effect-fade';
+
+import { Collapse } from 'react-collapse';
+import Header from '../components/Header';
+
+import ReactPlayer from 'react-player';
+import { copyFileSync } from 'fs';
+import { CSSTransition } from 'react-transition-group';
+
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+
+  return (
+    <div
+      className="swiper-button-prev"
+      onClick={onClick}
+      style={{ ...style, top: '35%' }}
+    />
+  );
+}
+
+function SampleNextArrow(props) {
+  const { className, style, onClick } = props;
+
+  return (
+    <div
+      className="swiper-button-next"
+      onClick={onClick}
+      style={{ ...style, top: '35%' }}
+    />
+  );
+}
+
+function FirstSamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+
+  return <div className="swiper-button-prev" onClick={onClick} />;
+}
+
+function FirstSampleNextArrow(props) {
+  const { className, style, onClick } = props;
+
+  return <div className="swiper-button-next" onClick={onClick} />;
+}
 
 const Home: NextPage = () => {
-  const a = cn('header', 'header_white', 'header_fixed');
-  const b = cn('top-menu', 'header-fixed__menu');
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [updateCount, setUpdateCount] = useState(0);
+  const [isShown, setIsShown] = useState(false);
+  const [isSelect, setSelect] = useState(false);
+  const [getEN, setEN] = useState([
+    {
+      id: 1,
+      title: 'HOME',
+      isClick: true,
+      link: '/',
+    },
+    {
+      id: 2,
+      title: 'NFT',
+      isClick: false,
+      link: '/',
+    },
+    {
+      id: 3,
+      title: 'ROADMAP',
+      isClick: false,
+      link: '/',
+    },
+    {
+      id: 4,
+      title: 'TEAM',
+      isClick: false,
+      link: '/',
+    },
+    {
+      id: 5,
+      title: 'DOCS',
+      isClick: false,
+      link: '/',
+    },
+  ]);
+
+  const [getKR, setKR] = useState([
+    {
+      id: 1,
+      title: '홈',
+      isClick: true,
+      link: '/',
+    },
+    {
+      id: 2,
+      title: '엔에프티',
+      isClick: false,
+      link: '/',
+    },
+    {
+      id: 3,
+      title: '로드맵',
+      isClick: false,
+      link: '/',
+    },
+    {
+      id: 4,
+      title: '팀',
+      isClick: false,
+      link: '/',
+    },
+    {
+      id: 5,
+      title: '문서',
+      isClick: false,
+      link: '/',
+    },
+  ]);
+
+  const [visible, setVisible] = useState(false);
+
+  const blockRef = useRef<HTMLDivElement>(null);
+  const [getHeight, setHeight] = useState(0);
+  const [marginTop, setMarginTop] = useState(0);
+
+  useEffect(() => {
+    if (!blockRef.current) return;
+    setHeight(blockRef.current.clientHeight);
+    setMarginTop(-1 * blockRef.current.clientHeight);
+  }, []);
+
+  const prevScrollTop = useRef(0);
+  const direction = useRef<'UP' | 'DOWN'>('DOWN');
+  const transitionPoint = useRef(0);
+
+  const onScroll = useCallback(() => {
+    const scrollTop = getScrollTop();
+    if (scrollTop > 64) {
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('scroll', onScroll);
+    return () => {
+      document.removeEventListener('scroll', onScroll);
+    };
+  }, [onScroll]);
+
+  const height = 10;
+
+  const accessibilityIds = {
+    checkbox: 'accessible-marker-example1',
+    button: 'accessible-marker-example2',
+  };
+
+  const [prevEl, setPrevEl] = useState<HTMLElement | null>(null);
+  const [nextEl, setNextEl] = useState<HTMLElement | null>(null);
+
+  const [isCheckboxCollapseOpen, setIsCheckboxCollapseOpen] = useState(false);
+  const [isButtonCollapseOpen, setIsButtonCollapseOpen] = useState(false);
+  const [isButtonCollapseOpen2, setIsButtonCollapseOpen2] = useState(false);
+  const [isButtonCollapseOpen3, setIsButtonCollapseOpen3] = useState(false);
+  const [isButtonCollapseOpen4, setIsButtonCollapseOpen4] = useState(false);
+
+  const onChange = useCallback(
+    ({ target: { checked } }) => setIsCheckboxCollapseOpen(checked),
+    [setIsCheckboxCollapseOpen]
+  );
+
+  const onClick = useCallback(
+    () => setIsButtonCollapseOpen(!isButtonCollapseOpen),
+    [isButtonCollapseOpen]
+  );
+  const onClick2 = useCallback(
+    () => setIsButtonCollapseOpen2(!isButtonCollapseOpen2),
+    [isButtonCollapseOpen2]
+  );
+  const onClick3 = useCallback(
+    () => setIsButtonCollapseOpen3(!isButtonCollapseOpen3),
+    [isButtonCollapseOpen3]
+  );
+  const onClick4 = useCallback(
+    () => setIsButtonCollapseOpen4(!isButtonCollapseOpen4),
+    [isButtonCollapseOpen4]
+  );
+
+  const WhichLang = isSelect ? getKR : getEN;
+
+  const settings = {
+    dots: false,
+    fade: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    afterChange: () => setUpdateCount(updateCount + 1),
+    beforeChange: (current, next) => setSlideIndex(next),
+  };
+
+  const multipleSettings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  const sliderRef = useRef<typeof Slider | null>(null);
+
   return (
     <div>
       <div className="page__inner animsition">
         <header className="header header_white header_fixed">
-          <div className="header__container">
-            <div className="header__wrapper container-fluid">
-              <div className="header__inner">
-                <Link href="/">
-                  <a className="logo header__logo">Arquito</a>
-                </Link>
-                <button className="header__menu-button" type="button">
-                  <span className="header__menu-button-inner" />
-                </button>
+          {visible ? (
+            <Block>
+              <div className="header__container">
+                <div className="header__wrapper container-fluid">
+                  <div className="header__inner">
+                    <Link href="/">
+                      <a className="logo header__logo">
+                        <LogoImg alt="" src="assets/img/blackLogo.png" />
+                      </a>
+                    </Link>
+                    {isShown ? (
+                      <button
+                        style={{ marginRight: '2rem' }}
+                        className="header__menu-button"
+                        type="button"
+                      >
+                        <MediumWidth>
+                          <div style={{ marginLeft: '2rem' }}>
+                            <BsDiscord size="24" style={{ color: 'black' }} />
+                          </div>
+                          <div style={{ marginLeft: '2rem', color: 'black' }}>
+                            <BsTwitter size="24" />
+                          </div>
+                          <div>
+                            <BsInstagram
+                              size="24"
+                              style={{ marginLeft: '2rem', color: 'black' }}
+                            />
+                          </div>
+                        </MediumWidth>
+
+                        <>
+                          <SideSheet
+                            isShown={isShown}
+                            onCloseComplete={() => setIsShown(false)}
+                            preventBodyScrolling={true}
+                          >
+                            <div
+                              style={{
+                                display: 'flex',
+                                padding: '4rem',
+                                flexDirection: 'column',
+                                height: '80%',
+                              }}
+                            >
+                              <SideSheetHeader>
+                                <div
+                                  onClick={() => setSelect(false)}
+                                  style={{
+                                    marginRight: '1.4rem',
+                                    color: isSelect ? '' : '#f24a00',
+                                  }}
+                                >
+                                  EN
+                                </div>
+                                <div
+                                  onClick={() => setSelect(true)}
+                                  style={{
+                                    color: isSelect ? '#f24a00' : '',
+                                  }}
+                                >
+                                  KR
+                                </div>
+                                <Paragraph style={{ marginLeft: 'auto' }}>
+                                  <GrClose onClick={() => setIsShown(false)} />
+                                </Paragraph>
+                              </SideSheetHeader>
+                              <div
+                                style={{
+                                  marginTop: '3rem',
+                                }}
+                              >
+                                {WhichLang.map((el) => (
+                                  <>
+                                    <Paragraph
+                                      style={{
+                                        fontSize: '1.875rem',
+                                        fontWeight: 500,
+                                        marginBottom: '1rem',
+                                        lineHeight: 1.1,
+                                        color: el.isClick ? 'black' : '#999',
+                                      }}
+                                    >
+                                      {el.title}
+                                    </Paragraph>
+                                  </>
+                                ))}
+                              </div>
+                              <div
+                                style={{ display: 'flex', marginTop: 'auto' }}
+                              >
+                                <BsTwitter
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsDiscord
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsInstagram
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </SideSheet>
+
+                          <MInMediumWidth>
+                            <div
+                              className="header__menu-button-inner"
+                              style={{ color: 'black' }}
+                            />
+                          </MInMediumWidth>
+                        </>
+                      </button>
+                    ) : (
+                      <button
+                        style={{ marginRight: '2rem' }}
+                        className="header__menu-button"
+                        type="button"
+                        onClick={() => {
+                          setIsShown(true);
+                        }}
+                      >
+                        <MediumWidth>
+                          <div style={{ marginLeft: '2rem' }}>
+                            <BsDiscord size="24" style={{ color: 'black' }} />
+                          </div>
+                          <div style={{ marginLeft: '2rem', color: 'black' }}>
+                            <BsTwitter size="24" />
+                          </div>
+                          <div>
+                            <BsInstagram
+                              size="24"
+                              style={{ marginLeft: '2rem', color: 'black' }}
+                            />
+                          </div>
+                        </MediumWidth>
+
+                        <>
+                          <SideSheet
+                            isShown={isShown}
+                            onCloseComplete={() => setIsShown(false)}
+                            preventBodyScrolling={true}
+                          >
+                            <div
+                              style={{
+                                display: 'flex',
+                                padding: '4rem',
+                                flexDirection: 'column',
+                                height: '80%',
+                              }}
+                            >
+                              <SideSheetHeader>
+                                <Paragraph style={{ marginRight: '1.4rem' }}>
+                                  KR
+                                </Paragraph>
+                                <Paragraph>EN</Paragraph>
+                                <Paragraph style={{ marginLeft: 'auto' }}>
+                                  <GrClose onClick={() => setIsShown(false)} />
+                                </Paragraph>
+                              </SideSheetHeader>
+                              <div
+                                style={{
+                                  marginTop: '3rem',
+                                }}
+                              >
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                    color: 'black',
+                                  }}
+                                >
+                                  HOME
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                    color: '#999',
+                                  }}
+                                >
+                                  NFT
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  ROADMAP
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  TEAM
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1ren',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  DOCS
+                                </Paragraph>
+                              </div>
+                              <div
+                                style={{ display: 'flex', marginTop: 'auto' }}
+                              >
+                                <BsTwitter
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsDiscord
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsInstagram
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </SideSheet>
+
+                          <MInMediumWidth>
+                            <div
+                              className="header__menu-button-inner"
+                              style={{ color: 'black' }}
+                            />
+                          </MInMediumWidth>
+                        </>
+                      </button>
+                    )}
+                  </div>
+                </div>
+                <div className="header-fixed">
+                  <div className="header-fixed__bottom container">
+                    <ul className="top-menu header-fixed__menu">
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <Link href="/">
+                            <a
+                              className="dropdown__trigger top-menu__menu-link"
+                              style={{ color: 'black' }}
+                            >
+                              Home
+                            </a>
+                          </Link>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__title">Light</div>
+                              <div className="dropdown__item">
+                                <a className="dropdown__link" href="index.html">
+                                  Default
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-parallax-piling.html"
+                                >
+                                  Parallax Piling
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-zoom-parallax.html"
+                                >
+                                  Zoom Parallax
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-3d-panorama.html"
+                                >
+                                  3D Panorama
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link dropdown__link dropdown__link_active"
+                                  href="home-studio.html"
+                                >
+                                  Studio
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-minimal.html"
+                                >
+                                  Minimal
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-grid-background.html"
+                                >
+                                  Grid Background
+                                </a>
+                              </div>
+                            </div>
+                            <div className="dropdown__column">
+                              <div className="dropdown__title">Dark</div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-default-dark.html"
+                                >
+                                  Default Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-zoom-parallax-dark.html"
+                                >
+                                  Zoom Parallax Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-3d-panorama-dark.html"
+                                >
+                                  3D Panorama Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-studio-dark.html"
+                                >
+                                  Studio Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-minimal-dark.html"
+                                >
+                                  Minimal Dark
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: 'black' }}
+                          >
+                            NFT
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="work-grid.html"
+                                >
+                                  Grid
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="work-carousel.html"
+                                >
+                                  Carousel
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="work-listing.html"
+                                >
+                                  Listing
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="project-detail-image.html"
+                                >
+                                  Project Detail Image
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="project-detail-slider.html"
+                                >
+                                  Project Detail Slider
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="project-detail-panorama.html"
+                                >
+                                  Project Detail Panorama
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: 'black' }}
+                          >
+                            ROADMAP
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-grid.html"
+                                >
+                                  Grid
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-listing.html"
+                                >
+                                  Listing
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-masonry.html"
+                                >
+                                  Masonry
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-single-post.html"
+                                >
+                                  Single Post
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: 'black' }}
+                          >
+                            TEAM
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-about.html"
+                                >
+                                  About
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services.html"
+                                >
+                                  Services
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services-detail.html"
+                                >
+                                  Services Detail
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-contact.html"
+                                >
+                                  Contact
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-404.html"
+                                >
+                                  404
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: 'black' }}
+                          >
+                            DOCS
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-about.html"
+                                >
+                                  About
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services.html"
+                                >
+                                  Services
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services-detail.html"
+                                >
+                                  Services Detail
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-contact.html"
+                                >
+                                  Contact
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-404.html"
+                                >
+                                  404
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="header-fixed">
-              <div className="header-fixed__bottom container">
-                <ul className="top-menu header-fixed__menu">
-                  <li className="top-menu__menu-item">
-                    <div className="dropdown">
-                      <Link href="/">
-                        <a className="dropdown__trigger top-menu__menu-link">
-                          Home
-                        </a>
-                      </Link>
-                      <div className="dropdown__menu">
-                        <div className="dropdown__column">
-                          <div className="dropdown__title">Light</div>
-                          <div className="dropdown__item">
-                            <a className="dropdown__link" href="index.html">
+              <div className="header__overlay" />
+              <div className="menu-panel header__menu">
+                <div className="menu-panel__inner">
+                  <button
+                    className="header__menu-button header__menu-button_fixed"
+                    type="button"
+                  >
+                    <span className="header__menu-button-inner" />
+                  </button>
+                  <div className="menu-panel__locales">
+                    <div className="menu-panel__locale link link link_active">
+                      En
+                    </div>
+                    <div className="menu-panel__locale link">Fr</div>
+                    <div className="menu-panel__locale link">De</div>
+                  </div>
+                  <div className="menu-panel__menu">
+                    <div className="menu-panel__menu-item">
+                      <a
+                        className="menu-panel__menu-link menu-panel__menu-link menu-panel__menu-link_active"
+                        data-toggle="collapse"
+                        href="#submenu1"
+                      >
+                        Home
+                      </a>
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu1"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="index.html"
+                            >
                               Default
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-parallax-piling.html"
                             >
                               Parallax Piling
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-zoom-parallax.html"
                             >
                               Zoom Parallax
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-3d-panorama.html"
                             >
                               3D Panorama
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link dropdown__link dropdown__link_active"
+                              className="menu-panel__submenu-link menu-panel__submenu-link menu-panel__submenu-link_active"
                               href="home-studio.html"
                             >
                               Studio
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-minimal.html"
                             >
                               Minimal
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-grid-background.html"
                             >
                               Grid Background
                             </a>
                           </div>
-                        </div>
-                        <div className="dropdown__column">
-                          <div className="dropdown__title">Dark</div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-default-dark.html"
                             >
                               Default Dark
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-zoom-parallax-dark.html"
                             >
                               Zoom Parallax Dark
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-3d-panorama-dark.html"
                             >
                               3D Panorama Dark
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-studio-dark.html"
                             >
                               Studio Dark
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="home-minimal-dark.html"
                             >
                               Minimal Dark
@@ -136,57 +993,62 @@ const Home: NextPage = () => {
                         </div>
                       </div>
                     </div>
-                  </li>
-                  <li className="top-menu__menu-item">
-                    <div className="dropdown">
+                    <div className="menu-panel__menu-item">
                       <a
-                        className="dropdown__trigger top-menu__menu-link"
-                        href="#"
+                        className="menu-panel__menu-link collapsed"
+                        data-toggle="collapse"
+                        href="#submenu2"
                       >
                         Work
                       </a>
-                      <div className="dropdown__menu">
-                        <div className="dropdown__column">
-                          <div className="dropdown__item">
-                            <a className="dropdown__link" href="work-grid.html">
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu2"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="work-grid.html"
+                            >
                               Grid
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="work-carousel.html"
                             >
                               Carousel
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="work-listing.html"
                             >
                               Listing
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="project-detail-image.html"
                             >
                               Project Detail Image
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="project-detail-slider.html"
                             >
                               Project Detail Slider
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="project-detail-panorama.html"
                             >
                               Project Detail Panorama
@@ -195,41 +1057,46 @@ const Home: NextPage = () => {
                         </div>
                       </div>
                     </div>
-                  </li>
-                  <li className="top-menu__menu-item">
-                    <div className="dropdown">
+                    <div className="menu-panel__menu-item">
                       <a
-                        className="dropdown__trigger top-menu__menu-link"
-                        href="#"
+                        className="menu-panel__menu-link collapsed collapsed"
+                        data-toggle="collapse"
+                        href="#submenu3"
                       >
                         News
                       </a>
-                      <div className="dropdown__menu">
-                        <div className="dropdown__column">
-                          <div className="dropdown__item">
-                            <a className="dropdown__link" href="news-grid.html">
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu3"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="news-grid.html"
+                            >
                               Grid
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="news-listing.html"
                             >
                               Listing
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="news-masonry.html"
                             >
                               Masonry
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="news-single-post.html"
                             >
                               Single Post
@@ -238,375 +1105,1022 @@ const Home: NextPage = () => {
                         </div>
                       </div>
                     </div>
-                  </li>
-                  <li className="top-menu__menu-item">
-                    <div className="dropdown">
+                    <div className="menu-panel__menu-item">
                       <a
-                        className="dropdown__trigger top-menu__menu-link"
-                        href="#"
+                        className="menu-panel__menu-link collapsed collapsed"
+                        data-toggle="collapse"
+                        href="#submenu4"
                       >
                         Page
                       </a>
-                      <div className="dropdown__menu">
-                        <div className="dropdown__column">
-                          <div className="dropdown__item">
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu4"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="page-about.html"
                             >
                               About
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="page-services.html"
                             >
                               Services
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="page-services-detail.html"
                             >
                               Services Detail
                             </a>
                           </div>
-                          <div className="dropdown__item">
+                          <div className="menu-panel__submenu-item">
                             <a
-                              className="dropdown__link"
+                              className="menu-panel__submenu-link"
                               href="page-contact.html"
                             >
                               Contact
                             </a>
                           </div>
-                          <div className="dropdown__item">
-                            <a className="dropdown__link" href="page-404.html">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="page-404.html"
+                            >
                               404
                             </a>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="header__overlay" />
-          <div className="menu-panel header__menu">
-            <div className="menu-panel__inner">
-              <button
-                className="header__menu-button header__menu-button_fixed"
-                type="button"
-              >
-                <span className="header__menu-button-inner" />
-              </button>
-              <div className="menu-panel__locales">
-                <div className="menu-panel__locale link link link_active">
-                  En
-                </div>
-                <div className="menu-panel__locale link">Fr</div>
-                <div className="menu-panel__locale link">De</div>
-              </div>
-              <div className="menu-panel__menu">
-                <div className="menu-panel__menu-item">
-                  <a
-                    className="menu-panel__menu-link menu-panel__menu-link menu-panel__menu-link_active"
-                    data-toggle="collapse"
-                    href="#submenu1"
-                  >
-                    Home
-                  </a>
-                  <div className="menu-panel__menu-list collapse" id="submenu1">
-                    <div className="menu-panel__bottom-submenu">
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="index.html"
-                        >
-                          Default
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-parallax-piling.html"
-                        >
-                          Parallax Piling
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-zoom-parallax.html"
-                        >
-                          Zoom Parallax
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-3d-panorama.html"
-                        >
-                          3D Panorama
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link menu-panel__submenu-link menu-panel__submenu-link_active"
-                          href="home-studio.html"
-                        >
-                          Studio
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-minimal.html"
-                        >
-                          Minimal
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-grid-background.html"
-                        >
-                          Grid Background
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-default-dark.html"
-                        >
-                          Default Dark
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-zoom-parallax-dark.html"
-                        >
-                          Zoom Parallax Dark
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-3d-panorama-dark.html"
-                        >
-                          3D Panorama Dark
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-studio-dark.html"
-                        >
-                          Studio Dark
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="home-minimal-dark.html"
-                        >
-                          Minimal Dark
-                        </a>
-                      </div>
-                    </div>
                   </div>
-                </div>
-                <div className="menu-panel__menu-item">
-                  <a
-                    className="menu-panel__menu-link collapsed"
-                    data-toggle="collapse"
-                    href="#submenu2"
-                  >
-                    Work
-                  </a>
-                  <div className="menu-panel__menu-list collapse" id="submenu2">
-                    <div className="menu-panel__bottom-submenu">
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="work-grid.html"
-                        >
-                          Grid
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="work-carousel.html"
-                        >
-                          Carousel
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="work-listing.html"
-                        >
-                          Listing
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="project-detail-image.html"
-                        >
-                          Project Detail Image
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="project-detail-slider.html"
-                        >
-                          Project Detail Slider
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="project-detail-panorama.html"
-                        >
-                          Project Detail Panorama
-                        </a>
-                      </div>
+
+                  <div className="menu-panel__footer">
+                    <div className="socials menu-panel__socials">
+                      <a className="socials__social icofont-facebook" href="#">
+                        <div className="visually-hidden">facebook</div>
+                      </a>
+                      <a
+                        className="socials__social icofont-google-plus"
+                        href="#"
+                      >
+                        <div className="visually-hidden">google plus</div>
+                      </a>
                     </div>
-                  </div>
-                </div>
-                <div className="menu-panel__menu-item">
-                  <a
-                    className="menu-panel__menu-link collapsed collapsed"
-                    data-toggle="collapse"
-                    href="#submenu3"
-                  >
-                    News
-                  </a>
-                  <div className="menu-panel__menu-list collapse" id="submenu3">
-                    <div className="menu-panel__bottom-submenu">
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="news-grid.html"
-                        >
-                          Grid
-                        </a>
+                    <div className="menu-panel__bottom">
+                      <div className="menu-panel__copyright">
+                        © 2019
+                        <strong>ARQUITO.</strong>
+                        All Rights Reserved.
                       </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="news-listing.html"
-                        >
-                          Listing
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="news-masonry.html"
-                        >
-                          Masonry
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="news-single-post.html"
-                        >
-                          Single Post
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="menu-panel__menu-item">
-                  <a
-                    className="menu-panel__menu-link collapsed collapsed"
-                    data-toggle="collapse"
-                    href="#submenu4"
-                  >
-                    Page
-                  </a>
-                  <div className="menu-panel__menu-list collapse" id="submenu4">
-                    <div className="menu-panel__bottom-submenu">
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="page-about.html"
-                        >
-                          About
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="page-services.html"
-                        >
-                          Services
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="page-services-detail.html"
-                        >
-                          Services Detail
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="page-contact.html"
-                        >
-                          Contact
-                        </a>
-                      </div>
-                      <div className="menu-panel__submenu-item">
-                        <a
-                          className="menu-panel__submenu-link"
-                          href="page-404.html"
-                        >
-                          404
-                        </a>
+                      <div className="menu-panel__author">
+                        Design by
+                        <a href="#">Logan Cee</a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="menu-panel__footer">
-                <div className="socials menu-panel__socials">
-                  <a className="socials__social icofont-twitter" href="#">
-                    <div className="visually-hidden">twitter</div>
-                  </a>
-                  <a className="socials__social icofont-facebook" href="#">
-                    <div className="visually-hidden">facebook</div>
-                  </a>
-                  <a className="socials__social icofont-google-plus" href="#">
-                    <div className="visually-hidden">google plus</div>
-                  </a>
-                </div>
-                <div className="menu-panel__bottom">
-                  <div className="menu-panel__copyright">
-                    © 2019
-                    <strong>ARQUITO.</strong>
-                    All Rights Reserved.
+            </Block>
+          ) : (
+            <>
+              <div className="header__container">
+                <div className="header__wrapper container-fluid">
+                  <div className="header__inner">
+                    <Link href="/">
+                      <a className="logo header__logo">
+                        <LogoImg alt="" src="assets/img/logo.png" />
+                      </a>
+                    </Link>
+                    {isShown ? (
+                      <button
+                        style={{ marginRight: '2rem' }}
+                        className="header__menu-button"
+                        type="button"
+                      >
+                        <MediumWidth>
+                          <div style={{ marginLeft: '2rem' }}>
+                            <BsDiscord size="24" style={{ color: '#fff' }} />
+                          </div>
+                          <div style={{ marginLeft: '2rem', color: '#fff' }}>
+                            <BsTwitter size="24" />
+                          </div>
+                          <div>
+                            <BsInstagram
+                              size="24"
+                              style={{ marginLeft: '2rem', color: '#fff' }}
+                            />
+                          </div>
+                        </MediumWidth>
+
+                        <>
+                          <SideSheet
+                            isShown={isShown}
+                            onCloseComplete={() => setIsShown(false)}
+                            preventBodyScrolling={true}
+                          >
+                            <div
+                              style={{
+                                display: 'flex',
+                                padding: '4rem',
+                                flexDirection: 'column',
+                                height: '80%',
+                              }}
+                            >
+                              <SideSheetHeader>
+                                <div
+                                  onClick={() => setSelect(false)}
+                                  style={{
+                                    marginRight: '1.4rem',
+                                    color: isSelect ? '' : '#f24a00',
+                                  }}
+                                >
+                                  EN
+                                </div>
+                                <div
+                                  onClick={() => setSelect(true)}
+                                  style={{
+                                    color: isSelect ? '#f24a00' : '',
+                                  }}
+                                >
+                                  KR
+                                </div>
+                                <Paragraph style={{ marginLeft: 'auto' }}>
+                                  <GrClose onClick={() => setIsShown(false)} />
+                                </Paragraph>
+                              </SideSheetHeader>
+                              <div
+                                style={{
+                                  marginTop: '3rem',
+                                }}
+                              >
+                                {WhichLang.map((el) => (
+                                  <>
+                                    <Paragraph
+                                      style={{
+                                        fontSize: '1.875rem',
+                                        fontWeight: 500,
+                                        marginBottom: '1rem',
+                                        lineHeight: 1.1,
+                                        color: el.isClick ? 'black' : '#999',
+                                      }}
+                                    >
+                                      {el.title}
+                                    </Paragraph>
+                                  </>
+                                ))}
+                              </div>
+                              <div
+                                style={{ display: 'flex', marginTop: 'auto' }}
+                              >
+                                <BsTwitter
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsDiscord
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsInstagram
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </SideSheet>
+
+                          <MInMediumWidth>
+                            <div
+                              className="header__menu-button-inner"
+                              style={{ color: '#fff' }}
+                            />
+                          </MInMediumWidth>
+                        </>
+                      </button>
+                    ) : (
+                      <button
+                        style={{ marginRight: '2rem' }}
+                        className="header__menu-button"
+                        type="button"
+                        onClick={() => {
+                          setIsShown(true);
+                        }}
+                      >
+                        <MediumWidth>
+                          <div style={{ marginLeft: '2rem' }}>
+                            <BsDiscord size="24" style={{ color: '#fff' }} />
+                          </div>
+                          <div style={{ marginLeft: '2rem', color: '#fff' }}>
+                            <BsTwitter size="24" />
+                          </div>
+                          <div>
+                            <BsInstagram
+                              size="24"
+                              style={{ marginLeft: '2rem', color: '#fff' }}
+                            />
+                          </div>
+                        </MediumWidth>
+
+                        <>
+                          <SideSheet
+                            isShown={isShown}
+                            onCloseComplete={() => setIsShown(false)}
+                            preventBodyScrolling={true}
+                          >
+                            <div
+                              style={{
+                                display: 'flex',
+                                padding: '4rem',
+                                flexDirection: 'column',
+                                height: '80%',
+                              }}
+                            >
+                              <SideSheetHeader>
+                                <Paragraph style={{ marginRight: '1.4rem' }}>
+                                  KR
+                                </Paragraph>
+                                <Paragraph>EN</Paragraph>
+                                <Paragraph style={{ marginLeft: 'auto' }}>
+                                  <GrClose onClick={() => setIsShown(false)} />
+                                </Paragraph>
+                              </SideSheetHeader>
+                              <div
+                                style={{
+                                  marginTop: '3rem',
+                                }}
+                              >
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                    color: 'black',
+                                  }}
+                                >
+                                  HOME
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                    color: '#999',
+                                  }}
+                                >
+                                  NFT
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  ROADMAP
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1rem',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  TEAM
+                                </Paragraph>
+                                <Paragraph
+                                  style={{
+                                    fontSize: '1.875rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1ren',
+                                    lineHeight: 1.1,
+                                  }}
+                                >
+                                  DOCS
+                                </Paragraph>
+                              </div>
+                              <div
+                                style={{ display: 'flex', marginTop: 'auto' }}
+                              >
+                                <BsTwitter
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsDiscord
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                                <BsInstagram
+                                  size="24"
+                                  style={{
+                                    marginRight: '1rem',
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </SideSheet>
+
+                          <MInMediumWidth>
+                            <div
+                              className="header__menu-button-inner"
+                              style={{ color: '#fff' }}
+                            />
+                          </MInMediumWidth>
+                        </>
+                      </button>
+                    )}
                   </div>
-                  <div className="menu-panel__author">
-                    Design by
-                    <a href="#">Logan Cee</a>
+                </div>
+                <div className="header-fixed">
+                  <div className="header-fixed__bottom container">
+                    <ul className="top-menu header-fixed__menu">
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <Link href="/">
+                            <a
+                              className="dropdown__trigger top-menu__menu-link"
+                              style={{ color: '#fff' }}
+                            >
+                              Home
+                            </a>
+                          </Link>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__title">Light</div>
+                              <div className="dropdown__item">
+                                <a className="dropdown__link" href="index.html">
+                                  Default
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-parallax-piling.html"
+                                >
+                                  Parallax Piling
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-zoom-parallax.html"
+                                >
+                                  Zoom Parallax
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-3d-panorama.html"
+                                >
+                                  3D Panorama
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link dropdown__link dropdown__link_active"
+                                  href="home-studio.html"
+                                >
+                                  Studio
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-minimal.html"
+                                >
+                                  Minimal
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-grid-background.html"
+                                >
+                                  Grid Background
+                                </a>
+                              </div>
+                            </div>
+                            <div className="dropdown__column">
+                              <div className="dropdown__title">Dark</div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-default-dark.html"
+                                >
+                                  Default Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-zoom-parallax-dark.html"
+                                >
+                                  Zoom Parallax Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-3d-panorama-dark.html"
+                                >
+                                  3D Panorama Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-studio-dark.html"
+                                >
+                                  Studio Dark
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="home-minimal-dark.html"
+                                >
+                                  Minimal Dark
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: '#fff' }}
+                          >
+                            NFT
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="work-grid.html"
+                                >
+                                  Grid
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="work-carousel.html"
+                                >
+                                  Carousel
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="work-listing.html"
+                                >
+                                  Listing
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="project-detail-image.html"
+                                >
+                                  Project Detail Image
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="project-detail-slider.html"
+                                >
+                                  Project Detail Slider
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="project-detail-panorama.html"
+                                >
+                                  Project Detail Panorama
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: '#fff' }}
+                          >
+                            ROADMAP
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-grid.html"
+                                >
+                                  Grid
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-listing.html"
+                                >
+                                  Listing
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-masonry.html"
+                                >
+                                  Masonry
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="news-single-post.html"
+                                >
+                                  Single Post
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: '#fff' }}
+                          >
+                            TEAM
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-about.html"
+                                >
+                                  About
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services.html"
+                                >
+                                  Services
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services-detail.html"
+                                >
+                                  Services Detail
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-contact.html"
+                                >
+                                  Contact
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-404.html"
+                                >
+                                  404
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="top-menu__menu-item">
+                        <div className="dropdown">
+                          <a
+                            className="dropdown__trigger top-menu__menu-link"
+                            href="#"
+                            style={{ color: '#fff' }}
+                          >
+                            DOCS
+                          </a>
+                          <div className="dropdown__menu">
+                            <div className="dropdown__column">
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-about.html"
+                                >
+                                  About
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services.html"
+                                >
+                                  Services
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-services-detail.html"
+                                >
+                                  Services Detail
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-contact.html"
+                                >
+                                  Contact
+                                </a>
+                              </div>
+                              <div className="dropdown__item">
+                                <a
+                                  className="dropdown__link"
+                                  href="page-404.html"
+                                >
+                                  404
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+              <div className="header__overlay" />
+              <div className="menu-panel header__menu">
+                <div className="menu-panel__inner">
+                  <button
+                    className="header__menu-button header__menu-button_fixed"
+                    type="button"
+                  >
+                    <span className="header__menu-button-inner" />
+                  </button>
+                  <div className="menu-panel__locales">
+                    <div className="menu-panel__locale link link link_active">
+                      En
+                    </div>
+                    <div className="menu-panel__locale link">Fr</div>
+                    <div className="menu-panel__locale link">De</div>
+                  </div>
+                  <div className="menu-panel__menu">
+                    <div className="menu-panel__menu-item">
+                      <a
+                        className="menu-panel__menu-link menu-panel__menu-link menu-panel__menu-link_active"
+                        data-toggle="collapse"
+                        href="#submenu1"
+                      >
+                        Home
+                      </a>
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu1"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="index.html"
+                            >
+                              Default
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="home-parallax-piling.html"
+                            >
+                              Parallax Piling
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="home-zoom-parallax.html"
+                            >
+                              Zoom Parallax
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="home-3d-panorama.html"
+                            >
+                              3D Panorama
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link menu-panel__submenu-link menu-panel__submenu-link_active"
+                              href="home-studio.html"
+                            >
+                              Studio
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="home-minimal.html"
+                            >
+                              Minimal
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="home-grid-background.html"
+                            >
+                              Grid Background
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="home-default-dark.html"
+                            >
+                              Default Dark
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="home-zoom-parallax-dark.html"
+                            >
+                              Zoom Parallax Dark
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="home-3d-panorama-dark.html"
+                            >
+                              3D Panorama Dark
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="home-studio-dark.html"
+                            >
+                              Studio Dark
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="home-minimal-dark.html"
+                            >
+                              Minimal Dark
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="menu-panel__menu-item">
+                      <a
+                        className="menu-panel__menu-link collapsed"
+                        data-toggle="collapse"
+                        href="#submenu2"
+                      >
+                        Work
+                      </a>
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu2"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="work-grid.html"
+                            >
+                              Grid
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="work-carousel.html"
+                            >
+                              Carousel
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="work-listing.html"
+                            >
+                              Listing
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="project-detail-image.html"
+                            >
+                              Project Detail Image
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="project-detail-slider.html"
+                            >
+                              Project Detail Slider
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="project-detail-panorama.html"
+                            >
+                              Project Detail Panorama
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="menu-panel__menu-item">
+                      <a
+                        className="menu-panel__menu-link collapsed collapsed"
+                        data-toggle="collapse"
+                        href="#submenu3"
+                      >
+                        News
+                      </a>
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu3"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="news-grid.html"
+                            >
+                              Grid
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="news-listing.html"
+                            >
+                              Listing
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="news-masonry.html"
+                            >
+                              Masonry
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="news-single-post.html"
+                            >
+                              Single Post
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="menu-panel__menu-item">
+                      <a
+                        className="menu-panel__menu-link collapsed collapsed"
+                        data-toggle="collapse"
+                        href="#submenu4"
+                      >
+                        Page
+                      </a>
+                      <div
+                        className="menu-panel__menu-list collapse"
+                        id="submenu4"
+                      >
+                        <div className="menu-panel__bottom-submenu">
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="page-about.html"
+                            >
+                              About
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="page-services.html"
+                            >
+                              Services
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="page-services-detail.html"
+                            >
+                              Services Detail
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="page-contact.html"
+                            >
+                              Contact
+                            </a>
+                          </div>
+                          <div className="menu-panel__submenu-item">
+                            <a
+                              className="menu-panel__submenu-link"
+                              href="page-404.html"
+                            >
+                              404
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="menu-panel__footer">
+                    <div className="socials menu-panel__socials">
+                      <a className="socials__social icofont-facebook" href="#">
+                        <div className="visually-hidden">facebook</div>
+                      </a>
+                      <a
+                        className="socials__social icofont-google-plus"
+                        href="#"
+                      >
+                        <div className="visually-hidden">google plus</div>
+                      </a>
+                    </div>
+                    <div className="menu-panel__bottom">
+                      <div className="menu-panel__copyright">
+                        © 2019
+                        <strong>ARQUITO.</strong>
+                        All Rights Reserved.
+                      </div>
+                      <div className="menu-panel__author">
+                        Design by
+                        <a href="#">Logan Cee</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </header>
+
         <main>
           <div
             className="studio-intro-slide"
@@ -617,12 +2131,11 @@ const Home: NextPage = () => {
             </div>
             <div className="faded-block studio-intro-slide__container container">
               <div className="studio-intro-slide__inner">
-                <div className="studio-intro-slide__subtitle">Architecture</div>
+                <div className="studio-intro-slide__subtitle">METAVERSE</div>
                 <div className="studio-intro-slide__title-wrapper">
                   <div className="studio-intro-slide__title">
-                    Capri Ocean
+                    ARTISTELLA
                     <br />
-                    Museum
                   </div>
                 </div>
                 <div className="studio-intro-slide__text">
@@ -672,23 +2185,32 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
+          <Player>
+            <iframe
+              src="https://www.youtube.com/embed/6RdXQYqXdvo"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </Player>
           <div className="cards-block">
             <div className="cards-block__head">
               <div className="container">
                 <div className="row">
                   <div className="col-12 col-lg-6 col-xl-5">
-                    <div className="cards-block__title">
-                      We provide best solutions for your dream
+                    <div
+                      className="cards-block__title"
+                      style={{ fontWeight: 600 }}
+                    >
+                      METAVERSE CONTENT
                     </div>
                   </div>
                   <div className="col-12 col-lg-6 offset-xl-1">
                     <div className="cards-block__text">
-                      When an unknown printer took a galley of type and
-                      scrambled it to make a type specimen book. It has survived
-                      not only five centuries. When an unknown printer took a
-                      galley of type and scrambled it to make a type specimen
-                      book. When an unknown printer took a galley of type and
-                      scrambled it to make a type specimen book.
+                      아티스텔라는 크게 네가지의 키워드를 가지고 있다 각
+                      키워드에 따라 사람들의 방문도가 결정되고 누군가에게는
+                      힐링의 공간, 또 다른 누군가에게는 게임의공간, 사람들 간의
+                      소통공간, 예술의 공간으로 나뉘어진다.
                     </div>
                   </div>
                 </div>
@@ -701,7 +2223,7 @@ const Home: NextPage = () => {
                     <a
                       className="cards__item-inner"
                       href="#"
-                      style={{ backgroundImage: 'url("img/card-image-1.jpg")' }}
+                      style={{ backgroundImage: 'url("img/1.png")' }}
                     >
                       <span className="cards__item-content">
                         <span className="cards__item-index">01</span>
@@ -720,7 +2242,7 @@ const Home: NextPage = () => {
                     <a
                       className="cards__item-inner"
                       href="#"
-                      style={{ backgroundImage: 'url("img/card-image-2.jpg")' }}
+                      style={{ backgroundImage: 'url("img/2.png")' }}
                     >
                       <span className="cards__item-content">
                         <span className="cards__item-index">02</span>
@@ -741,7 +2263,7 @@ const Home: NextPage = () => {
                     <a
                       className="cards__item-inner"
                       href="#"
-                      style={{ backgroundImage: 'url("img/card-image-3.jpg")' }}
+                      style={{ backgroundImage: 'url("img/3.png")' }}
                     >
                       <span className="cards__item-content">
                         <span className="cards__item-index">03</span>
@@ -759,7 +2281,7 @@ const Home: NextPage = () => {
                     <a
                       className="cards__item-inner"
                       href="#"
-                      style={{ backgroundImage: 'url("img/card-image-4.jpg")' }}
+                      style={{ backgroundImage: 'url("img/4.png")' }}
                     >
                       <span className="cards__item-content">
                         <span className="cards__item-index">04</span>
@@ -777,7 +2299,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="features-block">
+          {/* <div className="features-block">
             <div className="container">
               <div className="features-block__subtitle">Why Choose Us</div>
               <div className="features-block__title">Why we are different?</div>
@@ -837,27 +2359,33 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="studio-filter">
             <div className="container">
               <div className="studio-filter__inner">
                 <div className="studio-filter__title">Latest Projects</div>
                 <div className="studio-filter__filter">
-                  <a
-                    className="studio-filter__filter-link studio-filter__filter-link_active"
-                    href="#"
+                  <div
+                    className="studio-filter__filter-link"
+                    style={{ color: slideIndex == 0 ? '#f14201' : '' }}
+                    onClick={() => sliderRef.current.slickGoTo(0)}
                   >
-                    All
-                  </a>
-                  <a className="studio-filter__filter-link" href="#">
-                    Architecture
-                  </a>
-                  <a className="studio-filter__filter-link" href="#">
-                    Interior Design
-                  </a>
-                  <a className="studio-filter__filter-link" href="#">
-                    Landscape
-                  </a>
+                    Land
+                  </div>
+                  <div
+                    className="studio-filter__filter-link"
+                    style={{ color: slideIndex == 1 ? '#f14201' : '' }}
+                    onClick={() => sliderRef.current.slickGoTo(1)}
+                  >
+                    Building
+                  </div>
+                  <div
+                    style={{ color: slideIndex == 2 ? '#f14201' : '' }}
+                    className="studio-filter__filter-link"
+                    onClick={() => sliderRef.current.slickGoTo(2)}
+                  >
+                    Interior
+                  </div>
                 </div>
               </div>
             </div>
@@ -865,23 +2393,148 @@ const Home: NextPage = () => {
           <div className="studio-main-slider">
             <div className="revolution-slider">
               <div
-                className="revolution-slider__slider rev rev_slider fullwidthabanner revolution-slider__slider revolution-slider__slider_autoheight"
+                className="revolution-slider__slider rev rev_slider fullwidthabanner  revolution-slider__slider revolution-slider__slider_autoheight"
                 data-version="5.4.6"
-                style={{ display: 'none' }}
               >
-                <ul>
-                  <li
-                    data-easein="default"
-                    data-easeout="default"
-                    data-hideafterloop={0}
-                    data-hideslideonmobile="off"
-                    data-masterspeed={600}
-                    data-rotate={0}
-                    data-saveperformance="off"
-                    data-slicey_shadow="0px 0px 0px 0px transparent"
-                    data-slotamount="default"
-                    data-transition="fade"
-                  >
+                <div>
+                  <div>
+                    <Slider ref={sliderRef} {...settings}>
+                      <div className="slide2">
+                        <ForImg />
+
+                        <CenterImg className="container">
+                          <div className="studio-main-slide__inner">
+                            <div
+                              className="studio-main-slide__subtitle"
+                              style={{ fontSize: '1.2vw' }}
+                            >
+                              Architecture
+                            </div>
+                            <div className="studio-main-slide__title-wrapper">
+                              <div
+                                className="studio-main-slide__title"
+                                style={{ fontSize: '6vw' }}
+                              >
+                                Justin Burney Villa,
+                                <br />
+                                NY
+                              </div>
+                            </div>
+                            <div
+                              className="studio-main-slide__text"
+                              style={{ fontSize: '1.4vw' }}
+                            >
+                              This project designed &amp; building for purpose
+                              protect the ocean and exhibition. With inspired
+                              from sail, sponge and wind. Capri Ocean Musem was
+                              born
+                            </div>
+                            <a
+                              className="studio-main-slide__link studio-main-slide__link_inverted"
+                              href="#"
+                              style={{ fontSize: '1.4vw' }}
+                            >
+                              See project
+                            </a>
+                          </div>
+                        </CenterImg>
+                      </div>
+                      <div className="slide2">
+                        <ForImg2 />
+
+                        <CenterImg className="container">
+                          <div className="studio-main-slide__inner">
+                            <div
+                              className="studio-main-slide__subtitle"
+                              style={{ fontSize: '1.2vw' }}
+                            >
+                              Architecture
+                            </div>
+                            <div className="studio-main-slide__title-wrapper">
+                              <div
+                                className="studio-main-slide__title"
+                                style={{ fontSize: '6vw' }}
+                              >
+                                Justin Burney Villa,
+                                <br />
+                                NY
+                              </div>
+                            </div>
+                            <div
+                              className="studio-main-slide__text"
+                              style={{ fontSize: '1.4vw' }}
+                            >
+                              This project designed &amp; building for purpose
+                              protect the ocean and exhibition. With inspired
+                              from sail, sponge and wind. Capri Ocean Musem was
+                              born
+                            </div>
+                            <a
+                              className="studio-main-slide__link studio-main-slide__link_inverted"
+                              href="#"
+                              style={{ fontSize: '1.4vw' }}
+                            >
+                              See project
+                            </a>
+                          </div>
+                        </CenterImg>
+                      </div>
+                      <div className="slide2">
+                        <ForImg3 />
+
+                        <CenterImg className="container">
+                          <div className="studio-main-slide__inner">
+                            <div
+                              className="studio-main-slide__subtitle"
+                              style={{ fontSize: '1.2vw' }}
+                            >
+                              Architecture
+                            </div>
+                            <div className="studio-main-slide__title-wrapper">
+                              <div
+                                className="studio-main-slide__title"
+                                style={{ fontSize: '6vw' }}
+                              >
+                                Justin Burney Villa,
+                                <br />
+                                NY
+                              </div>
+                            </div>
+                            <div
+                              className="studio-main-slide__text"
+                              style={{ fontSize: '1.4vw' }}
+                            >
+                              This project designed &amp; building for purpose
+                              protect the ocean and exhibition. With inspired
+                              from sail, sponge and wind. Capri Ocean Musem was
+                              born
+                            </div>
+                            <a
+                              className="studio-main-slide__link studio-main-slide__link_inverted"
+                              href="#"
+                              style={{ fontSize: '1.4vw' }}
+                            >
+                              See project
+                            </a>
+                          </div>
+                        </CenterImg>
+                      </div>
+                    </Slider>
+                  </div>
+                </div>
+
+                {/* <Swiper
+                  slidesPerView={1}
+                  spaceBetween={30}
+                  effect={'fade'}
+                  loop={true}
+                  navigation={true}
+                  modules={[Pagination, Navigation, EffectFade]}
+                  className="mySwiper"
+                  onSwiper={(swiper) => console.log(swiper)}
+                  onSlideChange={() => console.log('slide change')}
+                >
+                  <SwiperSlide>
                     <img
                       alt=""
                       className="rev-slidebg"
@@ -898,377 +2551,18 @@ const Home: NextPage = () => {
                       data-rotatestart={0}
                       data-scaleend={120}
                       data-scalestart={100}
-                      src="img/home-slide-2.jpg"
+                      src="assets/img/slider1.jpeg"
                     />
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":300,"speed":1000,"frame":"0","from":"rX:0deg;rY:0deg;rZ:0deg;sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3700","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['150','150','100','100']"
-                      data-hoffset="['-112','-43','-81','44']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-219','-184','-185','182']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 5 }}
-                    />
-                    {/* LAYER NR. 2*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":350,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3650","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['200','150','150','150']"
-                      data-hoffset="['151','228','224','117']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-212','-159','71','-222']"
-                      data-whitespace="nowrap"
-                      data-width="['150','150','100','100']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 6 }}
-                    />
-                    {/*LAYER NR. 3*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":400,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3600","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['150','150','100','100']"
-                      data-hoffset="['339','-442','104','-159']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['2','165','-172','219']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 7 }}
-                    />
-                    {/* LAYER NR. 4*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":450,"speed":1000,"frame":"0","from":"opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3550","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height={150}
-                      data-hoffset="['162','216','-239','193']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['195','245','6','146']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','100','100']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 8 }}
-                    />
-                    {/* LAYER NR. 5*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":500,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3500","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['200','200','150','150']"
-                      data-hoffset="['-186','-119','273','-223']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['269','217','-121','69']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 9 }}
-                    />
-                    {/* LAYER NR. 6*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":550,"speed":1000,"frame":"0","from":"opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3450","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','150','50','50']"
-                      data-hoffset="['-325','292','162','-34']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['3','55','-275','-174']"
-                      data-whitespace="nowrap"
-                      data-width={150}
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 10 }}
-                    />
-                    {/* LAYER NR. 7*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":320,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3680","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['300','300','150','150']"
-                      data-hoffset="['-429','523','-190','-306']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-327','173','181','480']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 11 }}
-                    />
-                    {/* LAYER NR. 8*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":360,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3640","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','250','100','100']"
-                      data-hoffset="['422','-409','208','225']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-245','-72','294','-14']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 12 }}
-                    />
-                    {/* LAYER NR. 9*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":400,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3600","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','250','150','50']"
-                      data-hoffset="['549','-445','28','58']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['236','400','316','287']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','200']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 13 }}
-                    />
-                    {/* LAYER NR. 10*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":440,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3560","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','250','100','100']"
-                      data-hoffset="['-522','492','-151','262']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['339','-180','330','-141']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 14 }}
-                    />
-                    {/* LAYER NR. 11*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":480,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3520","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['200','200','150','150']"
-                      data-hoffset="['-588','-375','-253','-207']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['72','-328','-172','-111']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 15 }}
-                    />
-                    {/* LAYER NR. 12*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":310,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3690","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['100','100','50','50']"
-                      data-hoffset="['-37','73','-76','-100']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-401','-340','-293','-246']"
-                      data-whitespace="nowrap"
-                      data-width="['450','400','250','250']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 16 }}
-                    />
-                    {/* LAYER NR. 13*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":340,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3660","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['100','100','50','50']"
-                      data-hoffset="['186','38','116','17']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['363','402','190','395']"
-                      data-whitespace="nowrap"
-                      data-width="['350','400','250','250']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 17 }}
-                    />
-                    {/* LAYER NR. 14*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper"
-                      data-basealign="slide"
-                      data-frames='[{"delay":10,"speed":500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power4.easeOut"},{"delay":"wait","speed":500,"frame":"999","to":"opacity:0;","ease":"Power4.easeOut"}]'
-                      data-height="full"
-                      data-hoffset="['0','0','0','0']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive="off"
-                      data-responsive_offset="off"
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['0','0','0','0']"
-                      data-whitespace="nowrap"
-                      data-width="full"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 18 }}
-                    />
-                    <div
-                      className="studio-main-slide tp-caption tp-resizeme"
-                      data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"}]'
-                      data-height="none"
-                      data-responsive_offset="on"
-                      data-textalign="['center','center','center','center']"
-                      data-type="text"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                    >
-                      <div className="container">
-                        <div className="studio-main-slide__inner">
-                          <div className="studio-main-slide__subtitle">
-                            Architecture
-                          </div>
-                          <div className="studio-main-slide__title-wrapper">
-                            <div className="studio-main-slide__title">
-                              Art Museum
-                              <br />
-                              Poland
-                            </div>
-                          </div>
-                          <div className="studio-main-slide__text">
-                            This project designed &amp; building for purpose
-                            protect the ocean and exhibition. With inspired from
-                            sail, sponge and wind. Capri Ocean Musem was born
-                          </div>
-                          <a
-                            className="studio-main-slide__link studio-main-slide__link_inverted"
-                            href="#"
-                          >
-                            See project
-                          </a>
-                        </div>
+                    <SliderCenterText>
+                      <div style={{ fontSize: '6vw' }}>ARTISLAND</div>
+                      <div>
+                        {`"아티스랜드는 인간 커뮤니티의 기본 단위인 '마을' 로의 회기를 첫 번째 목표로 합니다."`}
                       </div>
-                    </div>
-                  </li>
-                  <li
-                    data-easein="default"
-                    data-easeout="default"
-                    data-hideafterloop={0}
-                    data-hideslideonmobile="off"
-                    data-masterspeed={600}
-                    data-rotate={0}
-                    data-saveperformance="off"
-                    data-slicey_shadow="0px 0px 0px 0px transparent"
-                    data-slotamount="default"
-                    data-transition="fade"
-                  >
+                      <div style={{}}>View Project</div>
+                    </SliderCenterText>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    {' '}
                     <img
                       alt=""
                       className="rev-slidebg"
@@ -1285,377 +2579,10 @@ const Home: NextPage = () => {
                       data-rotatestart={0}
                       data-scaleend={120}
                       data-scalestart={100}
-                      src="img/home-slide-8.jpg"
+                      src="assets/img/slider2.jpeg"
                     />
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":300,"speed":1000,"frame":"0","from":"rX:0deg;rY:0deg;rZ:0deg;sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3700","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['150','150','100','100']"
-                      data-hoffset="['-112','-43','-81','44']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-219','-184','-185','182']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 5 }}
-                    />
-                    {/* LAYER NR. 2*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":350,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3650","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['200','150','150','150']"
-                      data-hoffset="['151','228','224','117']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-212','-159','71','-222']"
-                      data-whitespace="nowrap"
-                      data-width="['150','150','100','100']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 6 }}
-                    />
-                    {/*LAYER NR. 3*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":400,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3600","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['150','150','100','100']"
-                      data-hoffset="['339','-442','104','-159']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['2','165','-172','219']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 7 }}
-                    />
-                    {/* LAYER NR. 4*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":450,"speed":1000,"frame":"0","from":"opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3550","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height={150}
-                      data-hoffset="['162','216','-239','193']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['195','245','6','146']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','100','100']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 8 }}
-                    />
-                    {/* LAYER NR. 5*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":500,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3500","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['200','200','150','150']"
-                      data-hoffset="['-186','-119','273','-223']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['269','217','-121','69']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 9 }}
-                    />
-                    {/* LAYER NR. 6*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":550,"speed":1000,"frame":"0","from":"opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3450","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','150','50','50']"
-                      data-hoffset="['-325','292','162','-34']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['3','55','-275','-174']"
-                      data-whitespace="nowrap"
-                      data-width={150}
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 10 }}
-                    />
-                    {/* LAYER NR. 7*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":320,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3680","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['300','300','150','150']"
-                      data-hoffset="['-429','523','-190','-306']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-327','173','181','480']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 11 }}
-                    />
-                    {/* LAYER NR. 8*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":360,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3640","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','250','100','100']"
-                      data-hoffset="['422','-409','208','225']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-245','-72','294','-14']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 12 }}
-                    />
-                    {/* LAYER NR. 9*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":400,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3600","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','250','150','50']"
-                      data-hoffset="['549','-445','28','58']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['236','400','316','287']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','200']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 13 }}
-                    />
-                    {/* LAYER NR. 10*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":440,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3560","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','250','100','100']"
-                      data-hoffset="['-522','492','-151','262']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['339','-180','330','-141']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 14 }}
-                    />
-                    {/* LAYER NR. 11*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":480,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3520","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['200','200','150','150']"
-                      data-hoffset="['-588','-375','-253','-207']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['72','-328','-172','-111']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 15 }}
-                    />
-                    {/* LAYER NR. 12*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":310,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3690","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['100','100','50','50']"
-                      data-hoffset="['-37','73','-76','-100']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-401','-340','-293','-246']"
-                      data-whitespace="nowrap"
-                      data-width="['450','400','250','250']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 16 }}
-                    />
-                    {/* LAYER NR. 13*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":340,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3660","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['100','100','50','50']"
-                      data-hoffset="['186','38','116','17']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['363','402','190','395']"
-                      data-whitespace="nowrap"
-                      data-width="['350','400','250','250']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 17 }}
-                    />
-                    {/* LAYER NR. 14*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper"
-                      data-basealign="slide"
-                      data-frames='[{"delay":10,"speed":500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power4.easeOut"},{"delay":"wait","speed":500,"frame":"999","to":"opacity:0;","ease":"Power4.easeOut"}]'
-                      data-height="full"
-                      data-hoffset="['0','0','0','0']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive="off"
-                      data-responsive_offset="off"
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['0','0','0','0']"
-                      data-whitespace="nowrap"
-                      data-width="full"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 18 }}
-                    />
-                    <div
-                      className="studio-main-slide tp-caption tp-resizeme"
-                      data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"}]'
-                      data-height="none"
-                      data-responsive_offset="on"
-                      data-textalign="['center','center','center','center']"
-                      data-type="text"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                    >
-                      <div className="container">
-                        <div className="studio-main-slide__inner">
-                          <div className="studio-main-slide__subtitle">
-                            Architecture
-                          </div>
-                          <div className="studio-main-slide__title-wrapper">
-                            <div className="studio-main-slide__title">
-                              Local Financial Office,
-                              <br />
-                              Iasi, Romania
-                            </div>
-                          </div>
-                          <div className="studio-main-slide__text">
-                            This project designed &amp; building for purpose
-                            protect the ocean and exhibition. With inspired from
-                            sail, sponge and wind. Capri Ocean Musem was born
-                          </div>
-                          <a
-                            className="studio-main-slide__link studio-main-slide__link_inverted"
-                            href="#"
-                          >
-                            See project
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li
-                    data-easein="default"
-                    data-easeout="default"
-                    data-hideafterloop={0}
-                    data-hideslideonmobile="off"
-                    data-masterspeed={600}
-                    data-rotate={0}
-                    data-saveperformance="off"
-                    data-slicey_shadow="0px 0px 0px 0px transparent"
-                    data-slotamount="default"
-                    data-transition="fade"
-                  >
+                  </SwiperSlide>
+                  <SwiperSlide>
                     <img
                       alt=""
                       className="rev-slidebg"
@@ -1672,366 +2599,10 @@ const Home: NextPage = () => {
                       data-rotatestart={0}
                       data-scaleend={120}
                       data-scalestart={100}
-                      src="img/home-slide-9.jpg"
+                      src="assets/img/slider3.jpeg"
                     />
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":300,"speed":1000,"frame":"0","from":"rX:0deg;rY:0deg;rZ:0deg;sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3700","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['150','150','100','100']"
-                      data-hoffset="['-112','-43','-81','44']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-219','-184','-185','182']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 5 }}
-                    />
-                    {/* LAYER NR. 2*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":350,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3650","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['200','150','150','150']"
-                      data-hoffset="['151','228','224','117']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-212','-159','71','-222']"
-                      data-whitespace="nowrap"
-                      data-width="['150','150','100','100']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 6 }}
-                    />
-                    {/*LAYER NR. 3*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":400,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3600","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['150','150','100','100']"
-                      data-hoffset="['339','-442','104','-159']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['2','165','-172','219']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 7 }}
-                    />
-                    {/* LAYER NR. 4*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":450,"speed":1000,"frame":"0","from":"opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3550","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height={150}
-                      data-hoffset="['162','216','-239','193']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['195','245','6','146']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','100','100']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 8 }}
-                    />
-                    {/* LAYER NR. 5*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":500,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3500","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['200','200','150','150']"
-                      data-hoffset="['-186','-119','273','-223']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['269','217','-121','69']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 9 }}
-                    />
-                    {/* LAYER NR. 6*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":550,"speed":1000,"frame":"0","from":"opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3450","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','150','50','50']"
-                      data-hoffset="['-325','292','162','-34']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['3','55','-275','-174']"
-                      data-whitespace="nowrap"
-                      data-width={150}
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 10 }}
-                    />
-                    {/* LAYER NR. 7*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":320,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3680","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['300','300','150','150']"
-                      data-hoffset="['-429','523','-190','-306']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-327','173','181','480']"
-                      data-whitespace="nowrap"
-                      data-width="['250','250','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 11 }}
-                    />
-                    {/* LAYER NR. 8*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":360,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3640","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','250','100','100']"
-                      data-hoffset="['422','-409','208','225']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-245','-72','294','-14']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 12 }}
-                    />
-                    {/* LAYER NR. 9*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":400,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3600","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','250','150','50']"
-                      data-hoffset="['549','-445','28','58']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['236','400','316','287']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','200']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 13 }}
-                    />
-                    {/* LAYER NR. 10*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":440,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3560","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['250','250','100','100']"
-                      data-hoffset="['-522','492','-151','262']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['339','-180','330','-141']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 14 }}
-                    />
-                    {/* LAYER NR. 11*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":480,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3520","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['200','200','150','150']"
-                      data-hoffset="['-588','-375','-253','-207']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={300}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['72','-328','-172','-111']"
-                      data-whitespace="nowrap"
-                      data-width="['300','300','150','150']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 15 }}
-                    />
-                    {/* LAYER NR. 12*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":310,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3690","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['100','100','50','50']"
-                      data-hoffset="['-37','73','-76','-100']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['-401','-340','-293','-246']"
-                      data-whitespace="nowrap"
-                      data-width="['450','400','250','250']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 16 }}
-                    />
-                    {/* LAYER NR. 13*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper tp-slicey tp-resizeme"
-                      data-frames='[{"delay":340,"speed":1000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"+3660","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                      data-height="['100','100','50','50']"
-                      data-hoffset="['186','38','116','17']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive_offset="on"
-                      data-slicey_blurend={20}
-                      data-slicey_blurstart={0}
-                      data-slicey_offset={250}
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['363','402','190','395']"
-                      data-whitespace="nowrap"
-                      data-width="['350','400','250','250']"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 17 }}
-                    />
-                    {/* LAYER NR. 14*/}
-                    <div
-                      className="tp-caption tp-shape tp-shapewrapper"
-                      data-basealign="slide"
-                      data-frames='[{"delay":10,"speed":500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power4.easeOut"},{"delay":"wait","speed":500,"frame":"999","to":"opacity:0;","ease":"Power4.easeOut"}]'
-                      data-height="full"
-                      data-hoffset="['0','0','0','0']"
-                      data-paddingbottom="[0,0,0,0]"
-                      data-paddingleft="[0,0,0,0]"
-                      data-paddingright="[0,0,0,0]"
-                      data-paddingtop="[0,0,0,0]"
-                      data-responsive="off"
-                      data-responsive_offset="off"
-                      data-textalign="['inherit','inherit','inherit','inherit']"
-                      data-type="shape"
-                      data-voffset="['0','0','0','0']"
-                      data-whitespace="nowrap"
-                      data-width="full"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                      style={{ zIndex: 18 }}
-                    />
-                    <div
-                      className="studio-main-slide tp-caption tp-resizeme"
-                      data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"}]'
-                      data-height="none"
-                      data-responsive_offset="on"
-                      data-textalign="['center','center','center','center']"
-                      data-type="text"
-                      data-x="['center','center','center','center']"
-                      data-y="['middle','middle','middle','middle']"
-                    >
-                      <div className="container">
-                        <div className="studio-main-slide__inner">
-                          <div className="studio-main-slide__subtitle">
-                            Architecture
-                          </div>
-                          <div className="studio-main-slide__title-wrapper">
-                            <div className="studio-main-slide__title">
-                              Justin Burney Villa,
-                              <br />
-                              NY
-                            </div>
-                          </div>
-                          <div className="studio-main-slide__text">
-                            This project designed &amp; building for purpose
-                            protect the ocean and exhibition. With inspired from
-                            sail, sponge and wind. Capri Ocean Musem was born
-                          </div>
-                          <a
-                            className="studio-main-slide__link studio-main-slide__link_inverted"
-                            href="#"
-                          >
-                            See project
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+                  </SwiperSlide>
+                </Swiper> */}
               </div>
             </div>
           </div>
@@ -2138,17 +2709,19 @@ const Home: NextPage = () => {
                   </div>
                 </div>
                 <div className="col-12 col-lg-6 offset-lg-1">
-                  <Link href="https://vimeo.com/34741214">
-                    <a className="video-block popup-video" target="_blank">
-                      <img alt="" src="img/home-studio-video-image.jpg" />
-                      <span className="video-block__play" />
-                    </a>
-                  </Link>
+                  <a
+                    className="video-block popup-video"
+                    href="https://vimeo.com/34741214"
+                    target="_blank"
+                  >
+                    <img alt="" src="img/home-studio-video-image.jpg" />
+                    <span className="video-block__play" />
+                  </a>
                 </div>
               </div>
             </div>
           </div>
-          <div className="studio-reviews">
+          {/* <div className="studio-reviews">
             <div className="container">
               <div className="studio-reviews__head">
                 <div className="studio-reviews__title">
@@ -2266,7 +2839,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="team-block">
             <div className="container">
               <div className="team-block__body team-block__body team-block__body_bordered">
@@ -2281,238 +2854,192 @@ const Home: NextPage = () => {
                     fruit whose isn’t. Meat seed you’re. Seed so days creature
                     seed, i whales creature make.
                   </div>
-                </div>
-                <div className="team-block__slider-wrapper">
-                  <button
-                    className="team-block__control team-block__control_prev icon-chevron-left"
-                    type="button"
-                  >
-                    <span className="visually-hidden">prev</span>
-                  </button>
-                  <button
-                    className="team-block__control team-block__control_next icon-chevron-right"
-                    type="button"
-                  >
-                    <span className="visually-hidden">next</span>
-                  </button>
-                  <div className="team-block__slider swiper-container">
-                    <div className="swiper-wrapper">
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-1.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="team-block__person-name">
+                  <div>
+                    <Slider {...multipleSettings}>
+                      <div className="slide">
+                        <MutipleSiderImg alt="" src="img/team-1.jpg" />
+                        <div
+                          style={{
+                            fontSize: '20px',
+                            fontWeight: 600,
+                            marginTop: '1rem',
+                          }}
+                        >
                           Alex Fergurson
                         </div>
-                        <div className="team-block__person-role">
+                        <div
+                          style={{
+                            color: '#999',
+                          }}
+                        >
                           CEO Founder
                         </div>
                       </div>
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-2.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
+
+                      <div className="slide">
+                        <MutipleSiderImg
+                          alt=""
+                          src="img/team-1.jpg"
+                          className="rev-slidebg"
+                        />
+                        <div
+                          style={{
+                            fontSize: '20px',
+                            fontWeight: 600,
+                            marginTop: '1rem',
+                          }}
+                        >
+                          Alex Fergurson
                         </div>
-                        <div className="team-block__person-name">
-                          Laura Jefferson
-                        </div>
-                        <div className="team-block__person-role">
-                          CO Founder
+                        <div
+                          style={{
+                            color: '#999',
+                          }}
+                        >
+                          CEO Founder
                         </div>
                       </div>
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-3.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="team-block__person-name">
-                          Kylian Mbappe
-                        </div>
-                        <div className="team-block__person-role">
-                          Project Management
-                        </div>
+                      <div>
+                        <MutipleSiderImg
+                          alt=""
+                          src="img/team-1.jpg"
+                          className="rev-slidebg"
+                        />
                       </div>
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-4.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="team-block__person-name">
-                          Jenifer Johanson
-                        </div>
-                        <div className="team-block__person-role">
-                          3D Visualization
-                        </div>
+                      <div>
+                        <MutipleSiderImg
+                          alt=""
+                          src="img/team-1.jpg"
+                          className="rev-slidebg"
+                        />
                       </div>
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-2.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="team-block__person-name">
-                          Laura Jefferson
-                        </div>
-                        <div className="team-block__person-role">
-                          CO Founder
-                        </div>
+                      <div>
+                        <img
+                          alt=""
+                          className="rev-slidebg"
+                          src="img/team-1.jpg"
+                          width={232}
+                          height={232}
+                        />
                       </div>
-                      <div className="team-block__slide swiper-slide">
-                        <div className="team-block__image-wrapper">
-                          <img alt="" src="img/team-3.jpg" />
-                          <div className="team-block__hover">
-                            <div className="socials">
-                              <a
-                                className="socials__social icofont-twitter"
-                                href="#"
-                              >
-                                <div className="visually-hidden">twitter</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-facebook"
-                                href="#"
-                              >
-                                <div className="visually-hidden">facebook</div>
-                              </a>
-                              <a
-                                className="socials__social icofont-google-plus"
-                                href="#"
-                              >
-                                <div className="visually-hidden">
-                                  google plus
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="team-block__person-name">
-                          Kylian Mbappe
-                        </div>
-                        <div className="team-block__person-role">
-                          Project Management
-                        </div>
+                      <div>
+                        <img
+                          alt=""
+                          className="rev-slidebg"
+                          src="img/team-1.jpg"
+                          width={232}
+                          height={232}
+                        />
                       </div>
-                    </div>
+                      <div>
+                        <img
+                          alt=""
+                          className="rev-slidebg"
+                          src="img/team-1.jpg"
+                          width={232}
+                          height={232}
+                        />
+                      </div>
+                      <div>
+                        <img
+                          alt=""
+                          className="rev-slidebg"
+                          src="img/team-1.jpg"
+                          width={232}
+                          height={232}
+                        />
+                      </div>
+                      <div>
+                        <img
+                          alt=""
+                          className="rev-slidebg"
+                          src="img/team-1.jpg"
+                          width={232}
+                          height={232}
+                        />
+                      </div>
+                    </Slider>
                   </div>
+
+                  {/* <Swiper
+                    slidesPerView={4}
+                    spaceBetween={30}
+                    slidesPerGroup={4}
+                    loop={true}
+                    loopFillGroupWithBlank={true}
+                    navigation={true}
+                    modules={[Pagination, Navigation]}
+                    className="mySwiper"
+                  >
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        alt=""
+                        className="rev-slidebg"
+                        src="img/team-1.jpg"
+                      />
+                    </SwiperSlide>
+                  </Swiper> */}
                 </div>
               </div>
             </div>
           </div>
+
           <div className="awards-block">
             <div className="container">
               <div className="heading-group heading-group heading-group_centered">
@@ -2605,7 +3132,7 @@ const Home: NextPage = () => {
                       <img
                         alt=""
                         className="posts__image"
-                        src="img/studio-post-image-1.jpg"
+                        src="img/studio-post-image-2.jpg"
                       />
                       <span className="posts__item-content">
                         <span className="posts__item-footer">
@@ -2799,3 +3326,121 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+const MediumWidth = styled.div`
+  display: flex;
+
+  ${media.custom(1200)} {
+    display: none;
+  }
+`;
+
+const MInMediumWidth = styled.div`
+  display: flex;
+  ${media.minCustom(1201)} {
+    display: none;
+  }
+`;
+
+const SideSheetHeader = styled.div`
+  display: flex;
+  width: 100%;
+  ${media.custom(576)} {
+    width: 50%;
+  }
+  font-size: 1rem;
+
+  text-transform: uppercase;
+`;
+
+const Block = styled.div`
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0px 0 8px rgba(0, 0, 0, 0.08);
+  transition: background 2s ease-out;
+  transition-property: background-color, color;
+`;
+
+const Player = styled.div`
+  width: 100%;
+  padding-top: 56.25%;
+  height: 0px;
+  position: relative;
+  iframe {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+`;
+
+const LogoImg = styled.img`
+  width: 286px;
+  height: 24px;
+  ${media.custom(768)} {
+    width: 144px;
+    height: 24px;
+  }
+`;
+
+const MutipleSiderImg = styled.img`
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 14.5rem;
+  height: 14.5rem;
+  ${media.custom(991)} {
+    width: 20.625rem;
+    height: 20.625rem;
+  }
+
+  ${media.custom(768)} {
+    object-fit: cover;
+    width: 100%;
+    height: 250px;
+  }
+`;
+
+const SingleSiderImg = styled.img`
+  width: 100%;
+  aspect-ratio: auto 1 / 1;
+`;
+
+const ForImg = styled.div`
+  background-image: url('/assets/img/slider1.jpeg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 0;
+  min-height: 500px;
+  padding-top: 66.64%;
+`;
+
+const ForImg2 = styled.div`
+  background-image: url('/assets/img/slider2.jpeg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 0;
+  padding-top: 66.64%;
+`;
+
+const ForImg3 = styled.div`
+  background-image: url('/assets/img/slider3.jpeg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 0;
+  padding-top: 66.64%;
+`;
+
+const CenterImg = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
