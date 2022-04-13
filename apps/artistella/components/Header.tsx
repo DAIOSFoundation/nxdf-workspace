@@ -270,9 +270,9 @@ function Header() {
               <li className="top-menu__menu-item">
                 <div className="dropdown">
                   <Link href="/">
-                    <a className="dropdown__trigger top-menu__menu-link">
+                    <LinkTO className="dropdown__trigger top-menu__menu-link">
                       Home
-                    </a>
+                    </LinkTO>
                   </Link>
                   <div className="dropdown__menu">
                     <div className="dropdown__column">
@@ -426,9 +426,9 @@ function Header() {
               </li>
               <li className="top-menu__menu-item">
                 <div className="dropdown">
-                  <a className="dropdown__trigger top-menu__menu-link" href="#">
+                  <LinkTO className="dropdown__trigger top-menu__menu-link">
                     ROADMAP
-                  </a>
+                  </LinkTO>
                   <div className="dropdown__menu">
                     <div className="dropdown__column">
                       <div className="dropdown__item">
@@ -850,3 +850,10 @@ function Header() {
 }
 
 export default Header;
+
+const LinkTO = styled.a`
+  color: #fff;
+  &:hover {
+    color: #f24a00;
+  }
+`;

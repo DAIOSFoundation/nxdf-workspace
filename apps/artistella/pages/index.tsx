@@ -532,9 +532,10 @@ const Home: NextPage = () => {
                           <Link href="/">
                             <a
                               className="dropdown__trigger top-menu__menu-link"
+                              href="#"
                               style={{ color: 'black' }}
                             >
-                              Home
+                              HOME
                             </a>
                           </Link>
                           <div className="dropdown__menu">
@@ -1207,9 +1208,9 @@ const Home: NextPage = () => {
                         type="button"
                       >
                         <MediumWidth>
-                          <div style={{ marginLeft: '2rem' }}>
-                            <BsDiscord size="24" style={{ color: '#fff' }} />
-                          </div>
+                          <IconWrapper style={{ marginLeft: '2rem' }}>
+                            <BsDiscord size="24" />
+                          </IconWrapper>
                           <div style={{ marginLeft: '2rem', color: '#fff' }}>
                             <BsTwitter size="24" />
                           </div>
@@ -1321,18 +1322,18 @@ const Home: NextPage = () => {
                         }}
                       >
                         <MediumWidth>
-                          <div style={{ marginLeft: '2rem' }}>
-                            <BsDiscord size="24" style={{ color: '#fff' }} />
-                          </div>
-                          <div style={{ marginLeft: '2rem', color: '#fff' }}>
+                          <IconWrapper style={{ marginLeft: '2rem' }}>
+                            <BsDiscord size="24" />
+                          </IconWrapper>
+                          <IconWrapper style={{ marginLeft: '2rem' }}>
                             <BsTwitter size="24" />
-                          </div>
-                          <div>
+                          </IconWrapper>
+                          <IconWrapper>
                             <BsInstagram
                               size="24"
-                              style={{ marginLeft: '2rem', color: '#fff' }}
+                              style={{ marginLeft: '2rem' }}
                             />
-                          </div>
+                          </IconWrapper>
                         </MediumWidth>
 
                         <>
@@ -1458,10 +1459,7 @@ const Home: NextPage = () => {
                       <li className="top-menu__menu-item">
                         <div className="dropdown">
                           <Link href="/">
-                            <a
-                              className="dropdown__trigger top-menu__menu-link"
-                              style={{ color: '#fff' }}
-                            >
+                            <a className="dropdown__trigger top-menu__menu-link">
                               Home
                             </a>
                           </Link>
@@ -1573,9 +1571,8 @@ const Home: NextPage = () => {
                           <a
                             className="dropdown__trigger top-menu__menu-link"
                             href="#"
-                            style={{ color: '#fff' }}
                           >
-                            NFT
+                            <div> NFT </div>
                           </a>
                           <div className="dropdown__menu">
                             <div className="dropdown__column">
@@ -1636,9 +1633,8 @@ const Home: NextPage = () => {
                           <a
                             className="dropdown__trigger top-menu__menu-link"
                             href="#"
-                            style={{ color: '#fff' }}
                           >
-                            ROADMAP
+                            <div> ROADMAP</div>
                           </a>
                           <div className="dropdown__menu">
                             <div className="dropdown__column">
@@ -1683,7 +1679,6 @@ const Home: NextPage = () => {
                           <a
                             className="dropdown__trigger top-menu__menu-link"
                             href="#"
-                            style={{ color: '#fff' }}
                           >
                             TEAM
                           </a>
@@ -1738,7 +1733,6 @@ const Home: NextPage = () => {
                           <a
                             className="dropdown__trigger top-menu__menu-link"
                             href="#"
-                            style={{ color: '#fff' }}
                           >
                             DOCS
                           </a>
@@ -2411,16 +2405,16 @@ const Home: NextPage = () => {
                               Architecture
                             </div>
                             <div className="studio-main-slide__title-wrapper">
-                              <div
+                              <SliderCenterText
                                 className="studio-main-slide__title"
                                 style={{ fontSize: '6vw' }}
                               >
                                 Justin Burney Villa,
                                 <br />
                                 NY
-                              </div>
+                              </SliderCenterText>
                             </div>
-                            <div
+                            <SliderCenterText
                               className="studio-main-slide__text"
                               style={{ fontSize: '1.4vw' }}
                             >
@@ -2428,7 +2422,7 @@ const Home: NextPage = () => {
                               protect the ocean and exhibition. With inspired
                               from sail, sponge and wind. Capri Ocean Musem was
                               born
-                            </div>
+                            </SliderCenterText>
                             <a
                               className="studio-main-slide__link studio-main-slide__link_inverted"
                               href="#"
@@ -2453,7 +2447,7 @@ const Home: NextPage = () => {
                             <div className="studio-main-slide__title-wrapper">
                               <div
                                 className="studio-main-slide__title"
-                                style={{ fontSize: '6vw' }}
+                                style={{ fontSize: '6vw', fontWeight: 600 }}
                               >
                                 Justin Burney Villa,
                                 <br />
@@ -3416,8 +3410,24 @@ const ForImg = styled.div`
   background-repeat: no-repeat;
   width: 100%;
   height: 0;
-  min-height: 500px;
+
   padding-top: 66.64%;
+
+  z-index: 18;
+  visibility: inherit;
+  transition: none 0s ease 0s;
+  text-align: inherit;
+  line-height: 24px;
+
+  letter-spacing: 0px;
+  font-weight: 400;
+  font-size: 14px;
+  white-space: nowrap;
+  min-height: 636px;
+  min-width: 821px;
+  opacity: 1;
+  transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  transform-origin: 50% 50% 0px;
 `;
 
 const ForImg2 = styled.div`
@@ -3443,4 +3453,24 @@ const CenterImg = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+`;
+
+const IconWrapper = styled.div`
+  color: #fff;
+  transition: color 0.5s;
+
+  &:hover {
+    color: #f24a00;
+  }
+`;
+
+const SliderCenterText = styled.div`
+  font-family: 'Gowun Dodum', sans-serif;
+`;
+
+const HoverBlack = styled.div`
+  color: black;
+  &:hover {
+    color: #f24a00;
+  }
 `;
