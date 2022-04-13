@@ -1,3 +1,49 @@
-{"type":"FeatureCollection","features":[{
-    "type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[4.9163818359375,37.80544394934271],[7.66845703125,37.80544394934271],[7.66845703125,39.44043541908485],[4.9163818359375,39.44043541908485],[4.9163818359375,37.80544394934271]]]}}
-    ]}
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "California",
+        "income": {
+          "2015": 64483
+        }
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [18.199999, 34.8],
+              [18.21, 34.8],
+              [18.21, 34.79],
+              [18.2, 34.79]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "asd",
+        "income": {
+          "2015": 1234
+        }
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [18.21, 34.8],
+              [18.22, 34.8],
+              [18.22, 34.79],
+              [18.21, 34.79]
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
