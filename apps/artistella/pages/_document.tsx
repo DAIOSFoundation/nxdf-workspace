@@ -23,7 +23,17 @@ export default class CustomDocument extends Document<{
       <Html>
         <Head>
           {this.props.styleTags}
-
+          <link
+            rel="stylesheet"
+            type="text/css"
+            charSet="UTF-8"
+            href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+          />
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+          />
           <link
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Teko:300,400&display=optional"
             rel="stylesheet"
@@ -58,7 +68,8 @@ export default class CustomDocument extends Document<{
         <script src="assets/js/revolution/jquery.themepunch.tools.min.js"></script>
         <script src="assets/js/revolution/jquery.themepunch.revolution.min.js"></script>
 
-        <script src="assets/js/revolution-addons/panorama/three.min.js"></script>
+        <script src="assets/js/revolutisions/revolution.extension.migration.min.js"></script>
+        <script src="assets/js/revolution/extenon-addons/panorama/three.min.js"></script>
         <script src="assets/js/revolution-addons/panorama/revolution.addon.panorama.min.js"></script>
 
         <script src="assets/js/revolution-addons/slicey/revolution.addon.slicey.min.js"></script>
@@ -67,7 +78,6 @@ export default class CustomDocument extends Document<{
         <script src="assets/js/revolution/extensions/revolution.extension.carousel.min.js"></script>
         <script src="assets/js/revolution/extensions/revolution.extension.kenburn.min.js"></script>
         <script src="assets/js/revolution/extensions/revolution.extension.layeranimation.min.js"></script>
-        <script src="assets/js/revolution/extensions/revolution.extension.migration.min.js"></script>
         <script src="assets/js/revolution/extensions/revolution.extension.navigation.min.js"></script>
         <script src="assets/js/revolution/extensions/revolution.extension.parallax.min.js"></script>
         <script src="assets/js/revolution/extensions/revolution.extension.slideanims.min.js"></script>

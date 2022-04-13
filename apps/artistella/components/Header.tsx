@@ -44,6 +44,15 @@ const Block = styled.div`
   }
 `;
 
+const LogoImg = styled.img`
+  width: 286px;
+  height: 24px;
+  ${media.custom(768)} {
+    width: 144px;
+    height: 24px;
+  }
+`;
+
 const EN = ['HOME', 'NFT', 'ROADMAP', 'TEAM ', 'DOCS'];
 const KR = ['홈', '옌에프티', '로드맵', '팀', '문서'];
 
@@ -57,7 +66,7 @@ function Header() {
           <div className="header__inner">
             <Link href="/">
               <a className="logo header__logo">
-                <img alt="" src="assets/img/logo.png" />
+                <LogoImg alt="" src="assets/img/logo.png" />
               </a>
             </Link>
             {isShown ? (
@@ -109,58 +118,21 @@ function Header() {
                           marginTop: '3rem',
                         }}
                       >
-                        <Paragraph
-                          style={{
-                            fontSize: '1.875rem',
-                            fontWeight: 500,
-                            marginBottom: '1rem',
-                            lineHeight: 1.1,
-                            color: 'black',
-                          }}
-                        >
-                          HOME
-                        </Paragraph>
-                        <Paragraph
-                          style={{
-                            fontSize: '1.875rem',
-                            fontWeight: 500,
-                            marginBottom: '1rem',
-                            lineHeight: 1.1,
-                            color: '#999',
-                          }}
-                        >
-                          NFT
-                        </Paragraph>
-                        <Paragraph
-                          style={{
-                            fontSize: '1.875rem',
-                            fontWeight: 500,
-                            marginBottom: '1rem',
-                            lineHeight: 1.1,
-                          }}
-                        >
-                          ROADMAP
-                        </Paragraph>
-                        <Paragraph
-                          style={{
-                            fontSize: '1.875rem',
-                            fontWeight: 500,
-                            marginBottom: '1rem',
-                            lineHeight: 1.1,
-                          }}
-                        >
-                          TEAM
-                        </Paragraph>
-                        <Paragraph
-                          style={{
-                            fontSize: '1.875rem',
-                            fontWeight: 500,
-                            marginBottom: '1ren',
-                            lineHeight: 1.1,
-                          }}
-                        >
-                          DOCS
-                        </Paragraph>
+                        {EN.map((el) => (
+                          <>
+                            <Paragraph
+                              style={{
+                                fontSize: '1.875rem',
+                                fontWeight: 500,
+                                marginBottom: '1rem',
+                                lineHeight: 1.1,
+                                color: 'black',
+                              }}
+                            >
+                              {el}
+                            </Paragraph>
+                          </>
+                        ))}
                       </div>
                       <div style={{ display: 'flex', marginTop: 'auto' }}>
                         <BsTwitter
@@ -245,58 +217,21 @@ function Header() {
                           marginTop: '3rem',
                         }}
                       >
-                        <Paragraph
-                          style={{
-                            fontSize: '1.875rem',
-                            fontWeight: 500,
-                            marginBottom: '1rem',
-                            lineHeight: 1.1,
-                            color: 'black',
-                          }}
-                        >
-                          HOME
-                        </Paragraph>
-                        <Paragraph
-                          style={{
-                            fontSize: '1.875rem',
-                            fontWeight: 500,
-                            marginBottom: '1rem',
-                            lineHeight: 1.1,
-                            color: '#999',
-                          }}
-                        >
-                          NFT
-                        </Paragraph>
-                        <Paragraph
-                          style={{
-                            fontSize: '1.875rem',
-                            fontWeight: 500,
-                            marginBottom: '1rem',
-                            lineHeight: 1.1,
-                          }}
-                        >
-                          ROADMAP
-                        </Paragraph>
-                        <Paragraph
-                          style={{
-                            fontSize: '1.875rem',
-                            fontWeight: 500,
-                            marginBottom: '1rem',
-                            lineHeight: 1.1,
-                          }}
-                        >
-                          TEAM
-                        </Paragraph>
-                        <Paragraph
-                          style={{
-                            fontSize: '1.875rem',
-                            fontWeight: 500,
-                            marginBottom: '1ren',
-                            lineHeight: 1.1,
-                          }}
-                        >
-                          DOCS
-                        </Paragraph>
+                        {EN.map((el) => (
+                          <>
+                            <Paragraph
+                              style={{
+                                fontSize: '1.875rem',
+                                fontWeight: 500,
+                                marginBottom: '1rem',
+                                lineHeight: 1.1,
+                                color: 'black',
+                              }}
+                            >
+                              {el}
+                            </Paragraph>
+                          </>
+                        ))}
                       </div>
                       <div style={{ display: 'flex', marginTop: 'auto' }}>
                         <BsTwitter
