@@ -170,3 +170,24 @@
     left: -0% !important;
   }
 }
+
+.blackText {
+  color: 'black' !important;
+  font-family: inherit;
+  text-decoration: none;
+  -webkit-transition: 0.3s ease;
+  -moz-transition: 0.3s ease;
+  transition: 0.3s ease;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.blackText:hover {
+  color: 'red';
+}
