@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Line from '../../line/Line';
 import { View, ViewRow } from '../../styled/View';
 import { GestureButton } from '../../styled/GestureButton';
 import { Text } from '../../styled/Text';
 import { Image } from '../../styled/Image';
 import icon_next from '../../../assets/wallet/icon_next.png';
+import { getCoin } from '../../../api/coinStaking';
+import { useQuery } from 'react-query';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { CoinAmountAtom } from '../../../lib/atoms';
 
 const Coin = (props) => {
-  return (
+  const { isLoading: infoLoading, data: infoData } = useQuery(
+    ['info', props.name],
+    getCoin.info
+  );
+  const price = infoData?.tickers[0].last;
+  let value = props.amount * price;
+  const SetAmount = useSetRecoilState(CoinAmountAtom);
+  // console.log(` ${infoData?.name} : ${value}`);
+  useEffect(() => {
+    infoLoading ? null : SetAmount((data) => data + value);
+  }, [infoLoading]);
+  return infoLoading ? null : (
     <View>
       <Line width={'100%'} height={1} />
       <GestureButton onPress={props.onPress}>
@@ -22,7 +37,7 @@ const Coin = (props) => {
               <Image source={props.logo} />
             </View>
             <View>
-              <Text ftWhite>{props.name}</Text>
+              <Text ftWhite>{infoData.name}</Text>
               <Text ftWhite ftSmall marginTop={5}>
                 {props.symbol}
               </Text>
@@ -37,7 +52,7 @@ const Coin = (props) => {
             </ViewRow>
             <View alignItems={'flex-end'}>
               <Text ftSmall ftBlueGray>
-                $ {props.price ? props.price.toFixed(4) : 0}
+                $ {price ? price.toFixed(4) : 0}
               </Text>
             </View>
           </View>

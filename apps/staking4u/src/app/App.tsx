@@ -14,6 +14,7 @@ import AndroidBackHandle from './screens/global/AndroidBackHanlder';
 import Push from './screens/global/Push';
 import SplashScreen from 'react-native-splash-screen';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { RecoilRoot } from 'recoil';
 
 const store = configure();
 
@@ -27,14 +28,16 @@ const App = () => {
 
   return (
     <Provider store={store}>
-       <QueryClientProvider client={queryClient} >
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot>
           <ScreenRouter />
           <ToastMessage />
           <GlobalModal />
           <AndroidBackHandle />
           {/* <Push /> */}
-            <Loading />
-        </QueryClientProvider>
+          <Loading />
+        </RecoilRoot>
+      </QueryClientProvider>
     </Provider>
   );
 };
