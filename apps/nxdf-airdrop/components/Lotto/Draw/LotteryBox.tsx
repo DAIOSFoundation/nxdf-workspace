@@ -13,7 +13,7 @@ export default class LotteryBox extends React.Component<
     LotteryBoxProps,
     LotteryBoxState
 > {
-
+    
     constructor(props: LotteryBoxProps) {
         super(props);
         this.state = {
