@@ -8,24 +8,49 @@ import icon_next from '../../../assets/wallet/icon_next.png';
 import { getCoin } from '../../../api/coinStaking';
 import { useQuery } from 'react-query';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { CoinAmountAtom } from '../../../lib/atoms';
+import { CoinAmountAtom, CoinInfo } from '../../../lib/atoms';
+import { Actions } from 'react-native-router-flux';
 
 const Coin = (props) => {
-  const { isLoading: infoLoading, data: infoData } = useQuery(
-    ['info', props.name],
-    getCoin.info
-  );
-  const price = infoData?.tickers[0].last;
-  let value = props.amount * price;
-  const SetAmount = useSetRecoilState(CoinAmountAtom);
-  // console.log(` ${infoData?.name} : ${value}`);
+  const setAmount = useSetRecoilState(CoinAmountAtom);
+  const setInfo = useSetRecoilState(CoinInfo);
+  const Info = useRecoilValue(CoinInfo);
+  const Amount = useRecoilValue(CoinAmountAtom);
+  const {
+    isLoading: coinLoading,
+    data: coinData,
+    isRefetching,
+    isFetched,
+  } = useQuery(['coin', props.name], getCoin.info, { refetchInterval: 10000 });
+  const name = coinData?.name;
+  const price = coinData?.tickers.find(
+    (data) => data.target === 'USD' && data.last
+  ).last;
+  // setInfo((allInfo) => {
+  //   return { ...allInfo, name, price };
+  // });
+  const value = props.amount * price;
   useEffect(() => {
-    infoLoading ? null : SetAmount((data) => data + value);
-  }, [infoLoading]);
-  return infoLoading ? null : (
+    setTimeout(() => {
+      isRefetching
+        ? setAmount((data) => data - value)
+        : setAmount((data) => data + value);
+      coinLoading || !coinData ? setAmount(0) : setAmount((data) => data);
+    }, 1000);
+  }, [coinData, setAmount, coinLoading, isRefetching]);
+
+  const onPressItem = (symbol) => {
+    // 해당 코인 디테일 페이지로 이동
+    Actions.walletDetailScreen({
+      coin: coinData,
+      solTokenPublicKey: 12345,
+      mintAddress: 12345,
+    });
+  };
+  return coinLoading ? null : (
     <View>
       <Line width={'100%'} height={1} />
-      <GestureButton onPress={props.onPress}>
+      <GestureButton onPress={onPressItem}>
         <ViewRow
           width={'94%'}
           height={70}
@@ -37,7 +62,7 @@ const Coin = (props) => {
               <Image source={props.logo} />
             </View>
             <View>
-              <Text ftWhite>{infoData.name}</Text>
+              <Text ftWhite>{coinData?.name}</Text>
               <Text ftWhite ftSmall marginTop={5}>
                 {props.symbol}
               </Text>
