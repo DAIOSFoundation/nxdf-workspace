@@ -33,7 +33,7 @@ const WalletScreen = () => {
   ]);
   const [tabItems] = useState(['Token', 'Collection']);
   const Amount = useRecoilValue(CoinAmountAtom);
-  console.log(Amount);
+  // console.log(Amount);
 
   // 탭뷰 스크린
   const renderScene = SceneMap({
