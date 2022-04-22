@@ -303,11 +303,14 @@ export const investmentHistory = [
   },
 ];
 
-export const WalletAmount = {
-  aaveAmount: { data: { balance: 1 } },
-  orbsAmount: { data: { balance: 2 } },
-  solAmount: { data: { balance: 3 } },
-  rayAmount: { data: { balance: 4 } },
+export const WalletData = {
+  Mnemonic:
+    'genius lion tiger running movies coffee chocolate choose grunt soda give filter',
+  PubKey: 'DhJETK5Y2S1q3e7yYAEAAm9DCP6cNjuh4ygUsCQTPDn3',
+  Amount: {
+    sol: { data: { balance: 3 } },
+    ray: { data: { balance: 4 } },
+  },
 };
 
 export const WalletCoin = [
@@ -320,27 +323,15 @@ export const WalletCoin = [
   //   price: tickers?.['AAVE']?.close * aaveAmount?.data.balance, // 현재 시장 가 * 보유 코인 갯수 ( $ )
   // },
   {
-    name: 'Aave', // 코인명
-    symbol: 'AAVE', // 단위
-    logo: aaveLogo, // 로고 이미지
-    amount: WalletAmount?.aaveAmount?.data.balance, //  보유 코인 개수
-  },
-  {
-    name: 'Orbs',
-    symbol: 'ORBS',
-    logo: orbsLogo,
-    amount: WalletAmount?.orbsAmount?.data.balance,
-  },
-  {
     name: 'Solana',
     symbol: 'SOL',
     logo: solLogo,
-    amount: WalletAmount?.solAmount?.data.balance,
+    amount: WalletData?.Amount?.sol.data.balance,
   },
   {
     name: 'Raydium',
     symbol: 'RAY',
     logo: rayLogo,
-    amount: WalletAmount?.rayAmount?.data.balance,
+    amount: WalletData?.Amount?.ray.data.balance,
   },
 ];
