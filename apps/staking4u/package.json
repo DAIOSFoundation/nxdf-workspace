@@ -44,6 +44,7 @@
     "react-query": "*",
     "@web3auth/react-native-sdk": "*",
     "detox": "*",
-    "recoil": "*"
+    "recoil": "*",
+    "react-hook-form": "*"
   }
 }
