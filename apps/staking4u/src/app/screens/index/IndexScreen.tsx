@@ -18,17 +18,21 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import AsyncStorage from '@react-native-community/async-storage';
 import { WalletData } from '../../utils/dummy';
 import { isLoggedin, tokenValue } from '../../lib/atoms';
+import { useQuery } from 'react-query';
+import { Mnemonic } from '../../api/coinStaking';
+import { postMnemonic } from '../../lib/api/mnemonic';
 
 const IndexScreen = () => {
   const setToken = useSetRecoilState(tokenValue);
   const setLoggedIn = useSetRecoilState(isLoggedin);
+
   const LoggedIn = useRecoilState(isLoggedin);
   const PreLoading = async () => {
     const token = await AsyncStorage.getItem('token');
+    console.log(token);
     if (token) {
       setToken(token);
       setLoggedIn(true);
-      console.log(`여기 ${token}`);
       Actions.tabBar();
     }
   };

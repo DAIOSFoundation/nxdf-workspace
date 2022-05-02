@@ -18,8 +18,6 @@ import { WalletCoin } from '../../../utils/dummy';
 const WalletDetailScreen = (props) => {
   const { coin } = props;
   const coinData = WalletCoin.filter((data) => data.name === coin.name).flat();
-  console.log(coinData[0].name);
-
   const price = coin?.tickers.find(
     (data) => data.target === 'USD' && data.last
   ).last;

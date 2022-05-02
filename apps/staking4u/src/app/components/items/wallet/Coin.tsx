@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Line from '../../line/Line';
 import { View, ViewRow } from '../../styled/View';
 import { GestureButton } from '../../styled/GestureButton';
@@ -13,31 +13,35 @@ import { Actions } from 'react-native-router-flux';
 
 const Coin = (props) => {
   const setAmount = useSetRecoilState(CoinAmountAtom);
-  const setInfo = useSetRecoilState(CoinInfo);
-  const Info = useRecoilValue(CoinInfo);
-  const Amount = useRecoilValue(CoinAmountAtom);
   const {
     isLoading: coinLoading,
     data: coinData,
     isRefetching,
     isFetched,
-  } = useQuery(['coin', props.name], getCoin.info, { refetchInterval: 10000 });
-  const name = coinData?.name;
+  } = useQuery(['coin', props.name], getCoin.info);
   const price = coinData?.tickers.find(
     (data) => data.target === 'USD' && data.last
   ).last;
+  const [value, setValue] = useState(0);
   // setInfo((allInfo) => {
   //   return { ...allInfo, name, price };
   // });
-  const value = props.amount * price;
   useEffect(() => {
+    setValue(
+      price && props.amount
+        ? (prev) =>
+            prev !== price * props.amount ? price * props.amount : prev
+        : 0
+    );
     setTimeout(() => {
       isRefetching
         ? setAmount((data) => data - value)
         : setAmount((data) => data + value);
-      coinLoading || !coinData ? setAmount(0) : setAmount((data) => data);
+      console.log(`isRefetching: ${isRefetching}`);
+      // console.log(`isFetched: ${isFetched}`);
+      // console.log(`coinLoading: ${coinLoading}`);
     }, 1000);
-  }, [coinData, setAmount, coinLoading, isRefetching]);
+  }, [setAmount, coinLoading, isRefetching, isFetched, setValue, value]);
 
   const onPressItem = (symbol) => {
     // 해당 코인 디테일 페이지로 이동
