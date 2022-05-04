@@ -18,70 +18,49 @@ import { AESKey, mnemonicEncrypt, storeData } from '../../utils/functions';
 import { useForm } from 'react-hook-form';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useQuery } from 'react-query';
-import { WalletData } from '../../utils/dummy';
+import jwt from 'jsonwebtoken';
+import { Mnemonic } from '../../api/coinStaking';
+
+interface MnemonicProps {
+  mnemonic: string;
+}
 
 const MnemonicInputScreen = () => {
-  const { getMnemonicVerification, jwt } = useSelector(
-    (state) => ({
-      jwt: 200,
-      getMnemonicVerification: true,
-    }),
-    shallowEqual
-  );
-  const { register, setValue, handleSubmit } = useForm({
-    defaultValues: {
-      mnemonic: WalletData.Mnemonic,
-    },
-  });
-  // const [mnemonic, setMnemonic] = useState(WalletData.Mnemonic);
-  const dispatch = useDispatch();
-  const Login = async (token) => {
-    console.log(token);
-    await AsyncStorage.multiSet([
-      ['token', JSON.stringify(token)],
-      ['loggedIn', JSON.stringify('yes')],
-    ]);
-  };
-  // useEffect(() => {
-  //   async function getStorage() {
-  //     if (jwt && jwt !== 400) {
-  //       await AESKey(mnemonic);
-  //       await storeData('isValidAuth', 'true');
-  //       await storeData('jwt', jwt);
-  //       Actions.reset('tabBar');
-  //     } else if (jwt === 400) {
-  //       dispatch(authsActions.reset_jwt());
-  //       await AESKey(mnemonic);
-  //       Actions.GenerateMnemonic();
-  //       Actions.emailVerificationScreen();
-  //     }
-  //   }
+  const [loading, setLoading] = useState(false);
+  const [mndata, setmndata] = useState<MnemonicProps | string>('');
+  const getMnemonicVerification = true;
+  const { register, setValue, handleSubmit, watch } = useForm();
+  const mn =
+    'elephant napkin toy fortune board ensure mad puppy bike coconut law chuckle';
 
-  //   getStorage();
-  //   return () => {
-  //     dispatch(registerActions.reset_mnemonic_verification());
-  //   };
-  // }, [jwt]);
-
-  const onPressNext = async (data) => {
-    // if (getMnemonicVerification) {
-    //   const param = {
-    //     publicMnemonicHash: await mnemonicEncrypt(mnemonic),
-    //   };
-
-    //   dispatch(authsActions.post_login(param));
-    // }
-    Login(WalletData.PubKey);
-    const token = await AsyncStorage.getItem('token');
-    if (token) {
-      Actions.tabBar();
+  const { isLoading, data: mnemonicData2 } = useQuery(
+    ['mnemonic', mndata?.mnemonic],
+    Mnemonic.postMnemonic,
+    {
+      enabled: !!loading,
     }
-    // Actions.tabBar();
-  };
-
+  );
+  console.log(`isLoading : ${isLoading}`);
+  console.log(`mnemonicData2 : ${mnemonicData2}`);
   useEffect(() => {
     register('mnemonic', { required: true });
   }, [register]);
+
+  const onPressNext = async (data) => {
+    data.mnemonic?.split(' ').length === 12
+      ? (setmndata(data), setLoading(true))
+      : alert('check your mnemonic');
+    const Mne = mnemonicData2?.data?.bip44Change?.publicKey;
+    console.log(`Mne : ${Mne}`);
+    console.log(`isLoading : ${isLoading}`);
+    if (Mne) {
+      await AsyncStorage.multiSet([
+        ['token', JSON.stringify(Mne)],
+        ['loggedIn', JSON.stringify('yes')],
+      ]);
+      Actions.tabBar();
+    }
+  };
 
   // const onChangeText = (text) => {
   //   setMnemonic(text);
@@ -124,10 +103,8 @@ const MnemonicInputScreen = () => {
         </View>
       </ScrollView>
       <BottomButton
-        {...(getMnemonicVerification
-          ? { bgYellowTheme: true }
-          : { bgBlueGray: true })}
-        text={'Next'}
+        {...(!loading ? { bgBlueGray: true } : { bgYellowTheme: true })}
+        text={!loading ? 'Verification' : 'Next'}
         onPress={handleSubmit(onPressNext)}
       />
     </SafeAreaView>

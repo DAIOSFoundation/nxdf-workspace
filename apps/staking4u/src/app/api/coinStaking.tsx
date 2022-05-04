@@ -1,5 +1,9 @@
+import RNFetchBlob from 'rn-fetch-blob';
+import { headers } from '../utils/request';
+import { postMnemonic } from '../lib/api/mnemonic';
+
 const BASE_URL = 'https://api.coingecko.com/api/v3/coins/';
-const D_Wallet = 'https://d-wallet-api-dev.daios.net ';
+const D_Wallet = 'https://d-wallet-api-dev.daios.net';
 
 export const getCoin = {
   info: ({ queryKey }) => {
@@ -17,27 +21,32 @@ export const getCoin = {
 };
 
 export const Mnemonic = {
-  get: async ({ queryKey }) => {
-    const [_, mnemonic] = queryKey;
-    return await fetch(`${D_Wallet}/v1/sol/decodeMnemonic`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        mnemonic:
-          'genius human spirit run movie copy change choose grunt soda give filter',
+  postMnemonic: async ({ queryKey }) => {
+    try {
+      const [_, mnemonic] = queryKey;
+      const method = 'POST';
+      const url = `${D_Wallet}/v1/sol/decodeMnemonic`;
+      const body = JSON.stringify({
+        mnemonic,
         accountIndex: '0',
         walletIndex: '0',
-      }),
-    })
-      .then((response) => response.json())
-      .catch((err) => console.log(err));
+      });
+      const result = await RNFetchBlob.config({
+        trusty: true,
+      }).fetch(method, url, headers(''), body);
+
+      return JSON.parse(result.data);
+    } catch (error) {
+      console.log('postMnemonic error => ', error);
+    }
   },
-  post: ({ queryKey }) => {
-    const [_, coin] = queryKey;
-    return fetch(
-      `${D_Wallet}/v1/sol/balance?network=mainnet-beta&address=9ompFcaiqDjBmzNGtppoieYGmKZ9AjLTykZfZfuz7W3G`
-    ).then((response) => response.json());
+  getMnemonic: async () => {
+    const method = 'POST';
+    const url = 'https://d-wallet-api-dev.daios.net/v1/xlm/mnemonic';
+    const result = await RNFetchBlob.config({
+      trusty: true,
+    }).fetch(method, url, headers(''));
+
+    return JSON.parse(result.data);
   },
 };

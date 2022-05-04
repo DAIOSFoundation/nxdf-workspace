@@ -1,17 +1,15 @@
 import RNFetchBlob from 'rn-fetch-blob';
 import ROUTES from '../../routes';
-import {headers} from '../../utils/request';
+import { headers } from '../../utils/request';
 
 export const postMnemonic = async (params) => {
   try {
     const method = 'POST';
-    const url = ROUTES.REGISTER.GENERATE_MNEMONIC;
-
+    const url = 'https://d-wallet-api-dev.daios.net/v1/xlm/mnemonic';
     const result = await RNFetchBlob.config({
       trusty: true,
     }).fetch(method, url, headers(''));
 
-    // console.log('result ===> ', result);
     return JSON.parse(result.data);
   } catch (error) {
     console.log('postMnemonic error => ', error);
@@ -24,7 +22,7 @@ export const getMnemonicVerification = async (mnemonic) => {
 
   const result = await RNFetchBlob.config({
     trusty: true,
-  }).fetch(method, url, headers(''), JSON.stringify({mnemonic}));
+  }).fetch(method, url, headers(''), JSON.stringify({ mnemonic }));
 
   console.log('getMnemonicVerification result ===> ', result.data);
   return JSON.parse(result.data);

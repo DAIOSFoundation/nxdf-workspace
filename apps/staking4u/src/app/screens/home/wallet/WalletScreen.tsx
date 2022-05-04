@@ -24,8 +24,11 @@ import { Actions } from 'react-native-router-flux';
 import Coin from '../../../components/items/wallet/Coin';
 import { useRecoilValue } from 'recoil';
 import { CoinAmountAtom } from '../../../lib/atoms';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const WalletScreen = () => {
+  const token = AsyncStorage.getItem('token');
+  console.log(token);
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'first', title: 'First' },
