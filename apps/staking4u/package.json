@@ -42,6 +42,10 @@
     "redux": "*",
     "openlogin-react-native-sdk": "*",
     "react-query": "*",
-    "@web3auth/react-native-sdk": "*"
+    "@web3auth/react-native-sdk": "*",
+    "detox": "*",
+    "recoil": "*",
+    "react-hook-form": "*",
+    "jsonwebtoken": "*"
   }
 }

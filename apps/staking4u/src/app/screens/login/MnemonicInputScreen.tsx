@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import * as authsActions from '../../store/modules/auths/actions';
 import * as registerActions from '../../store/modules/register/actions';
 import {
@@ -8,61 +8,63 @@ import {
   ViewBorderRadius,
 } from '../../components/styled/View';
 import TopBar from '../../components/bar/TopBar';
-import {Text} from '../../components/styled/Text';
+import { Text } from '../../components/styled/Text';
 import BottomButton from '../../components/buttons/BottomButton';
-import {NBTextareaRadius} from '../../components/styled/Input';
+import { NBTextareaRadius } from '../../components/styled/Input';
 import I18n from 'react-native-i18n';
-import {Actions} from 'react-native-router-flux';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import {AESKey, mnemonicEncrypt, storeData} from '../../utils/functions';
+import { Actions } from 'react-native-router-flux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { AESKey, mnemonicEncrypt, storeData } from '../../utils/functions';
+import { useForm } from 'react-hook-form';
+import AsyncStorage from '@react-native-community/async-storage';
+import { useQuery } from 'react-query';
+import jwt from 'jsonwebtoken';
+import { Mnemonic } from '../../api/coinStaking';
+
+interface MnemonicProps {
+  mnemonic: string;
+}
 
 const MnemonicInputScreen = () => {
-  const {getMnemonicVerification, jwt} = useSelector(
-    (state) => ({
-      jwt: 200,
-      getMnemonicVerification: true,
-    }),
-    shallowEqual,
-  );
+  const [loading, setLoading] = useState(false);
+  const [mndata, setmndata] = useState<MnemonicProps | string>('');
+  const getMnemonicVerification = true;
+  const { register, setValue, handleSubmit, watch } = useForm();
+  const mn =
+    'elephant napkin toy fortune board ensure mad puppy bike coconut law chuckle';
 
-  const [mnemonic, setMnemonic] = useState();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function getStorage() {
-      if (jwt && jwt !== 400) {
-        await AESKey(mnemonic);
-        await storeData('isValidAuth', 'true');
-        await storeData('jwt', jwt);
-        Actions.reset('tabBar');
-      } else if (jwt === 400) {
-        dispatch(authsActions.reset_jwt());
-        await AESKey(mnemonic);
-        Actions.GenerateMnemonic();
-        Actions.emailVerificationScreen();
-      }
+  const { isLoading, data: mnemonicData2 } = useQuery(
+    ['mnemonic', mndata?.mnemonic],
+    Mnemonic.postMnemonic,
+    {
+      enabled: !!loading,
     }
+  );
+  console.log(`isLoading : ${isLoading}`);
+  console.log(`mnemonicData2 : ${mnemonicData2}`);
+  useEffect(() => {
+    register('mnemonic', { required: true });
+  }, [register]);
 
-    getStorage();
-    return () => {
-      dispatch(registerActions.reset_mnemonic_verification());
-    };
-  }, [jwt]);
-
-  const onPressNext = async () => {
-    // if (getMnemonicVerification) {
-    //   const param = {
-    //     publicMnemonicHash: await mnemonicEncrypt(mnemonic),
-    //   };
-
-    //   dispatch(authsActions.post_login(param));
-    // }
-    Actions.mainScreen();
+  const onPressNext = async (data) => {
+    data.mnemonic?.split(' ').length === 12
+      ? (setmndata(data), setLoading(true))
+      : alert('check your mnemonic');
+    const Mne = mnemonicData2?.data?.bip44Change?.publicKey;
+    console.log(`Mne : ${Mne}`);
+    console.log(`isLoading : ${isLoading}`);
+    if (Mne) {
+      await AsyncStorage.multiSet([
+        ['token', JSON.stringify(Mne)],
+        ['loggedIn', JSON.stringify('yes')],
+      ]);
+      Actions.tabBar();
+    }
   };
 
-  const onChangeText = (text) => {
-    setMnemonic(text);
-  };
+  // const onChangeText = (text) => {
+  //   setMnemonic(text);
+  // };
 
   return (
     <SafeAreaView bgNavyTheme>
@@ -80,11 +82,12 @@ const MnemonicInputScreen = () => {
             width={'100%'}
             bgDarkGray
             brLightGray
-            marginTop={30}>
+            marginTop={30}
+          >
             <NBTextareaRadius
               {...(getMnemonicVerification
-                ? {brSuccess: true}
-                : {brDanger: true})}
+                ? { brSuccess: true }
+                : { brDanger: true })}
               paddingLeft={10}
               paddingRight={10}
               paddingTop={10}
@@ -92,18 +95,17 @@ const MnemonicInputScreen = () => {
               ftWhite
               rowSpan={5}
               bordered
-              onChangeText={onChangeText}
-              value={mnemonic}
+              autoCapitalize="none"
+              onChangeText={(text) => setValue('mnemonic', text)}
+              onSubmitEditing={handleSubmit(onPressNext)}
             />
           </ViewBorderRadius>
         </View>
       </ScrollView>
       <BottomButton
-        {...(getMnemonicVerification
-          ? {bgYellowTheme: true}
-          : {bgBlueGray: true})}
-        text={'Next'}
-        onPress={onPressNext}
+        {...(!loading ? { bgBlueGray: true } : { bgYellowTheme: true })}
+        text={!loading ? 'Verification' : 'Next'}
+        onPress={handleSubmit(onPressNext)}
       />
     </SafeAreaView>
   );

@@ -1,9 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-scroll'
+import LayoutProps from '../interface'
 
-const HeaderNav = styled.nav`
-  width:100%;
+
+
+const HeaderNav = styled.nav<{isMobile: boolean}>`
+  width: ${({ isMobile }) => isMobile ? "100%" : "100vw"};
   min-height:5rem;
   color:white;
   display:flex;
@@ -17,8 +20,8 @@ const HeaderNav = styled.nav`
   padding-top: 5px;
 `
 
-const MenuDiv=styled.div`
-  font-size:1.5rem;
+const MenuDiv=styled.div<{isMobile: boolean}>`
+  font-size:${({ isMobile }) => isMobile ? "0.8rem" : "1.5rem"};
   font-weight:bold;
 `
 const MenuSpan=styled.span`
@@ -27,8 +30,8 @@ const MenuSpan=styled.span`
     color:rgb(220, 52, 141);
   }
 `
-const NextDraw=styled.p`
-  font-size:1.4rem;
+const NextDraw=styled.p<{isMobile: boolean}>`
+  font-size:${({ isMobile }) => isMobile ? "0.8rem" : "1.4rem"};
   font-weight:bold;
   color:rgb(220, 52, 141);
 `
@@ -53,16 +56,16 @@ const Logo=styled.h1`
   font-size:1.7rem;
   font-weight:700;
 `
-function Header() {
+function Header({isMobile}:LayoutProps) {
   return (
-    <HeaderNav>
+    <HeaderNav isMobile={isMobile} >
       <Link to="Main" spy={true} smooth={true} offset={-80}>
         <LogoDiv>
           <LogoIcon></LogoIcon>
           <Logo>NXDF LOTTO</Logo>
         </LogoDiv>
       </Link>
-      <MenuDiv>
+      <MenuDiv isMobile={isMobile}>
         <Link to="Buyers" spy={true} smooth={true} offset={-80}>
           <MenuSpan>Ticket Buyers</MenuSpan>
         </Link>
@@ -73,7 +76,7 @@ function Header() {
           <MenuSpan>Winners</MenuSpan>
         </Link>
       </MenuDiv>
-      <NextDraw>Next Draw Saturday 2:00 PM UTC</NextDraw>
+      <NextDraw isMobile={isMobile} >Next Draw Saturday 2:00 PM UTC</NextDraw>
     </HeaderNav>
   );
 }

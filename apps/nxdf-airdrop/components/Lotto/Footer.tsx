@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-scroll'
+import LayoutProps from '../interface'
 
-const FooterDiv=styled.div`
-  width:100vw;
+const FooterDiv=styled.div<{isMobile: boolean}>`
+  width:${({isMobile}) => isMobile ? "auto" : "100vw"};
   height:45vh;
   background-color:#453C70;
   display:flex;
@@ -41,9 +42,9 @@ const Button=styled.button`
   border:none;
   color:#1E293B;
 `
-function Footer() {
+function Footer({isMobile}:LayoutProps) {
   return (
-    <FooterDiv>
+    <FooterDiv isMobile={isMobile}>
       <Title>Feeling Lucky?</Title>
       <Text>BUY YOUR NXDF LOTTO TICKET NOW!</Text>
       <Link to="Main" spy={true} smooth={true} offset={-80}>

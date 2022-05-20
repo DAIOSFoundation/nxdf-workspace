@@ -1,23 +1,24 @@
+import type { NextPage } from 'next';
 import styled from 'styled-components';
-import Main from "./main";
+import MainLayout from '../components/MainLayout';
+import MetaContent from '../components/Home/MetaContent';
+import Universe from '../components/Home/Universe';
+import Layout from '../components/Layout';
 
-
-const StyledPage = styled.div`
-  .page {
-  }
-`;
-
-export function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.styled-components file.
-   */
-  return (
-    <StyledPage>
-      <Main />
-    </StyledPage>
+const Home: NextPage = () => {
+  fetch('https://d-wallet-api-dev.daios.net/v1/xlm/mnemonic').then((res) =>
+    console.log(res)
   );
-}
 
-export default Index;
+  return (
+    <Layout>
+      <MainLayout>
+        <h1>hello</h1>
+      </MainLayout>
+      <Universe />
+      <MetaContent />
+    </Layout>
+  );
+};
+
+export default Home;

@@ -1,21 +1,44 @@
 import React, { useEffect } from 'react';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import {
   SafeAreaView,
   View,
   ViewRadiusCustom,
 } from '../../components/styled/View';
-import {Text} from '../../components/styled/Text';
-import {ButtonRadius, ButtonBorderRadius} from '../../components/styled/Button';
-import {Image, ImageAbsolute} from '../../components/styled/Image';
+import { Text } from '../../components/styled/Text';
+import {
+  ButtonRadius,
+  ButtonBorderRadius,
+} from '../../components/styled/Button';
+import { Image, ImageAbsolute } from '../../components/styled/Image';
 import startImage from '../../assets/index/start.png';
 import holdingImage from '../../assets/index/holding.png';
 import mainLogo from '../../assets/common/main_logo.png';
-
-
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import AsyncStorage from '@react-native-community/async-storage';
+import { WalletData } from '../../utils/dummy';
+import { isLoggedin, tokenValue } from '../../lib/atoms';
+import { useQuery } from 'react-query';
+import { Mnemonic } from '../../api/coinStaking';
+import { postMnemonic } from '../../lib/api/mnemonic';
 
 const IndexScreen = () => {
+  const setToken = useSetRecoilState(tokenValue);
+  const setLoggedIn = useSetRecoilState(isLoggedin);
 
+  const LoggedIn = useRecoilState(isLoggedin);
+  const PreLoading = async () => {
+    const token = await AsyncStorage.getItem('token');
+    console.log(token);
+    if (token) {
+      setToken(token);
+      setLoggedIn(true);
+      Actions.tabBar();
+    }
+  };
+  useEffect(() => {
+    PreLoading();
+  }, []);
   return (
     <SafeAreaView bgYellowTheme>
       <View flex={1}>
@@ -26,7 +49,8 @@ const IndexScreen = () => {
         flex={1}
         bgNavyTheme
         borderTopLeftRadius={25}
-        borderTopRightRadius={25}>
+        borderTopRightRadius={25}
+      >
         <View flex={3} alignItems={'center'} justifyContent={'center'}>
           <Image source={mainLogo} height={'70%'} resizeMode={'contain'} />
         </View>
@@ -42,7 +66,8 @@ const IndexScreen = () => {
             marginBottom={10}
             marginLeft={'auto'}
             marginRight={'auto'}
-            onPress={Actions.GenerateMnemonic}>
+            onPress={Actions.GenerateMnemonic}
+          >
             <Text ftFontNavy bold fontSize={16}>
               Create Wallet
             </Text>
@@ -55,7 +80,8 @@ const IndexScreen = () => {
             marginTop={10}
             marginLeft={'auto'}
             marginRight={'auto'}
-            onPress={Actions.GetMnemonic}>
+            onPress={Actions.GetMnemonic}
+          >
             <Text ftWhite bold fontSize={16}>
               Enter Mnemonic
             </Text>

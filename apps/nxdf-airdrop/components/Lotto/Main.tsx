@@ -18,16 +18,15 @@ import {WalletMultiButton} from "@nxdf/shared/services";
 /* eslint-disable-next-line */
 export interface LottoProps {
   userId: string;
+  isMobile: boolean;
 };
 
 function Main(props: LottoProps) {
   const [loading,setloading] = useState(false);
-
   const [nxdfInfo,setNxdfInfo]=useState({})
   const [current,setCurrent]=useState(0)
   const [noftic,setNoftic]=useState(1)
   const [multiple, setMultiple] = useState(false)
-
   const {publicKey}=useWallet()
 
   async function ToUsd(){
@@ -77,23 +76,23 @@ function Main(props: LottoProps) {
       router.push(`/events/lotto/draw/?user_id=${props.userId}`)
     }
   }
-  console.log(props.userId==='')
+  // console.log(props.userId==='')
   return (
-    <MainLayout id="Main">
+    <MainLayout id="Main" isMobile={props.isMobile}>
         <PotContainer>
           <CurrentJackpot>CURRENT<br/>JACKPOT</CurrentJackpot>
           <PotSolContainer>{current} NXDF</PotSolContainer>
           <PotUsdContainer>( { loading ?  (Number(nxdfInfo)*current).toFixed(2) : 0 } $)</PotUsdContainer>
         </PotContainer>
-        <GetTicketContainer>
+        <GetTicketContainer isMobile={props.isMobile}>
           <HourGlass src='/img/img-hourglass.svg'/>
           <BackgroundDiv>
           {/* 남은 시간 계산해주는 타이머 */}
             <TimerContainer>
                 <Timer></Timer>
             </TimerContainer>
-            <WalletMultiButton className="btn btn-ghost" />
-              <GetTicket onClick={BuyTicketClick}>
+            <WalletConnectBtn className="btn btn-ghost" />
+              <GetTicket isMobile={props.isMobile} onClick={BuyTicketClick}>
                 GET {noftic} TICKET
               </GetTicket>
             </BackgroundDiv>
@@ -116,21 +115,28 @@ function Main(props: LottoProps) {
 
 export default Main;
 
-const MainLayout = styled.div`
+const MainLayout = styled.div<{isMobile:boolean}>`
   display:flex;
   align-items:center;
   justify-content: center;
   flex-direction: column;
-  height:100%a;
-  width:100vw;
+  padding: 10px;
+  height:${({ isMobile }) => isMobile ? `${window.innerHeight-90}px ` : `${window.innerHeight-90}px`};
+  width: ${({ isMobile }) => isMobile ? "auto" : "100vw"};
   margin-top:5rem;
   background-color: #453C70;
-  background-image:url('/img/img-lottomen.svg'), url('/img/img-lottobox.svg');
+  background-image: url('/img/img-lottomen.svg') , url('/img/img-lottobox.svg');
   background-repeat:no-repeat,no-repeat;
-  background-size:380px, 38%;
-  background-position:left, right;
+  background-size:${(props) => props.isMobile ? `50%, 70%  ` : "28%, 38%"};
+  background-position:${(props) => props.isMobile ? `top left, right bottom` : "left,right"};
   //padding-top:5rem;
 `;
+
+
+const WalletConnectBtn = styled(WalletMultiButton)`
+  margin-bottom:30px;
+  font-size: 1.5rem ;
+`
 
 const HourGlass = styled.img`
   width: 11%;

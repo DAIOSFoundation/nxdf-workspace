@@ -67,14 +67,16 @@ let encryptIv = '';
 // 키생성
 export const AESKey = async (mnemonic) => {
   try {
-    await generateKey(env.AES_PASSWORD, 'SALT', 1000, 256).then((key) => {
-      encryptKey = key;
+    await generateKey('SQ6YgTdKJWAM9Kj0iNG4aBU', 'SALT', 1000, 256).then(
+      (key) => {
+        encryptKey = key;
 
-      console.log(`AESKey 생성 ===> ${encryptKey}`);
+        console.log(`AESKey 생성 ===> ${encryptKey}`);
 
-      storeData('AESKey', encryptKey);
-      AESEncrypt(mnemonic, encryptKey);
-    });
+        storeData('AESKey', encryptKey);
+        AESEncrypt(mnemonic, encryptKey);
+      }
+    );
   } catch (e) {
     console.error(e);
   }
