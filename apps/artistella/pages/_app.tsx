@@ -1,19 +1,13 @@
-import { AppProps } from 'next/app';
-import Head from 'next/head';
-import { GlobalStyle } from './globalstyle';
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import { ParallaxProvider } from 'react-scroll-parallax';
 
-function CustomApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <GlobalStyle />
-      <Head>
-        <title>Welcome to artistella!</title>
-      </Head>
-      <main className="app">
-        <Component {...pageProps} />
-      </main>
+      <Component {...pageProps} />
     </>
   );
 }
 
-export default CustomApp;
+export default MyApp;
