@@ -17,7 +17,7 @@ import { Button } from '../../../components/styled/Button';
 import { tickers } from '../../../utils/dummy';
 import { Actions } from 'react-native-router-flux';
 import Coin from '../../../components/items/wallet/Coin';
-
+import getKeypair from '../../global/GetKeyPair';
 
 
 
@@ -36,7 +36,7 @@ const WalletScreen = () => {
     second: WalletNftScreen,
   });
 
-  
+  getKeypair();
   const aaveAmount = { data: { balance: 1 } };
   const orbsAmount = { data: { balance: 2 } };
   const solAmount = { data: { balance: 3 } };

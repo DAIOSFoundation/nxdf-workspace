@@ -43,6 +43,11 @@
     "openlogin-react-native-sdk": "*",
     "react-query": "*",
     "@web3auth/react-native-sdk": "*",
-    "detox": "*"
+    "detox": "*",
+    "metro-config": "*",
+    "@solana/web3.js": "*",
+    "react-native-fs": "*",
+    "bs58": "*",
+    "string-encode-decode": "*"
   }
 }
