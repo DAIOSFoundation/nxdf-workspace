@@ -14,7 +14,7 @@ const initialState = {
   xlmNetworkMode: 'PUBLIC', // xlm 네트워크 - TESTNET : PUBLIC
   // ETH 네트워크 - (mainnet, ropsten), AAVE 네트워크 - (mainnet, kovan), ORBS 네트워크 - (,)
   ethNetworkMode: 'mainnet',
-  solNetworkMode: 'mainnet-beta', // devnet OR testnet OR mainnet-beta
+  solNetworkMode: 'mainnet-beta', //'mainnet-beta', // devnet OR testnet OR mainnet-beta
 };
 
 const global = handleActions(
@@ -44,19 +44,34 @@ const global = handleActions(
         ('');
       });
     },
+    [GLOBAL.GET_SOL_KEYS]: (state, action) => {
+      console.log('GET_SOL_KEYS_SUCCESS => ', action.payload);
+      return produce(state, (draft) => {
+            draft.solPublic = action.payload.publicKey;
+            draft.solSecret = action.payload.secretKey;
+//        draft.solPublic = action.payload.data.bip44Change.publicKey;
+//        draft.solSecret = action.payload.data.bip44Change.keypairSecretKey;
+      });
+    },
+/*
     [GLOBAL.GET_SOL_KEYS_SUCCESS]: (state, action) => {
       console.log('GET_SOL_KEYS_SUCCESS => ', action.payload);
       return produce(state, (draft) => {
-        draft.solPublic = action.payload.data.bip44Change.publicKey;
-        draft.solSecret = action.payload.data.bip44Change.keypairSecretKey;
+            draft.solPublic = action.payload.publicKey;
+            draft.solSecret = action.payload.secretKey;
+//        draft.solPublic = action.payload.data.bip44Change.publicKey;
+//        draft.solSecret = action.payload.data.bip44Change.keypairSecretKey;
       });
     },
+*/
+/*
     [GLOBAL.GET_SOL_KEYS_FAILED]: (state, action) => {
       console.log('GET_SOL_KEYS_FAILED => ', action.payload);
       return produce(state, (draft) => {
         ('');
       });
     },
+*/
     [GLOBAL.CHANGE_ETH_NETWORK_MODE]: (state, action) => {
       console.log('CHANGE_ETH_NETWORK_MODE => ', action.payload);
       return produce(state, (draft) => {
