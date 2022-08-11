@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { Actions } from 'react-native-router-flux';
 import * as modalActions from '../../../../store/modules/modal/actions';
@@ -20,9 +20,12 @@ import { Text } from '../../../../components/styled/Text';
 import { findOneThemeToken } from '../../../../utils/functions';
 
 const SendAddressScreen = ({ title, amount, mintAddress }) => {
+  
   const dispatch = useDispatch();
-
-  const address = '1234567890';
+  
+  const address = useSelector(                     //  SecretKey of my wallet.
+    (state: RootStateOrAny) => state.wallet.address
+  );
 
   useEffect(() => {
     return () => dispatch(walletActions.reset_wallet());
@@ -83,6 +86,7 @@ const SendAddressScreen = ({ title, amount, mintAddress }) => {
           paddingLeft={10}
           paddingRight={10}
         >
+          {console.log(address)}
           <InputBorderRadius
             height={37}
             ftWhite

@@ -25,7 +25,10 @@ const SendWalletScreen = styled(View)`
 
 
 const NftSendDetailScreen = (props) => {
-  
+  const onPressSend = () => {
+
+  }
+
   return (
     <SafeAreaView bgNavyTheme>
         <Topbar isLeftButton title={"NFT Send"} />
@@ -40,14 +43,14 @@ const NftSendDetailScreen = (props) => {
               </SendWalletScreen>
           </View>
         <View flex={4} marginTop={50}>
-            <Text marginLeft={20} ftWhite>send Collection</Text>
+            <Text marginLeft={20} ftWhite>send a NFT</Text>
             <Image source={""} width={"60%"} height={"80%"} borderRadius={10} bgLightGray marginLeft={'auto'}
         marginRight={'auto'} marginTop={10} />
           </View>
           <View flex={2} width={"90%"}  marginTop={40} marginBottom={10} marginLeft={'auto'}
         marginRight={'auto'}>
-            <Text marginBottom={10} fontSize={16} ftWhite>Collection Name plz...</Text>
-            <Text  ftLightGray>Collection Name plz...</Text>
+            <Text marginBottom={10} fontSize={16} ftWhite>NFT Name plz...</Text>
+            <Text  ftLightGray>NFT Name plz...</Text>
           </View>
         <View flex={2} flexDirection={"row"} justifyContent={'center'} alignItems={''}>
         <ButtonRadius
@@ -60,7 +63,7 @@ const NftSendDetailScreen = (props) => {
         marginBottom={20}
         marginLeft={'auto'}
         marginRight={'auto'}
-        onPress={""}
+        onPress={onPressSend}
         >
             <Text ftNavyTheme bold fontSize={16}>
                 Send

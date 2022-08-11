@@ -36,9 +36,10 @@ const PriceInput = styled.TextInput`
 
 
 const NftSendScreen = (props) => {
+    console.log("============NFT Send===========", props);
    // 전송 버튼
   const onPressSend= () => {
- ;
+ 
     const param = {
       address: '1111111',
     };

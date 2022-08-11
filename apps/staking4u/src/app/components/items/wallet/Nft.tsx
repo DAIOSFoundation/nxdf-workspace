@@ -18,20 +18,20 @@ const Nft = (props) => {
           alignItems={'center'}
           
         >
-                  <View
-                      width={'100%'}
-                height={'80%'}
-                  bgLightGray
-                  >
-                          
-            </View>
-            <View width={'100%'}
-                      height={'20%'}
-                    bgBlack
-                  >
-                      <Text ftWhite>{props.name}</Text>
-                      <Text ftLightGray>{props.name}</Text>
-            </View>
+          <View
+            width={'100%'}
+            height={'80%'}
+            bgLightGray
+          >                
+          </View>
+          <View 
+            width={'100%'}
+            height={'20%'}
+            bgBlack
+          >
+            <Text ftWhite>{(props.name == undefined) ? 'undefined' : props.name }</Text>
+            <Text ftLightGray>{(props.name == undefined) ? 'undefined' : props.name }</Text>
+          </View>
         </View>
       </GestureButton>
       <View bgDarkGray height={1} />

@@ -21,6 +21,7 @@ const FlexibleScreen = () => {
 
   return (
     <SafeAreaView bgNavyTheme>
+
       <View
         flex={1}
         justifyContent={'center'}

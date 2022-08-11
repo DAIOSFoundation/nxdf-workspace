@@ -54,6 +54,8 @@
     "@solana/spl-token": "*",
     "bn.js": "*",
     "@solana/spl-token-registry": "*",
-    "axios": "*"
+    "axios": "*",
+    "big-integer": "*",
+    "text-encoding": "*"
   }
 }

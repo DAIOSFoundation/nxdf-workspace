@@ -4,7 +4,7 @@ import { SystemProgram, Transaction, LAMPORTS_PER_SOL, Connection, PublicKey, cl
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import BN from 'bn.js';
 import { TokenListProvider, TokenInfo } from '@solana/spl-token-registry';
-import axios from 'axios'
+import axios from 'axios';
 
 import { SceneMap, TabView } from 'react-native-tab-view';
 import { SafeAreaView, View, ViewAbsolute, ViewRow } from '../../../components/styled/View';
@@ -56,6 +56,7 @@ const getListOfTokens = async (pubkey, networkMode) => {
       const accountInfo = account.account.data.parsed.info;
       if (accountInfo.tokenAmount.amount == '1' && accountInfo.tokenAmount.decimals == 0) {
         tokenList.push({
+          isNative: accountInfo.tokenAmount.isNative,
           name: accountInfo.tokenAmount.name,
           symbol: accountInfo.tokenAmount.symbol,
           logoURI: accountInfo.tokenAmount.logoURI,
@@ -67,6 +68,7 @@ const getListOfTokens = async (pubkey, networkMode) => {
         });
       } else if (accountInfo.tokenAmount.amount != '1' && accountInfo.tokenAmount.decimals > 0) {
         tokenList.push({
+          isNative: accountInfo.tokenAmount.isNative,
           mint: accountInfo.mint,
           decimals: accountInfo.tokenAmount.decimals,
           amount: accountInfo.tokenAmount.amount,
@@ -76,19 +78,7 @@ const getListOfTokens = async (pubkey, networkMode) => {
       }
     }
   });
-  /////////////////////////////////////// Add Sol to TokenList
-  const balance = await connection.getBalance(new PublicKey(pubkey));
-  if (balance > 0) {
-    tokenList.push({
-      'amount' : 'XXXX',
-      'decimals' : 9,
-      'mint' : 'So11111111111111111111111111111111111111112',
-      'uiAmount' : ((balance + 0.0)/LAMPORTS_PER_SOL),
-      'type' : 'FT' 
-    });
-  }
-                       
-  console.log(tokenList);          
+
 ////////////////////////////////////////////////////////////////////////////////////////  Get FT name, symbol, logoURI, price based USD
   //////////////////////////////////// Get Symbol and logoURI of spl token list
   ////////////////////  Get All Token Info
@@ -99,41 +89,80 @@ const getListOfTokens = async (pubkey, networkMode) => {
     if (item.type == "FT") {
       mintList.push(item.mint);
       for (let token in splTokens) {
+
         if (splTokens[token].address === item.mint) {
           return {
             ...item,
-            'name': splTokens[token].name,
-            'symbol': splTokens[token].symbol,
-            'logoURI': splTokens[token].logoURI
+            name: splTokens[token].name,
+            symbol: splTokens[token].symbol,
+            logoURI: splTokens[token].logoURI
           };
         }  
       }
+    } else {
+      return {
+        ...item,
+        name: undefined,
+        symbol: undefined,
+        logoURI: undefined
+      };
     }     
   });
+
   ///////////////////////////////////// Get Token Prices
   let result = await axios.get(`https://api.coingecko.com/api/v3/simple/token_price/solana?contract_addresses=${mintList.join(',')}&vs_currencies=USD`);
   ///////////////////////////////////// Get Token List with name, price, symbol, amount, logoURI and so on
-  tokenList = await tokenList.map((item) => {
-    if (result.data[item.mint] != undefined) {
-      return {
-        ...item,
-        'price': result.data[item.mint].usd
-      }
+  let tkList = {NFTs : [], FTs : []};
+  tokenList.forEach((item) => {
+    if (item !=undefined && item.type =="FT") {
+      if (result.data[item.mint] != undefined)
+        tkList.FTs.push({
+          ...item,
+          'price': result.data[item.mint].usd
+        });
+      else 
+        tkList.FTs.push({
+          ...item,
+          price: undefined
+        })
+    }
+    if (item != undefined && item.type == "NFT") {
+      tkList.NFTs.push(item);
     }
   });
-  return tokenList; 
+
+  /////////////////////////////////////// Add Sol to TokenList
+  result = await axios.get('https://api.coingecko.com/api/v3/coins/solana');
+  const solPrice = result.data.tickers[0].last;
+
+  const balance = await connection.getBalance(new PublicKey(pubkey));
+
+  if (balance > 0) {
+    tkList.FTs.push({
+      isNative: true,
+      name: 'Solana',
+      symbol: 'SOL',
+      logoURI: 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png',
+      amount : 'XXXXX',
+      decimals : 9,
+      price: solPrice,
+      mint : 'XXXXX',
+      uiAmount : ((balance + 0.0)/LAMPORTS_PER_SOL),
+      type : 'FT' //  Tokens show Wrapped SOL and Native SOL 
+    });
+  }
+  return tkList; 
 }
 
 // Caculate Total Balance based USD from solTokenList
 const totalBalanceCalculation = (tokenList) => {
-  console.log(tokenList.length);
-
   let totalBalance = 0.0;
   tokenList.forEach((item) => {
-    if (item.type == 'FT')
+    if (item.price != undefined)
       totalBalance += item.uiAmount * item.price;
   });
-  return totalBalance.toFixed(5);
+
+  return totalBalance.toFixed(9);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////  Main Wallet Component
@@ -142,6 +171,9 @@ const WalletScreen = () => {
   const [solTokenList, setSolTokenList] = useState([]); //  List of Tokens owned by my wallet
   const [totalBalance, setTotalBalance] = useState(0);  //  Total Balance
 
+  const message = useSelector(                   //  Modal Message.
+    (state: RootStateOrAny) => state.wallet.message
+  );
   const solSecretKey = useSelector(                     //  SecretKey of my wallet.
     (state: RootStateOrAny) => state.global.solSecret
   );
@@ -161,8 +193,8 @@ const WalletScreen = () => {
 
   // TabView Screen
   const renderScene = SceneMap({
-    first: WalletCoinScreen,
-    second: WalletNftScreen,
+    first: () => <WalletCoinScreen solTokenList={solTokenList.FTs} solPublicKey={solPublicKey} />,
+    second: () => <WalletNftScreen solTokenList={solTokenList.NFTs} solPublicKey={solPublicKey} />,
   });
 
   const usdExchangeRate = 1;
@@ -172,10 +204,10 @@ const WalletScreen = () => {
       (async () => {
         let tokenlist = await getListOfTokens(solPublicKey, solNetworkMode);
         setSolTokenList(tokenlist);  
-        setTotalBalance(totalBalanceCalculation(solTokenList));
+        setTotalBalance(totalBalanceCalculation(tokenlist.FTs));
       })();      
     }
-  }, [solSecretKey]);
+  }, [message]);
 
   return (
     <SafeAreaView bgNavyTheme>
@@ -240,7 +272,7 @@ const WalletScreen = () => {
           </ViewRow>
         </View>
         <TabView
-          navigationState={{ index, routes, solTokenList }}
+          navigationState={{ index, routes }}
           renderScene={renderScene}
           renderTabBar={() => null}
           onIndexChange={setIndex}

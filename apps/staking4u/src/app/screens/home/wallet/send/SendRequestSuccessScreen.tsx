@@ -8,7 +8,7 @@ import {Actions} from 'react-native-router-flux';
 
 const SendRequestSuccessScreen = () => {
   const onPressOK = () => {
-    Actions.popTo('walletDetailScreen');
+    Actions.popTo('walletScreen');
   };
   return (
     <SafeAreaView bgNavyTheme alignItems={'center'}>

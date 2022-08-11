@@ -33,7 +33,7 @@ const Product = ({ name}) => {
               />
               <View marginLeft={10}>
                 <Text ftLightWhite fontSize={15} bold>
-                  {infoData.name.length > 9 ? `${infoData.name.substring(0, 9)}...` : infoData.name}
+                  {infoData?.name.length > 9 ? `${infoData?.name.substring(0, 9)}...` : infoData?.name}
                 </Text>
                 <Text ftLightWhite fontSize={12}>
                   {infoData.symbol}

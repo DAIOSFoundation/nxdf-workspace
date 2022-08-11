@@ -25,6 +25,7 @@
     "@react-native-firebase/app": "^11.5.0",
     "@react-native-firebase/messaging": "^11.5.0",
     "@react-navigation/native": "^6.0.6",
+    "@rsksmart/rns-resolver.js": "^1.1.0",
     "@solana/spl-token": "^0.1.8",
     "@solana/spl-token-registry": "^0.2.4574",
     "@solana/wallet-adapter-react": "^0.15.2",
@@ -88,6 +89,7 @@
     "styled-reset": "^4.3.4",
     "styled-system": "^5.1.5",
     "swr": "^1.0.1",
+    "text-encoding": "^0.7.0",
     "text-encoding-polyfill": "^0.6.7",
     "tslib": "^2.0.0"
   },

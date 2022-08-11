@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { TOKEN_PROGRAM_ID, createTransferInstruction } from "@solana/spl-token";
+import { LAMPORTS_PER_SOL, SystemProgram, sendAndConfirmTransaction, Connection, Keypair, PublicKey, Transaction, clusterApiUrl } from "@solana/web3.js";
+
 import * as globalActions from '../../../../store/modules/global/actions';
 import * as modalActions from '../../../../store/modules/modal/actions';
 import * as walletActions from '../../../../store/modules/wallet/actions';
@@ -16,13 +19,23 @@ import {
 } from '../../../../components/styled/View';
 import { ButtonBorderRadius } from '../../../../components/styled/Button';
 import { SOL_TOKENS } from '../../../../utils/constants';
+import { getTokenAccountFromWallet } from '../../../../utils/solCommonFunctions';
 
 const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
   const dispatch = useDispatch();
 
-  const [message, setMessage] = useState('');
-  const solNetworkMode = 'test';
-  const solSecret = '';
+  const message = useSelector(                   //  Modal Message.
+    (state: RootStateOrAny) => state.wallet.message
+  );
+  const solSecret = useSelector(                     //  SecretKey of my wallet.
+    (state: RootStateOrAny) => state.global.solSecret
+  );
+  const solPublicKey = useSelector(                     //  PublicKey of my wallet.
+    (state: RootStateOrAny) => state.global.solPublic
+  );
+  const solNetworkMode = useSelector(                   //  Solana Network Mode. This value is initialState.
+    (state: RootStateOrAny) => state.global.solNetworkMode
+  );
 
   const [withdrawalAmount, setWithdrawalAmount] = useState('0');
   const [isMax, setIsMax] = useState(false);
@@ -63,43 +76,40 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
         String(Number(amount) - Number(title === 'SOL' ? 0.000005 : 0))
       ); // 수수료 빼줌
     }
-
+    console.log(solSecret);
     setIsMax(!isMax);
   };
-
-  const onPressModalOK = () => {
-    if (SOL_TOKENS.includes(title)) {
-      // SPL 토큰일 경우
+//  toAddress: recipient wallet pubkey
+//  secretKey: owner wallet secretkey
+//  publicKey: owner wallet pubkey
+//  withdrawalAmount: amount to transfer
+//  mintAddress: mint address of SPL Token
+  const onPressModalOK = async () => {
+    if (title != 'SOL') {
+      // To send SPL Token
       let param = {
-        network: solNetworkMode,
-        privateKey: solSecret,
+        networkMode: solNetworkMode,
+        secretKey: solSecret,
+        publicKey: solPublicKey,
         toAddress: address,
         mintAddress,
-        amount: withdrawalAmount,
+        withdrawalAmount: withdrawalAmount,
       };
 
-      console.log('SPL 전송 =====>', param);
-      //dispatch(walletActions.post_send_sol_token_transaction(param));
-      setMessage('transactionSuccess');
+      console.log('To send SPL Token =====>', param);
+      dispatch(walletActions.post_send_sol_token_transaction(param));
     } else {
-      // SOL일 경우
-      // let param = {
-      //   network: solNetworkMode,
-      //   privateKey: solSecret,
-      //   toAddress: address,
-      //   balance: withdrawalAmount,
-      // };
-
+      // To send SOL
       let param = {
-        network: solNetworkMode,
-        privateKey: '0987654321',
+        networkMode: solNetworkMode,
+        secretKey: solSecret,
+        publicKey: solPublicKey,
         toAddress: address,
-        balance: withdrawalAmount,
+        withdrawalAmount: withdrawalAmount,
       };
 
-      console.log('SOL 전송 =====>', param);
-      //dispatch(walletActions.post_send_sol_transaction(param));
-      setMessage('transactionSuccess');
+      console.log('To send SOL =====>', param);
+      dispatch(walletActions.post_send_sol_transaction(param));
     }
   };
 
