@@ -21,7 +21,7 @@ import { ButtonBorderRadius } from '../../../../components/styled/Button';
 import { SOL_TOKENS } from '../../../../utils/constants';
 import { getTokenAccountFromWallet } from '../../../../utils/solCommonFunctions';
 
-const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
+const SolSendAmountScreen = ({ title, amount, decimals, address, mintAddress }) => {
   const dispatch = useDispatch();
 
   const message = useSelector(                   //  Modal Message.
@@ -93,6 +93,7 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
         publicKey: solPublicKey,
         toAddress: address,
         mintAddress,
+        decimals,
         withdrawalAmount: withdrawalAmount,
       };
 
@@ -105,6 +106,7 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
         secretKey: solSecret,
         publicKey: solPublicKey,
         toAddress: address,
+        decimals,
         withdrawalAmount: withdrawalAmount,
       };
 

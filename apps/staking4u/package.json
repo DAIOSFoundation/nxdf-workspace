@@ -56,6 +56,7 @@
     "@solana/spl-token-registry": "*",
     "axios": "*",
     "big-integer": "*",
-    "text-encoding": "*"
+    "text-encoding": "*",
+    "@metaplex/js": "*"
   }
 }

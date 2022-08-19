@@ -1,112 +1,134 @@
-import React from 'react';
-import { SafeAreaView, View } from '../../../../components/styled/View';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import Topbar from '../../../../components/bar/TopBar';
-import { ButtonRadius } from '../../../../components/styled/Button';
 import { Image } from '../../../../components/styled/Image';
-import styled from 'styled-components/native';
+import {
+  SafeAreaView,
+  View,
+  ViewBorderRadius,
+  ViewRow,
+} from '../../../../components/styled/View';
+import {
+  ButtonBorderRadius,
+  ButtonRadius,
+} from '../../../../components/styled/Button';
 import { Text } from '../../../../components/styled/Text';
+import { findOneThemeToken } from '../../../../utils/functions';
 import scan from '../../../assets/main/icon_scan.png';
 import { Actions } from 'react-native-router-flux';
 import { isEmpty } from '../../../../utils/functions';
 
-
-const SellScreen = styled(View)`
-    height: 50px;
-    border: 1px solid white;
-    border-radius: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-`;
-
-
-const PriceInput = styled.TextInput`
-    height: 100%;
-    width: 70%;
-    text-align: right;
-    color: white;
-    align-self: center;
-    font-size: 18px;
-    font-weight: 600;
-    margin-right: 10px;
-`;
-
+import Clipboard from '@react-native-clipboard/clipboard';
+import * as modalActions from '../../../../store/modules/modal/actions';
+import * as walletActions from '../../../../store/modules/wallet/actions';
+import InputBorderRadius from '../../../../components/input/InputBorderRadius';
 
 
 const NftSendScreen = (props) => {
-    console.log("============NFT Send===========", props);
-   // 전송 버튼
+  const dispatch = useDispatch();
+  
+  const address = useSelector(                     //  SecretKey of my wallet.
+    (state: RootStateOrAny) => state.wallet.address
+  );
+
+  // 전송 버튼
   const onPressSend= () => {
- 
+
     const param = {
-      address: '1111111',
+      address: address,
+      title: props.title,
+      decimals: props.decimals,
+      mintAddress: props.mintAddress,
+      logo: props.logo
     };
     Actions.sendNftDetailScreen(param);
   };
-    
-    //뒤로가기
-    const onPressLeft = () => {
+
+  const pasteClipboard = async () => {
+    dispatch(walletActions.change_wallet_address(await Clipboard.getString()));
+  };
+
+  const qrScan = () => {
+    Actions.qRCodeScannerScreen();
+  };
+
+  const onChangeAddress = (text) => {
+    dispatch(walletActions.change_wallet_address(text));
+  };
+
+  //뒤로가기
+  const onPressLeft = () => {
     if (isEmpty(props.onPressLeft)) {
       Actions.pop();
     } else {
       props.onPressLeft();
     }
   };
-    
+
   return (
     <SafeAreaView bgNavyTheme>
-      <Topbar isLeftButton title={"Send"} />
-        <View flex={5} marginTop={50}>
-            <Text marginLeft={20} ftWhite>asdasd</Text>
-            <Image source={""} width={"60%"} height={"80%"} borderRadius={10} bgLightGray marginLeft={'auto'}
-        marginRight={'auto'} marginTop={10} />
-          </View>
-          <View flex={4} width={"90%"}  marginTop={40} marginBottom={10} marginLeft={'auto'}
-        marginRight={'auto'}>
-            <Text  ftWhite>Wallet Address</Text>
-                <SellScreen border={true}>
-                  <PriceInput  />
-                  <ButtonRadius marginTop={5} width={"15%"} height={"80%"} bgWhite alignItems={'center'} justifyContent={'center'}>
-                     <Image source={scan} width={"50%"} height={"50%"} borderRadius={10} bgWhite />
-                    </ButtonRadius>
-              </SellScreen>
-          </View>
-        <View flex={2} flexDirection={"row"} justifyContent={'center'} alignItems={''}>
-        <ButtonRadius
-        bgWhite
-        width={'40%'}
-        height={'40%'}
-        paddingTop={10}
-        paddingBottom={10}
-        marginTop={20}
-        marginBottom={20}
-        marginLeft={'auto'}
-        marginRight={'auto'}
-        onPress={onPressLeft}
+      <Topbar isLeftButton title={`${props.title} Send`} />
+      <View marginTop={30} paddingLeft={20} paddingRight={20} flex={1}>
+        <Text ftWhite bold>
+          Wallet address
+        </Text>
+        <ViewBorderRadius
+          marginTop={15}
+          brBlueGray
+          paddingLeft={10}
+          paddingRight={10}
         >
-            <Text ftNavyTheme bold fontSize={16}>
-                Cancel
-            </Text>
-        </ButtonRadius>
-        <ButtonRadius
-        bgYellowTheme
-        width={'40%'}
-        height={'40%'}
-        paddingTop={10}
-        paddingBottom={10}
-        marginTop={20}
-        marginBottom={20}
-        marginLeft={'auto'}
-        marginRight={'auto'}
-        onPress={onPressSend}
-        >
-            <Text ftNavyTheme bold fontSize={16}>
-                Send
-            </Text>
-        </ButtonRadius>
+          <InputBorderRadius
+            height={37}
+            ftWhite
+            value={address}
+            onChangeText={onChangeAddress}
+            maxLength={null}
+          />
+        </ViewBorderRadius>
+        <ViewRow justifyContent={'center'} marginTop={15}>
+          <ButtonBorderRadius
+            bgLightWhite
+            width={'auto'}
+            paddingLeft={15}
+            paddingTop={10}
+            paddingBottom={10}
+            paddingRight={15}
+            marginRight={5}
+            onPress={qrScan}
+          >
+            <Text>Scan QR</Text>
+          </ButtonBorderRadius>
+          <ButtonBorderRadius
+            bgLightWhite
+            width={'auto'}
+            paddingLeft={15}
+            paddingTop={10}
+            paddingBottom={10}
+            paddingRight={15}
+            marginLeft={5}
+            onPress={pasteClipboard}
+          >
+            <Text>Paste Clipboard</Text>
+          </ButtonBorderRadius>
+        </ViewRow>
       </View>
+      <ButtonRadius
+        width={'88%'}
+        paddingTop={10}
+        paddingBottom={10}
+        marginTop={20}
+        bgYellowTheme
+        onClick={this}
+        onPress={onPressSend}
+        marginLeft={'auto'}
+        marginRight={'auto'}
+        marginBottom={20}
+      >
+        <Text bold fontSize={16}>
+          Send
+        </Text>
+      </ButtonRadius>
     </SafeAreaView>
   );
 };

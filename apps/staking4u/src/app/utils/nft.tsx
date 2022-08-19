@@ -5,10 +5,11 @@ import { sendAndConfirmRawTransaction, SystemProgram, Connection, Transaction, P
 import * as web3 from '@solana/web3.js';
 import * as splToken from '@solana/spl-token';
 import { Buffer } from 'buffer';
-
+import axios from 'axios';
 import { 
   programs 
 } from '@metaplex/js'
+import { isEmpty } from './functions';
 
 const { metadata: { Metadata } } = programs;
 
@@ -100,22 +101,38 @@ export const getNFTMetaData = async(
     wallet: web3.PublicKey
   ) => {
   const metadata = await getMetadata(mint);
-  const sourceNftAccount = await getTokenWallet( 
-      wallet, 
-      mint);
-  const info = await connection.getAccountInfo(sourceNftAccount);
 
+  const connection = new Connection(clusterApiUrl('mainnet-beta'));
   const accountInfo: any = await connection.getParsedAccountInfo(metadata);
-
+  
   let metadataData : any = new Metadata(wallet.toBase58(), accountInfo.value);
-
-  const { data }: any = await axios.get(metadataData.data.data.uri);
-
-  return {
-      name: data.name,
-      symbol: data.symbol,
-      image: data.image,
-      edition: data.edition,
-      description: data.description
+  if (isEmpty(metadataData.data.data.uri)) {
+    return {
+      name: undefined,
+      symbol: undefined,
+      image: undefined,
+      edition: undefined,
+      description: undefined
+    }
+  } else {
+    try {
+      const { data }: any = await axios.get(metadataData.data.data.uri);
+      return {
+        name: data.name,
+        symbol: data.symbol,
+        image: data.image,
+        edition: data.edition,
+        description: data.description
+      }
+    }
+    catch (err) {
+      return {
+        name: undefined,
+        symbol: undefined,
+        image: undefined,
+        edition: undefined,
+        description: undefined
+      }
+    }  
   }
 };

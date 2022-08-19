@@ -19,7 +19,7 @@ import {
 import { Text } from '../../../../components/styled/Text';
 import { findOneThemeToken } from '../../../../utils/functions';
 
-const SendAddressScreen = ({ title, amount, mintAddress }) => {
+const SendAddressScreen = ({ title, decimals, amount, mintAddress }) => {
   
   const dispatch = useDispatch();
   
@@ -67,6 +67,7 @@ const SendAddressScreen = ({ title, amount, mintAddress }) => {
         title,
         amount,
         address,
+        decimals,
         mintAddress,
       };
       Actions.solSendAmountScreen(param);

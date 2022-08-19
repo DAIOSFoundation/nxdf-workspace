@@ -13,15 +13,17 @@ import { Text } from '../../../components/styled/Text';
 import { ButtonBorderRadius, ButtonRadius } from '../../../components/styled/Button';
 import { findOneThemeToken } from '../../../utils/functions';
 import { Image } from '../../../components/styled/Image';
+import icon_undefined from '../../../assets/logos/undefined.png';
 
 // 지갑 상세
 const WalletNftDetailScreen = (props) => {
-
   // 전송 버튼
   const onPressSend= () => {
     const param = {
       title: props.coin.symbol,
+      decimals: props.coin.decimals,
       mintAddress: props.mintAddress,   // mintaddress
+      logo: props.coin.logoURI
     };
     Actions.sendNftScreen(param);
   };
@@ -31,7 +33,9 @@ const WalletNftDetailScreen = (props) => {
     const param = {
       title: props.coin.symbol,
       amount,
+      decimals: props.coin.decimals,
       mintAddress: props.mintAddress,
+      logo: props.coin.logoURI,
     };
     Actions.sellNftScreen(param);
   };
@@ -40,14 +44,22 @@ const WalletNftDetailScreen = (props) => {
     <SafeAreaView bgNavyTheme>
       <TopBar isLeftButton title={props.coin.name} />
         <View flex={5}>
-            <Image source={""} width={"90%"} height={"100%"} borderRadius={10} bgLightGray marginLeft={'auto'}
-        marginRight={'auto'}  />
-          </View>
-          <View flex={4} width={"90%"}  marginTop={10} marginBottom={10} marginLeft={'auto'}
+        {
+          (() => {
+            if (props.coin.logoURI == undefined)
+              return <Image source={icon_undefined} width={"90%"} height={"100%"} borderRadius={10} bgLightGray marginLeft={'auto'}
+              marginRight={'auto'} />
+            else
+              return <Image source={{uri : props.coin.logoURI}} width={"90%"} height={"100%"} borderRadius={10} bgLightGray marginLeft={'auto'}
+              marginRight={'auto'}/>
+          })()
+        }
+        </View>
+        <View flex={4} width={"90%"}  marginTop={10} marginBottom={10} marginLeft={'auto'}
         marginRight={'auto'}>
-            <Text ftWhite>{props.coin.name}</Text>
-            <Text ftWhite>{props.coin.name}</Text>
-          </View>
+          <Text ftWhite>{props.coin.name}</Text>
+          <Text ftWhite>{props.coin.name}</Text>
+        </View>
         <View flex={2} flexDirection={"row"} justifyContent={'center'} alignItems={''}>
         <ButtonRadius
         bgWhite

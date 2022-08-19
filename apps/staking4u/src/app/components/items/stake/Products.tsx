@@ -14,6 +14,7 @@ const Product = ({ name}) => {
   const rate = infoData?.market_data?.price_change_24h?.toFixed(2);
   const price = infoData?.tickers[0].last 
   const image = infoData?.image.thumb
+
   const onPressItem = () => {
       Actions.flexibleDetailScreen(name);
     };

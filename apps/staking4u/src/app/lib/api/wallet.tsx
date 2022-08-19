@@ -1,5 +1,6 @@
 import RNFetchBlob from 'rn-fetch-blob';
-import { TOKEN_PROGRAM_ID, createTransferInstruction, getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
+import { TOKEN_PROGRAM_ID, createTransferInstruction, Token } from "@solana/spl-token";
+import * as spl from "@solana/spl-token";
 import { LAMPORTS_PER_SOL, SystemProgram, sendAndConfirmTransaction, Connection, Keypair, PublicKey, Transaction, clusterApiUrl } from "@solana/web3.js";
 
 import ROUTES from '../../routes';
@@ -35,7 +36,6 @@ export const postERC20Transaction = async (body) => {
 };
 
 export const postSOLTransaction = async (body) => {
-  console.log("=========SOL===========", body);
 
   let result;
   try {
@@ -67,38 +67,35 @@ export const postSOLTransaction = async (body) => {
 };
 
 export const postSOLTokenTransaction = async (body) => {
-  console.log("==========SPL==========", body);
-
   let result;
+
   try {
     const connection = new Connection(clusterApiUrl(body.networkMode));
     const walletKeypair = Keypair.fromSecretKey(Uint8Array.from(body.secretKey));
     const mint = new PublicKey(body.mintAddress);
-
-    const fromTokenAccount = await getOrCreateAssociatedTokenAccount(
-        connection,
-        walletKeypair,
-        mint,
-        walletKeypair.publicKey
+    const mintToken = new spl.Token(
+      connection,
+      mint,
+      TOKEN_PROGRAM_ID,
+      walletKeypair
     );
-    const toTokenAccount = await getOrCreateAssociatedTokenAccount(
-        connection,
-        walletKeypair,
-        mint,
-        new PublicKey(body.toAddress)
+    const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(
+      walletKeypair.publicKey
+    );
+    const toTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(
+      new PublicKey(body.toAddress)
     ); 
-  
     const transaction = new Transaction().add(
-        createTransferInstruction(
+        spl.Token.createTransferInstruction(
+            TOKEN_PROGRAM_ID,
             fromTokenAccount.address,
             toTokenAccount.address,
             walletKeypair.publicKey,
-            body.withdrawalAmount * LAMPORTS_PER_SOL,
-            [walletKeypair],
-            TOKEN_PROGRAM_ID
+            [],
+            parseFloat(body.withdrawalAmount) * (10 ** body.decimals),
         )
-    )
-
+    )    
+    
     const signature = await sendAndConfirmTransaction(
         connection,
         transaction,
@@ -109,7 +106,7 @@ export const postSOLTokenTransaction = async (body) => {
     result = {responseStatus: 200};
   }
   catch (err) {
-    console.log('!!!!!!!!!!!!!!!!!!ERROR!!!!!!!!!!!!!!!!!!!!!!');
+    console.log('!!!!!!!!!!!!!!!!!!ERROR!!!!!!!!!!!!!!!!!!!!!!', err);
     result = {responseStatus: 404};
   }  
   return result;

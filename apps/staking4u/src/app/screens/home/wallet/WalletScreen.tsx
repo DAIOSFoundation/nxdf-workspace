@@ -1,12 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { SystemProgram, Transaction, LAMPORTS_PER_SOL, Connection, PublicKey, clusterApiUrl, Keypair } from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import * as spl from "@solana/spl-token";
+import { TOKEN_PROGRAM_ID, Token } from "@solana/spl-token";
 import BN from 'bn.js';
 import { TokenListProvider, TokenInfo } from '@solana/spl-token-registry';
 import axios from 'axios';
-
+import * as bs58 from "bs58";
 import { SceneMap, TabView } from 'react-native-tab-view';
+import { format } from 'date-fns';
+import { Actions } from 'react-native-router-flux';
+
 import { SafeAreaView, View, ViewAbsolute, ViewRow } from '../../../components/styled/View';
 import TabViewBar from '../../../components/bar/TabViewBar';
 import WalletCoinScreen from './WalletCoinScreen';
@@ -14,41 +18,38 @@ import WalletNftScreen from './WalletNftScreen';
 import { Text } from '../../../components/styled/Text';
 import Line from '../../../components/line/Line';
 import { Image } from '../../../components/styled/Image';
-
 import dollarIcon from '../../../assets/common/dollar.png';
 import checkPressed from '../../../assets/common/iconOvalCheckPressed.png';
 import { localeString } from '../../../utils/functions';
-import { format } from 'date-fns';
 import { Button } from '../../../components/styled/Button';
 import { tickers } from '../../../utils/dummy';
-import { Actions } from 'react-native-router-flux';
 import Coin from '../../../components/items/wallet/Coin';
+import { getNFTMetaData } from "../../../utils/nft";
 
 const getListOfTokens = async (pubkey, networkMode) => {
   const connection = new Connection(clusterApiUrl(networkMode));
 
   let tokenList = [];
   let mintList = [];
-
   //////////////////////////////////////////////////////////////////////////////////////////////    Get SPL Token List owned by pubkey.
   ////////////////////////////////////  Get All Token List owned by pubkey
   const accounts = await connection.getParsedProgramAccounts(
-    TOKEN_PROGRAM_ID, // new PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")
+    TOKEN_PROGRAM_ID,
     {
       filters: [
         {
-          dataSize: 165, // number of bytes
+          dataSize: 165,
         },
         {
           memcmp: {
-            offset: 32, // number of bytes
-            bytes: new PublicKey(pubkey), // base58 encoded string
+            offset: 32,
+            bytes: new PublicKey(pubkey),
           },
         },
       ],
     }
   );
-
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@", accounts);
   ///////////////////////////////////// Classify FT and NFT from token list with their useful info
   accounts.forEach((account) => {
     //  If it is token account owned by me
@@ -85,30 +86,35 @@ const getListOfTokens = async (pubkey, networkMode) => {
   let tokens = await new TokenListProvider().resolve();
   const splTokens = tokens.filterByClusterSlug(networkMode).getList();
   ///////////////////   Get Token List with name, symbol, logoURI and so on
-  tokenList = await tokenList.map((item) => {
+  let tkLists = [];
+  for (let index = 0; index < tokenList.length ; index++) {
+    let item = tokenList[index];
     if (item.type == "FT") {
       mintList.push(item.mint);
       for (let token in splTokens) {
-
         if (splTokens[token].address === item.mint) {
-          return {
+          tkLists.push({
             ...item,
             name: splTokens[token].name,
             symbol: splTokens[token].symbol,
             logoURI: splTokens[token].logoURI
-          };
-        }  
+          });
+          break;
+        }   
       }
-    } else {
-      return {
+    }
+    else if (item.type == "NFT") {
+      const res = await getNFTMetaData(new PublicKey(item.mint), new PublicKey(pubkey));
+      tkLists.push({
         ...item,
-        name: undefined,
-        symbol: undefined,
-        logoURI: undefined
-      };
-    }     
-  });
+        name: res.name,
+        symbol: res.symbol,
+        logoURI: res.image
+      });   
+    }
+  }
 
+  tokenList = tkLists;
   ///////////////////////////////////// Get Token Prices
   let result = await axios.get(`https://api.coingecko.com/api/v3/simple/token_price/solana?contract_addresses=${mintList.join(',')}&vs_currencies=USD`);
   ///////////////////////////////////// Get Token List with name, price, symbol, amount, logoURI and so on

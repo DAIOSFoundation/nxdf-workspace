@@ -25,6 +25,7 @@ const WalletDetailScreen = (props) => {
   const onPressReceive = () => {
     const param = {
       title: props.coin.symbol,
+      decimals: props.coin.decimals,
       address: props.solPublicKey.toBase58(),
     };
     Actions.receiveScreen(param);
@@ -36,6 +37,7 @@ const WalletDetailScreen = (props) => {
       title: props.coin.symbol,
       amount: props.coin.uiAmount,
       mintAddress: props.coin.mint,
+      decimals: props.coin.decimals,
       address: props.solPublicKey.toBase58()
     };
     Actions.sendAddressScreen(param);

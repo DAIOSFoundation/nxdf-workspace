@@ -45,7 +45,7 @@ const global = handleActions(
       });
     },
     [GLOBAL.GET_SOL_KEYS]: (state, action) => {
-      console.log('GET_SOL_KEYS_SUCCESS => ', action.payload);
+//      console.log('GET_SOL_KEYS_SUCCESS => ', action.payload);
       return produce(state, (draft) => {
             draft.solPublic = action.payload.publicKey;
             draft.solSecret = action.payload.secretKey;

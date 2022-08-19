@@ -3,6 +3,7 @@ import { FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { format } from 'date-fns';
 import { useDispatch } from 'react-redux';
+
 import Line from '../../../components/line/Line';
 import Coin from '../../../components/items/wallet/Coin';
 import {
@@ -20,12 +21,7 @@ import checkPressed from '../../../assets/common/iconOvalCheckPressed.png';
 import Nft from '../../../components/items/wallet/Nft';
 
 // 나의 지갑
-const WalletNftScreen = (props) => {
-
-  useEffect(() => {
-
-  }, []);
-  
+const WalletNftScreen = (props) => { 
   const usdExchangeRate = 1;
 
   const renderCoin = ({ item }) => {
