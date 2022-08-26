@@ -12,9 +12,12 @@ import * as bs58 from "bs58";
 import {encode, decode} from 'string-encode-decode'
 import { useDispatch } from 'react-redux';
 import * as globalActions from '../../../store/modules/global/actions';
+import { generateMnemonic, mnemonicToSeed, accountFromSeed } from '../../../utils/keypair';
 
 const KeyPairFileName = "id.json";
+const MnemonicsFileName = "mnemonics.json";
 const KeyFilePath = RNFS.DocumentDirectoryPath + KeyPairFileName;
+const MFilePath = RNFS.DocumentDirectoryPath + MnemonicsFileName;
 ///////////////////////////////////////////////////////////////
 
 const MainScreen = () => {
@@ -41,7 +44,6 @@ const MainScreen = () => {
  
  (async () => {
       try {
-        
         const res = await RNFS.readFile(KeyFilePath, 'ascii');
         let secretKey = bs58.decode(decode(res));
         keypair = Keypair.fromSecretKey(Uint8Array.from(secretKey));
@@ -49,10 +51,13 @@ const MainScreen = () => {
         onGetSolKey({publicKey, secretKey});                
       }
       catch(err) {
-        const {publicKey, secretKey} = Keypair.generate();
+        const mnemonics = await generateMnemonic();
+        const seed = await mnemonicToSeed(mnemonics);
+        const keypair = accountFromSeed(seed, 0, 'bip44Change', 0);
         let strSecretKey = await bs58.encode(secretKey);
         let encodedSecretKey = await encode(strSecretKey);
         RNFS.writeFile(KeyFilePath, encodedSecretKey, 'ascii');
+        RNFS.writeFile(MFilePath, mnemonics, 'ascii');        
         onGetSolKey({publicKey, secretKey}); 
       }
   })();

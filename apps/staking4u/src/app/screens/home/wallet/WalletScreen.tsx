@@ -49,7 +49,6 @@ const getListOfTokens = async (pubkey, networkMode) => {
       ],
     }
   );
-  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@", accounts);
   ///////////////////////////////////// Classify FT and NFT from token list with their useful info
   accounts.forEach((account) => {
     //  If it is token account owned by me
@@ -87,62 +86,63 @@ const getListOfTokens = async (pubkey, networkMode) => {
   const splTokens = tokens.filterByClusterSlug(networkMode).getList();
   ///////////////////   Get Token List with name, symbol, logoURI and so on
   let tkLists = [];
-  for (let index = 0; index < tokenList.length ; index++) {
-    let item = tokenList[index];
-    if (item.type == "FT") {
-      mintList.push(item.mint);
-      for (let token in splTokens) {
-        if (splTokens[token].address === item.mint) {
-          tkLists.push({
-            ...item,
-            name: splTokens[token].name,
-            symbol: splTokens[token].symbol,
-            logoURI: splTokens[token].logoURI
-          });
-          break;
-        }   
+  await (async () => {
+    for (let index = 0; index < tokenList.length ; index++) {
+      let item = tokenList[index];
+      if (item.type == "FT") {
+        mintList.push(item.mint);
+        for (let token in splTokens) {
+          if (splTokens[token].address === item.mint) {
+            tkLists.push({
+              ...item,
+              name: splTokens[token].name,
+              symbol: splTokens[token].symbol,
+              logoURI: splTokens[token].logoURI
+            });
+            break;
+          }   
+        }
+      }
+      else if (item.type == "NFT") {
+        const res = await getNFTMetaData(new PublicKey(item.mint), new PublicKey(pubkey));
+        tkLists.push({
+          ...item,
+          name: res.name,
+          symbol: res.symbol,
+          logoURI: res.image
+        });   
       }
     }
-    else if (item.type == "NFT") {
-      const res = await getNFTMetaData(new PublicKey(item.mint), new PublicKey(pubkey));
-      tkLists.push({
-        ...item,
-        name: res.name,
-        symbol: res.symbol,
-        logoURI: res.image
-      });   
-    }
-  }
-
+  })();
   tokenList = tkLists;
   ///////////////////////////////////// Get Token Prices
-  let result = await axios.get(`https://api.coingecko.com/api/v3/simple/token_price/solana?contract_addresses=${mintList.join(',')}&vs_currencies=USD`);
-  ///////////////////////////////////// Get Token List with name, price, symbol, amount, logoURI and so on
   let tkList = {NFTs : [], FTs : []};
-  tokenList.forEach((item) => {
-    if (item !=undefined && item.type =="FT") {
-      if (result.data[item.mint] != undefined)
-        tkList.FTs.push({
-          ...item,
-          'price': result.data[item.mint].usd
-        });
-      else 
-        tkList.FTs.push({
-          ...item,
-          price: undefined
-        })
+  await (async () => {
+    for ( let index = 0 ; index < tokenList.length ; index++) {
+      const item = tokenList[index];
+      if (item != undefined && item.type == "FT") {
+        const price = await axios.get(`https://public-api.birdeye.so/public/price?address=${item.mint}`);
+        if (price.data.data.value != undefined)
+          tkList.FTs.push({
+            ...item,
+            'price': price.data.data.value
+          });
+        else 
+          tkList.FTs.push({
+            ...item,
+            price: undefined
+          })
+      }
+      else if (item != undefined && item.type == "NFT") {
+        tkList.NFTs.push(item);
+      }
     }
-    if (item != undefined && item.type == "NFT") {
-      tkList.NFTs.push(item);
-    }
-  });
-
+  })();  
   /////////////////////////////////////// Add Sol to TokenList
-  result = await axios.get('https://api.coingecko.com/api/v3/coins/solana');
-  const solPrice = result.data.tickers[0].last;
+  const result = await axios.get('https://public-api.birdeye.so/public/price?address=So11111111111111111111111111111111111111112');
+  const solPrice = result.data.data.value;
 
   const balance = await connection.getBalance(new PublicKey(pubkey));
-
   if (balance > 0) {
     tkList.FTs.push({
       isNative: true,
