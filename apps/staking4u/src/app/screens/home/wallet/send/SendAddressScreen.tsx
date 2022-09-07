@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { Actions } from 'react-native-router-flux';
 import * as modalActions from '../../../../store/modules/modal/actions';
@@ -19,13 +19,10 @@ import {
 import { Text } from '../../../../components/styled/Text';
 import { findOneThemeToken } from '../../../../utils/functions';
 
-const SendAddressScreen = ({ title, decimals, amount, mintAddress }) => {
-  
+const SendAddressScreen = ({ title, amount, mintAddress }) => {
   const dispatch = useDispatch();
-  
-  const address = useSelector(                     //  SecretKey of my wallet.
-    (state: RootStateOrAny) => state.wallet.address
-  );
+
+  const address = 'Dd77w197tyyst5wXYXUHVCbWBYyWbTdBBHecpqLD6z16';
 
   useEffect(() => {
     return () => dispatch(walletActions.reset_wallet());
@@ -67,7 +64,6 @@ const SendAddressScreen = ({ title, decimals, amount, mintAddress }) => {
         title,
         amount,
         address,
-        decimals,
         mintAddress,
       };
       Actions.solSendAmountScreen(param);
@@ -87,7 +83,6 @@ const SendAddressScreen = ({ title, decimals, amount, mintAddress }) => {
           paddingLeft={10}
           paddingRight={10}
         >
-          {console.log(address)}
           <InputBorderRadius
             height={37}
             ftWhite

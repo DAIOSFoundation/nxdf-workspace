@@ -44,19 +44,12 @@
     "react-query": "*",
     "@web3auth/react-native-sdk": "*",
     "detox": "*",
+    "metro-config": "*",
+    "@solana/web3.js": "*",
     "react-native-get-random-values": "*",
     "react-native-url-polyfill": "*",
-    "@solana/web3.js": "*",
-    "react-native-fs": "*",
-    "bs58": "*",
-    "string-encode-decode": "*",
-    "text-encoding-polyfill": "*",
-    "@solana/spl-token": "*",
-    "bn.js": "*",
-    "@solana/spl-token-registry": "*",
-    "axios": "*",
-    "big-integer": "*",
     "text-encoding": "*",
-    "@metaplex/js": "*"
+    "text-encoding-polyfill": "*",
+    "@solana/spl-token": "*"
   }
 }

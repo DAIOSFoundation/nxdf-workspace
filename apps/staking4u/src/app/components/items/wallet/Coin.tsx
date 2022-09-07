@@ -5,7 +5,6 @@ import { GestureButton } from '../../styled/GestureButton';
 import { Text } from '../../styled/Text';
 import { Image } from '../../styled/Image';
 import icon_next from '../../../assets/wallet/icon_next.png';
-import icon_undefined from '../../../assets/logos/undefined.png';
 
 const Coin = (props) => {
   return (
@@ -20,19 +19,12 @@ const Coin = (props) => {
         >
           <ViewRow alignItems={'center'}>
             <View width={25} height={25} marginRight={10}>
-              {
-                (() => {
-                  if (props.logo == undefined)
-                    return <Image source={icon_undefined} />
-                  else
-                    return <Image source={{uri : props.logo}} />
-                })()
-              }
+              <Image source={props.logo} />
             </View>
             <View>
-              <Text ftWhite>{(props.name == undefined) ? 'undefined' : props.name }</Text>
+              <Text ftWhite>{props.name}</Text>
               <Text ftWhite ftSmall marginTop={5}>
-                {(props.symbol == undefined) ? 'undefined' : props.symbol }
+                {props.symbol}
               </Text>
             </View>
           </ViewRow>
@@ -45,7 +37,7 @@ const Coin = (props) => {
             </ViewRow>
             <View alignItems={'flex-end'}>
               <Text ftSmall ftBlueGray>
-                $ {(props.price != undefined) ? props.price.toFixed(4) : 0}
+                $ {props.price ? props.price.toFixed(4) : 0}
               </Text>
             </View>
           </View>

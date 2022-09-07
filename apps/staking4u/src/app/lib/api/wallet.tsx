@@ -1,8 +1,4 @@
 import RNFetchBlob from 'rn-fetch-blob';
-import { TOKEN_PROGRAM_ID, createTransferInstruction, Token } from "@solana/spl-token";
-import * as spl from "@solana/spl-token";
-import { LAMPORTS_PER_SOL, SystemProgram, sendAndConfirmTransaction, Connection, Keypair, PublicKey, Transaction, clusterApiUrl } from "@solana/web3.js";
-
 import ROUTES from '../../routes';
 import {
   headers,
@@ -36,80 +32,27 @@ export const postERC20Transaction = async (body) => {
 };
 
 export const postSOLTransaction = async (body) => {
+  const method = 'POST';
+  const url = ROUTES.WALLET.SEND_SOL_TX;
 
-  let result;
-  try {
-    const connection = new Connection(clusterApiUrl(body.networkMode));
-    const walletKeypair = Keypair.fromSecretKey(Uint8Array.from(body.secretKey));
-    
-    const transaction = new Transaction().add(
-      SystemProgram.transfer({
-        fromPubkey: walletKeypair.publicKey,
-        toPubkey: new PublicKey(body.toAddress),
-        lamports: body.withdrawalAmount * LAMPORTS_PER_SOL,
-      })
-    );
+  const result = await RNFetchBlob.config({
+    trusty: true,
+  }).fetch(method, url, headers(''), JSON.stringify(body));
 
-    // Sign transaction, broadcast, and confirm
-    const signature = await sendAndConfirmTransaction(
-      connection,
-      transaction,
-      [walletKeypair]
-    );
-    console.log('================SOL================', signature);
-    result = {responseStatus: 200};
-  }
-  catch (err) {
-    console.log('!!!!!!!!!!!!!!!!!!ERROR!!!!!!!!!!!!!!!!!!!!!!');
-    result = {responseStatus: 404};
-  }  
-  return result;
+  console.log('postSOLTransaction result ===> ', result.data);
+  return JSON.parse(result.data);
 };
 
 export const postSOLTokenTransaction = async (body) => {
-  let result;
+  const method = 'POST';
+  const url = ROUTES.WALLET.SEND_SOL_TOKEN_TX;
 
-  try {
-    const connection = new Connection(clusterApiUrl(body.networkMode));
-    const walletKeypair = Keypair.fromSecretKey(Uint8Array.from(body.secretKey));
-    const mint = new PublicKey(body.mintAddress);
-    const mintToken = new spl.Token(
-      connection,
-      mint,
-      TOKEN_PROGRAM_ID,
-      walletKeypair
-    );
-    const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(
-      walletKeypair.publicKey
-    );
-    const toTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(
-      new PublicKey(body.toAddress)
-    ); 
-    const transaction = new Transaction().add(
-        spl.Token.createTransferInstruction(
-            TOKEN_PROGRAM_ID,
-            fromTokenAccount.address,
-            toTokenAccount.address,
-            walletKeypair.publicKey,
-            [],
-            parseFloat(body.withdrawalAmount) * (10 ** body.decimals),
-        )
-    )    
-    
-    const signature = await sendAndConfirmTransaction(
-        connection,
-        transaction,
-        [walletKeypair]
-    );
+  const result = await RNFetchBlob.config({
+    trusty: true,
+  }).fetch(method, url, headers(''), JSON.stringify(body));
 
-    console.log('===============SPL=================', signature);
-    result = {responseStatus: 200};
-  }
-  catch (err) {
-    console.log('!!!!!!!!!!!!!!!!!!ERROR!!!!!!!!!!!!!!!!!!!!!!', err);
-    result = {responseStatus: 404};
-  }  
-  return result;
+  console.log('postSOLTokenTransaction result ===> ', result.data);
+  return JSON.parse(result.data);
 };
 
 export const getETHGasPrice = async (networkMode) => {

@@ -15,27 +15,6 @@ import Push from './screens/global/Push';
 import SplashScreen from 'react-native-splash-screen';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-import {decode, encode} from 'base-64'
-
-if (!global.btoa) {  global.btoa = encode }
-
-if (!global.atob) { global.atob = decode }
-
-global.Buffer = require("buffer").Buffer;
-global.Buffer.TYPED_ARRAY_SUPPORT = false;
-
-global.process = require("process");
-global.location = {
-  protocol: "file:",
-};
-const TextEncodingPolyfill = require('text-encoding');
-const BigInt = require('big-integer')
-Object.assign(global, {
-  TextEncoder: TextEncodingPolyfill.TextEncoder,
-  TextDecoder: TextEncodingPolyfill.TextDecoder,
-  BigInt: BigInt,
-});
-
 const store = configure();
 
 const queryClient = new QueryClient();

@@ -1,9 +1,8 @@
+import * as web3 from '@solana/web3.js';
+import * as spl  from "@solana/spl-token";
 import React, { useEffect, useState } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { useDispatch, useSelector } from 'react-redux';
-import { TOKEN_PROGRAM_ID, createTransferInstruction } from "@solana/spl-token";
-import { LAMPORTS_PER_SOL, SystemProgram, sendAndConfirmTransaction, Connection, Keypair, PublicKey, Transaction, clusterApiUrl } from "@solana/web3.js";
-
+import { useDispatch } from 'react-redux';
 import * as globalActions from '../../../../store/modules/global/actions';
 import * as modalActions from '../../../../store/modules/modal/actions';
 import * as walletActions from '../../../../store/modules/wallet/actions';
@@ -19,23 +18,13 @@ import {
 } from '../../../../components/styled/View';
 import { ButtonBorderRadius } from '../../../../components/styled/Button';
 import { SOL_TOKENS } from '../../../../utils/constants';
-import { getTokenAccountFromWallet } from '../../../../utils/solCommonFunctions';
 
-const SolSendAmountScreen = ({ title, amount, decimals, address, mintAddress }) => {
+const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
   const dispatch = useDispatch();
 
-  const message = useSelector(                   //  Modal Message.
-    (state: RootStateOrAny) => state.wallet.message
-  );
-  const solSecret = useSelector(                     //  SecretKey of my wallet.
-    (state: RootStateOrAny) => state.global.solSecret
-  );
-  const solPublicKey = useSelector(                     //  PublicKey of my wallet.
-    (state: RootStateOrAny) => state.global.solPublic
-  );
-  const solNetworkMode = useSelector(                   //  Solana Network Mode. This value is initialState.
-    (state: RootStateOrAny) => state.global.solNetworkMode
-  );
+  const [message, setMessage] = useState('');
+  const solNetworkMode = 'devnet';
+  const solSecret = '';
 
   const [withdrawalAmount, setWithdrawalAmount] = useState('0');
   const [isMax, setIsMax] = useState(false);
@@ -76,42 +65,118 @@ const SolSendAmountScreen = ({ title, amount, decimals, address, mintAddress }) 
         String(Number(amount) - Number(title === 'SOL' ? 0.000005 : 0))
       ); // 수수료 빼줌
     }
-    console.log(solSecret);
+
     setIsMax(!isMax);
   };
-//  toAddress: recipient wallet pubkey
-//  secretKey: owner wallet secretkey
-//  publicKey: owner wallet pubkey
-//  withdrawalAmount: amount to transfer
-//  mintAddress: mint address of SPL Token
-  const onPressModalOK = async () => {
-    if (title != 'SOL') {
-      // To send SPL Token
+
+  const sendSPLsToAccount = async(param) => {
+
+    const connectionCluster = new web3.Connection(web3.clusterApiUrl('devnet'));
+
+    const TokenAddress = new web3.PublicKey(param.mintAddress);		
+    const recipientAddress = new web3.PublicKey(param.toAddress);	
+    const senderKeypair = web3.Keypair.fromSecretKey(param.privateKey);	
+
+    const txSinger: web3.Signer = {
+      publicKey: senderKeypair.publicKey,
+      secretKey: senderKeypair.secretKey
+    }
+
+    
+    const addRecipientTokenAccount = await spl.getOrCreateAssociatedTokenAccount(
+        connectionCluster,
+        txSinger,
+        TokenAddress,
+        recipientAddress
+    );
+    
+    
+    const addSenderTokenAccount = await spl.getOrCreateAssociatedTokenAccount(
+        connectionCluster,
+        senderKeypair,
+        TokenAddress,
+        senderKeypair.publicKey
+    );
+    
+    const tranferToken = await spl.transfer(
+        connectionCluster,
+        senderKeypair,
+        addSenderTokenAccount.address,
+        addRecipientTokenAccount.address,
+        senderKeypair.publicKey,
+        Number(param.amount)
+    );
+    
+  }
+
+
+
+  const sendSOLSToAccount = async(param) => {
+    
+    const connection = new web3.Connection(web3.clusterApiUrl('devnet'));
+    let accountFromSecret = web3.Keypair.fromSecretKey(param.privateKey);
+    
+    let base58ToSend = new web3.PublicKey(param.toAddress);
+
+    var transaction = new web3.Transaction().add(
+      web3.SystemProgram.transfer({
+        fromPubkey: accountFromSecret.publicKey,
+        toPubkey: base58ToSend,
+        lamports: Number(param.amount), // number of SOL to send
+      }),
+    );
+
+    var signature = await web3.sendAndConfirmTransaction(connection, transaction, [
+      accountFromSecret,
+    ]);
+
+    setMessage('transactionSuccess');
+  }
+
+  const onPressModalOK = () => {
+
+    let mySecretKey = new Uint8Array([63,187,34,85,159,44,110,254,116,129,35,146,
+                              244,255,155,211,149,242,54,58,203,80,192,19,201,245,
+                              83,120,199,209,45,200,244,225,78,38,107,204,74,92,219,
+                              98,200,117,166,82,140,165,111,161,190,47,129,123,66,
+                              42,89,147,160,22,184,133,133,213]);
+
+    if (SOL_TOKENS.includes(title)) {
+
+      // SOL일 경우
+      // let param = {
+      //   network: solNetworkMode,
+      //   privateKey: solSecret,
+      //   toAddress: address,
+      //   balance: withdrawalAmount,
+      // };
+
+      
       let param = {
-        networkMode: solNetworkMode,
-        secretKey: solSecret,
-        publicKey: solPublicKey,
+        network: solNetworkMode,
+        privateKey: mySecretKey,
         toAddress: address,
         mintAddress,
-        decimals,
-        withdrawalAmount: withdrawalAmount,
+        amount: withdrawalAmount,
       };
 
-      console.log('To send SPL Token =====>', param);
-      dispatch(walletActions.post_send_sol_token_transaction(param));
+      console.log('SOL 전송 =====>', param);
+      //dispatch(walletActions.post_send_sol_transaction(param));
+      sendSPLsToAccount(param);
+
     } else {
-      // To send SOL
-      let param = {
-        networkMode: solNetworkMode,
-        secretKey: solSecret,
-        publicKey: solPublicKey,
+        // SPL 토큰일 경우
+        let param = {
+        network: solNetworkMode,
+        privateKey: mySecretKey,
         toAddress: address,
-        decimals,
-        withdrawalAmount: withdrawalAmount,
-      };
+        amount: withdrawalAmount,
+        };
 
-      console.log('To send SOL =====>', param);
-      dispatch(walletActions.post_send_sol_transaction(param));
+        console.log('SPL 전송 =====>', param);
+        //dispatch(walletActions.post_send_sol_token_transaction(param));
+        sendSOLSToAccount(param);
+
     }
   };
 

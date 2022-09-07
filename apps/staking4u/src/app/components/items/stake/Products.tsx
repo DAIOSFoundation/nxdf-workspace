@@ -11,10 +11,9 @@ import { Actions } from 'react-native-router-flux';
 
 const Product = ({ name}) => {
   const { isLoading: infoLoading, data: infoData } = useQuery(["info", name], getCoin.info);
-  const rate = infoData?.market_data?.price_change_24h?.toFixed(2);
+  const rate = infoData?.market_data?.price_change_24h.toFixed(2);
   const price = infoData?.tickers[0].last 
   const image = infoData?.image.thumb
-
   const onPressItem = () => {
       Actions.flexibleDetailScreen(name);
     };
@@ -34,7 +33,7 @@ const Product = ({ name}) => {
               />
               <View marginLeft={10}>
                 <Text ftLightWhite fontSize={15} bold>
-                  {infoData?.name.length > 9 ? `${infoData?.name.substring(0, 9)}...` : infoData?.name}
+                  {infoData.name.length > 9 ? `${infoData.name.substring(0, 9)}...` : infoData.name}
                 </Text>
                 <Text ftLightWhite fontSize={12}>
                   {infoData.symbol}

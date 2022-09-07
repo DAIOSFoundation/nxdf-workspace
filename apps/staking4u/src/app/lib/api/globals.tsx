@@ -14,7 +14,6 @@ export const getETHKeys = async (param) => {
   return JSON.parse(result.data);
 };
 
-/*
 export const getSOLKeys = async (param) => {
   const method = 'POST';
   const url = ROUTES.MNEMONIC.SOL_KEY;
@@ -26,4 +25,3 @@ export const getSOLKeys = async (param) => {
   console.log('getSOLKeys result ===> ', result.data);
   return JSON.parse(result.data);
 };
-*/

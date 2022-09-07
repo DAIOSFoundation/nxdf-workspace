@@ -15,9 +15,8 @@ export const [GET_ETH_KEYS, GET_ETH_KEYS_SUCCESS, GET_ETH_KEYS_FAILED] =
 export const get_eth_keys = createAction(GET_ETH_KEYS);
 
 // SOL 키(PUBLIC/SECRET) 가져오기
-//export const [GET_SOL_KEYS, GET_SOL_KEYS_SUCCESS, GET_SOL_KEYS_FAILED] =
-//  createRequestActionTypes('global/GET_SOL_KEYS');
-export const GET_SOL_KEYS = 'global/GET_SOL_KEYS';
+export const [GET_SOL_KEYS, GET_SOL_KEYS_SUCCESS, GET_SOL_KEYS_FAILED] =
+  createRequestActionTypes('global/GET_SOL_KEYS');
 export const get_sol_keys = createAction(GET_SOL_KEYS);
 
 // ETH 네트워크 모드 변경
