@@ -24,7 +24,7 @@ import { getCoin } from '../../../../api/coinStaking';
 
 const FlexibleDetailScreen = ({data}) => {
   const { isLoading: infoLoading, data: infoData } = useQuery(["info", data], getCoin.info);
-  const rate = infoData?.market_data?.price_change_24h.toFixed(2);
+  const rate = 987; // infoData?.market_data?.price_change_24h.toFixed(2);
   const price = infoData?.tickers[0].last;
   const image = infoData?.image.thumb
   const onPressStart = () => {

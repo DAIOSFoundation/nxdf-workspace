@@ -50,6 +50,7 @@
     "react-native-url-polyfill": "*",
     "text-encoding": "*",
     "text-encoding-polyfill": "*",
-    "@solana/spl-token": "*"
+    "@solana/spl-token": "*",
+    "@solana/wallet-adapter-react": "*"
   }
 }

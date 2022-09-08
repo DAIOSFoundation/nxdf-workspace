@@ -18,6 +18,7 @@ import {
 } from '../../../../components/styled/View';
 import { ButtonBorderRadius } from '../../../../components/styled/Button';
 import { SOL_TOKENS } from '../../../../utils/constants';
+import {transfer, getOrCreateAssociatedTokenAccount} from '../../../../spl-transfer';
 
 const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
   const dispatch = useDispatch();
@@ -73,8 +74,8 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
 
     const connectionCluster = new web3.Connection(web3.clusterApiUrl('devnet'));
 
-    const TokenAddress = new web3.PublicKey(param.mintAddress);		
-    const recipientAddress = new web3.PublicKey(param.toAddress);	
+    const TokenAddresss = new web3.PublicKey(param.mintAddress);		
+    const recipientAddresss = new web3.PublicKey(param.toAddress);	
     const senderKeypair = web3.Keypair.fromSecretKey(param.privateKey);	
 
     const txSinger: web3.Signer = {
@@ -83,22 +84,22 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
     }
 
     
-    const addRecipientTokenAccount = await spl.getOrCreateAssociatedTokenAccount(
+    const addRecipientTokenAccount = await getOrCreateAssociatedTokenAccount(
         connectionCluster,
         txSinger,
-        TokenAddress,
-        recipientAddress
+        TokenAddresss,
+        recipientAddresss
     );
     
     
-    const addSenderTokenAccount = await spl.getOrCreateAssociatedTokenAccount(
+    const addSenderTokenAccount = await getOrCreateAssociatedTokenAccount(
         connectionCluster,
         senderKeypair,
-        TokenAddress,
+        TokenAddresss,
         senderKeypair.publicKey
     );
     
-    const tranferToken = await spl.transfer(
+    const tranferToken = await transfer(
         connectionCluster,
         senderKeypair,
         addSenderTokenAccount.address,
@@ -106,6 +107,8 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
         senderKeypair.publicKey,
         Number(param.amount)
     );
+
+    setMessage('transactionSuccess');
     
   }
 
