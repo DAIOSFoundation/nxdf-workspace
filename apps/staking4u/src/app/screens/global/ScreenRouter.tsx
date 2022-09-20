@@ -70,6 +70,8 @@ import WalletNftDetailScreen from '../home/wallet/WalletNftDetailScreen';
 import NftSellScreen from '../home/wallet/nft/nftSell';
 import NftSendScreen from '../home/wallet/nft/nftSend';
 import NftSendDetailScreen from '../home/wallet/nft/nftSendDetail';
+import ExportKeyScreen from '../home/myinfo/exportkey/exportkeyScreen';
+import ImportKeyScreen from '../home/myinfo/importKey/importKeyScreen';
 // import TermsOfServiceScreen from './TermsOfServiceScreen';
 // import PrivacyScreen from './PrivacyScreen';
 
@@ -174,7 +176,6 @@ const ScreenRouter = (props) => {
           />
         </Scene> */}
 
-
         <Scene
           key={'tabBar'}
           tabs
@@ -208,7 +209,7 @@ const ScreenRouter = (props) => {
               component={FlexibleInputScreen}
             />
             {/* 유동성풀 이동 */}
-             <Scene
+            <Scene
               hideNavBar
               hideTabBar
               key="LiquidityDetailScreen"
@@ -224,48 +225,40 @@ const ScreenRouter = (props) => {
           {/* 지갑 */}
           <Scene hideNavBar key={'Wallet'} title={'wallet'} icon={tabBarIcon}>
             <Scene key="walletScreen" component={WalletScreen} />
-              <Scene
-                hideTabBar
-                key="walletDetailScreen"
-                component={WalletDetailScreen}
-              />
-              <Scene
-                hideTabBar
-                key="walletNftDetailScreen"
-                component={WalletNftDetailScreen}
-              />
-                <Scene
-                  key={'sellNftScreen'}
-                  component={NftSellScreen}
-                  hideTabBar
-                />
-                <Scene
-                  key={'sendNftScreen'}
-                  component={NftSendScreen}
-                  hideTabBar
-                />
-                <Scene
-                  key={'sendNftDetailScreen'}
-                  component={NftSendDetailScreen}
-                  hideTabBar
-                />
-              <Scene key={'receiveScreen'} component={ReceiveScreen} hideTabBar />
-                <Scene
-                  key={'sendAddressScreen'}
-                  component={SendAddressScreen}
-                  hideTabBar
-                />
-                {/* <Scene
+            <Scene
+              hideTabBar
+              key="walletDetailScreen"
+              component={WalletDetailScreen}
+            />
+            <Scene
+              hideTabBar
+              key="walletNftDetailScreen"
+              component={WalletNftDetailScreen}
+            />
+            <Scene key={'sellNftScreen'} component={NftSellScreen} hideTabBar />
+            <Scene key={'sendNftScreen'} component={NftSendScreen} hideTabBar />
+            <Scene
+              key={'sendNftDetailScreen'}
+              component={NftSendDetailScreen}
+              hideTabBar
+            />
+            <Scene key={'receiveScreen'} component={ReceiveScreen} hideTabBar />
+            <Scene
+              key={'sendAddressScreen'}
+              component={SendAddressScreen}
+              hideTabBar
+            />
+            {/* <Scene
                   key={'ethSendAmountScreen'}
                   component={EthSendAmountScreen}
                   hideTabBar
                 /> */}
-                <Scene
-                  key={'solSendAmountScreen'}
-                  component={SolSendAmountScreen}
-                  hideTabBar
-                />
-            </Scene>
+            <Scene
+              key={'solSendAmountScreen'}
+              component={SolSendAmountScreen}
+              hideTabBar
+            />
+          </Scene>
           {/* 투자내역 */}
           <Scene
             hideNavBar
@@ -304,12 +297,22 @@ const ScreenRouter = (props) => {
             />
           </Scene>
           {/* swap */}
-           <Scene hideNavBar key={'Swap'} title={'Swap'} icon={tabBarIcon}>
+          <Scene hideNavBar key={'Swap'} title={'Swap'} icon={tabBarIcon}>
             <Scene hideNavBar key="SwapScreen" component={SwapScreen} />
           </Scene>
           {/* 나의 정보 */}
           <Scene hideNavBar key={'MyInfo'} title={'myInfo'} icon={tabBarIcon}>
             <Scene hideNavBar key="myInfoScreen" component={MyInfoScreen} />
+            <Scene
+              hideNavBar
+              key="ExportKeyScreen"
+              component={ExportKeyScreen}
+            />
+            <Scene
+              hideNavBar
+              key="ImportKeyScreen"
+              component={ImportKeyScreen}
+            />
           </Scene>
         </Scene>
 

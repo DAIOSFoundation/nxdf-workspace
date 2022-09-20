@@ -17,7 +17,15 @@ const MyInfoScreen = () => {
     dispatch(authsActions.reset_jwt());
     dispatch(authsActions.reset_email_auth());
     await AsyncStorage.clear();
-    Actions.reset('Main'); // 작동 안함
+    Actions.pop();
+    // Actions.reset('Main'); // 작동 안함
+  };
+
+  const onPressExportKey = async () => {
+    Actions.ExportKeyScreen();
+  };
+  const onPressImportKey = async () => {
+    Actions.ImportKeyScreen();
   };
 
   const sections = [
@@ -34,6 +42,20 @@ const MyInfoScreen = () => {
     {
       title: 'App version 0.0.2',
       isButton: false,
+    },
+    {
+      title: 'Import Key',
+      isButton: true,
+      onPress: () => {
+        onPressImportKey();
+      },
+    },
+    {
+      title: 'Export Key',
+      isButton: true,
+      onPress: () => {
+        onPressExportKey();
+      },
     },
     {
       title: 'Logout',
