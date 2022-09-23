@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { TextInput } from 'react-native';
+import * as RNFS from 'react-native-fs';
+import * as bs58 from "bs58";
 import { SceneMap, TabView } from 'react-native-tab-view';
 import { View, SafeAreaView } from '../../../../components/styled/View';
 import { ButtonRadius } from '../../../../components/styled/Button';
@@ -16,12 +19,28 @@ const ImportInput = styled.TextInput`
   margin: 0 auto;
 `;
 
+const KeyPairFileName = "key.json";
+
 const ImportKeyScreen = () => {
   // 탭뷰 스크린
 
+  const [secretKey, setSecretKey] = useState(null);
+
   const onPressOk = async () => {
+
+    try {
+      const KeyFilePath = RNFS.DocumentDirectoryPath + KeyPairFileName;
+      await RNFS. writeFile(KeyFilePath, secretKey, 'ascii');
+    }
+    catch(err) {
+      alert("Could not import key. Please try again");
+      return;
+    }
+
     Actions.pop();
   };
+
+
   const onPressCopy = async () => {
     alert('init system');
   };
@@ -39,7 +58,14 @@ const ImportKeyScreen = () => {
         padding={20}
         flex={5}
       >
-        <ImportInput placeholder={'import key'} />
+        {/* <ImportInput placeholder={'import key'} /> */}
+        <TextInput
+            style={{flex: 1, width: '100%'}}
+            multiline={true}
+            placeholder="Paste your key here"
+            onChangeText={setSecretKey}
+            value={secretKey}
+        />
       </View>
       <View
         flex={4}

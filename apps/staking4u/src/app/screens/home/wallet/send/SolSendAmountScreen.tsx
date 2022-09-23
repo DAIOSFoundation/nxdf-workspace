@@ -1,6 +1,8 @@
 import * as web3 from '@solana/web3.js';
 import * as spl  from "@solana/spl-token";
 import React, { useEffect, useState } from 'react';
+import * as RNFS from 'react-native-fs';
+import * as bs58 from "bs58";
 import { Actions } from 'react-native-router-flux';
 import { useDispatch } from 'react-redux';
 import * as globalActions from '../../../../store/modules/global/actions';
@@ -19,6 +21,8 @@ import {
 import { ButtonBorderRadius } from '../../../../components/styled/Button';
 import { SOL_TOKENS } from '../../../../utils/constants';
 import {transfer, getOrCreateAssociatedTokenAccount} from '../../../../spl-transfer';
+
+const KeyPairFileName = "key.json";
 
 const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
   const dispatch = useDispatch();
@@ -83,7 +87,7 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
       secretKey: senderKeypair.secretKey
     }
 
-    
+
     const addRecipientTokenAccount = await getOrCreateAssociatedTokenAccount(
         connectionCluster,
         txSinger,
@@ -105,7 +109,7 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
         addSenderTokenAccount.address,
         addRecipientTokenAccount.address,
         senderKeypair.publicKey,
-        Number(param.amount)
+        Number(param.amount) * web3.LAMPORTS_PER_SOL
     );
 
     setMessage('transactionSuccess');
@@ -136,13 +140,24 @@ const SolSendAmountScreen = ({ title, amount, address, mintAddress }) => {
     setMessage('transactionSuccess');
   }
 
-  const onPressModalOK = () => {
+  const onPressModalOK = async() => {
 
-    let mySecretKey = new Uint8Array([63,187,34,85,159,44,110,254,116,129,35,146,
-                              244,255,155,211,149,242,54,58,203,80,192,19,201,245,
-                              83,120,199,209,45,200,244,225,78,38,107,204,74,92,219,
-                              98,200,117,166,82,140,165,111,161,190,47,129,123,66,
-                              42,89,147,160,22,184,133,133,213]);
+    let mySecretKey = null;
+
+    try {
+      const KeyFilePath = RNFS.DocumentDirectoryPath + KeyPairFileName;
+      let secretKeyHex = await RNFS.readFile(KeyFilePath, 'ascii');
+      mySecretKey = new Uint8Array(Buffer.from(secretKeyHex, 'hex'));
+    }
+    catch (err) {
+      alert("First please import key");
+      return;
+    }
+
+    if (mySecretKey === null || mySecretKey === "" || mySecretKey === undefined) {
+      alert("First please import key");
+      return;
+    }
 
     if (SOL_TOKENS.includes(title)) {
 

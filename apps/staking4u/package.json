@@ -51,6 +51,8 @@
     "text-encoding": "*",
     "text-encoding-polyfill": "*",
     "@solana/spl-token": "*",
-    "@solana/wallet-adapter-react": "*"
+    "@solana/wallet-adapter-react": "*",
+    "react-native-fs": "*",
+    "bs58": "*"
   }
 }

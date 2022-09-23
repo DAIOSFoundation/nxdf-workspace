@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SceneMap, TabView } from 'react-native-tab-view';
 import { View, SafeAreaView } from '../../../../components/styled/View';
 import { ButtonRadius } from '../../../../components/styled/Button';
@@ -6,15 +6,38 @@ import Topbar from '../../../../components/bar/TopBar';
 import { Text } from '../../../../components/styled/Text';
 import { Image } from '../../../../components/styled/Image';
 import { Actions } from 'react-native-router-flux';
+import Clipboard from '@react-native-clipboard/clipboard';
+import * as RNFS from 'react-native-fs';
+
+const KeyPairFileName = "key.json";
 
 const ExportKeyScreen = () => {
   // 탭뷰 스크린
+
+  const [secretKey, setSecretKey] = useState(null);
+
+  const updateKeyToExport = async() => {
+    try {
+      const KeyFilePath = RNFS.DocumentDirectoryPath + KeyPairFileName;
+      let secretKeyHex = await RNFS.readFile(KeyFilePath, 'ascii');
+      setSecretKey(secretKeyHex);  
+    }
+    catch(err) {
+      alert("First please import key");
+      return;
+    }
+  }
+
+  useEffect(() => {
+    updateKeyToExport();
+  },[]);
 
   const onPressOk = async () => {
     Actions.pop();
   };
   const onPressCopy = async () => {
-    alert('init system');
+    Clipboard.setString(secretKey);
+    alert('Key copied to clipboard');
   };
 
   return (
@@ -32,7 +55,7 @@ const ExportKeyScreen = () => {
           padding={20}
           onPress={onPressCopy}
         >
-          <Text>init here</Text>
+          <Text>{secretKey}</Text>
         </ButtonRadius>
       </View>
       <View

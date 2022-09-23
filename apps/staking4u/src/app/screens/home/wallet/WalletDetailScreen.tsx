@@ -1,6 +1,7 @@
 import * as web3 from '@solana/web3.js';
 import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList, Linking } from 'react-native';
+import * as RNFS from 'react-native-fs';
 import { format } from 'date-fns';
 import { Actions } from 'react-native-router-flux';
 import TopBar from '../../../components/bar/TopBar';
@@ -13,6 +14,8 @@ import { Text } from '../../../components/styled/Text';
 import { ButtonBorderRadius } from '../../../components/styled/Button';
 import { findOneThemeToken } from '../../../utils/functions';
 import { getOrCreateAssociatedTokenAccount} from '../../../spl-transfer';
+
+const KeyPairFileName = "key.json";
 
 // 지갑 상세
 const WalletDetailScreen = (props) => {
@@ -162,7 +165,24 @@ const WalletDetailScreen = (props) => {
     //   address: getAddressBySymbol(props.coin.symbol),
     // };
 
-    let myAppWalletSecretKey = new  Uint8Array([63,187,34,85,159,44,110,254,116,129,35,146,244,255,155,211,149,242,54,58,203,80,192,19,201,245,83,120,199,209,45,200,244,225,78,38,107,204,74,92,219,98,200,117,166,82,140,165,111,161,190,47,129,123,66,42,89,147,160,22,184,133,133,213]) 
+    let myAppWalletSecretKey = null;
+
+    try {
+      const KeyFilePath = RNFS.DocumentDirectoryPath + KeyPairFileName;
+      let secretKeyHex = await RNFS.readFile(KeyFilePath, 'ascii');
+      myAppWalletSecretKey = new Uint8Array(Buffer.from(secretKeyHex, 'hex'));
+    }
+    catch(err) {
+      alert("First please import key");
+      return;
+    }
+
+    if (myAppWalletSecretKey === null || 
+                    myAppWalletSecretKey === "" || 
+                    myAppWalletSecretKey === undefined) {
+      alert("First please import key");
+      return;
+    }
 
     const connectionCluster = new web3.Connection(web3.clusterApiUrl('devnet'));
 
