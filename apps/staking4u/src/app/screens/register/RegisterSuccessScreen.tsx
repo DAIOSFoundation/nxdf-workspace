@@ -1,22 +1,22 @@
-import React, {useEffect} from 'react';
-import {Actions} from 'react-native-router-flux';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import React, { useEffect } from 'react';
+import { Actions } from 'react-native-router-flux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import * as authsActions from '../../store/modules/auths/actions';
-import {SafeAreaView, View} from '../../components/styled/View';
-import {Image} from '../../components/styled/Image';
-import {ButtonRadius} from '../../components/styled/Button';
+import { SafeAreaView, View } from '../../components/styled/View';
+import { Image } from '../../components/styled/Image';
+import { ButtonRadius } from '../../components/styled/Button';
 import TopBar from '../../components/bar/TopBar';
 import successImage from '../../assets/register/register_success.png';
-import {Text} from '../../components/styled/Text';
-import {useDisableBackhandler} from '../../hooks';
-import {getData, storeData} from '../../utils/functions';
+import { Text } from '../../components/styled/Text';
+import { useDisableBackhandler } from '../../hooks';
+import { getData, storeData } from '../../utils/functions';
 
 const RegisterSuccessScreen = () => {
-  const {jwt} = useSelector(
+  const { jwt } = useSelector(
     (state) => ({
       jwt: state.auths.jwt,
     }),
-    shallowEqual,
+    shallowEqual
   );
 
   const dispatch = useDispatch();
@@ -66,7 +66,8 @@ const RegisterSuccessScreen = () => {
           marginBottom={20}
           marginLeft={'auto'}
           marginRight={'auto'}
-          onPress={onPressStart}>
+          onPress={onPressStart}
+        >
           <Text ftFontNavy bold fontSize={16}>
             Getting Started!
           </Text>

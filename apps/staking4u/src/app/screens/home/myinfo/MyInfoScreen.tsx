@@ -17,7 +17,7 @@ const MyInfoScreen = () => {
     dispatch(authsActions.reset_jwt());
     dispatch(authsActions.reset_email_auth());
     await AsyncStorage.clear();
-    Actions.pop();
+    Actions.Index();
     // Actions.reset('Main'); // 작동 안함
   };
 

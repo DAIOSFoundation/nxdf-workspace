@@ -1,27 +1,30 @@
-import React, {useEffect, useState} from 'react';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import {Actions} from 'react-native-router-flux';
+import React, { useEffect, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import * as authsActions from '../../store/modules/auths/actions';
 import * as modalActions from '../../store/modules/modal/actions';
-import {SafeAreaView, View} from '../../components/styled/View';
-import {ButtonRadius} from '../../components/styled/Button';
-import {Text} from '../../components/styled/Text';
+import { SafeAreaView, View } from '../../components/styled/View';
+import { ButtonRadius } from '../../components/styled/Button';
+import { Text } from '../../components/styled/Text';
 import TopBar from '../../components/bar/TopBar';
 import InputBorderRadius from '../../components/input/InputBorderRadius';
-import {regEmail} from '../../utils/regExp';
-import {getData, storeData} from '../../utils/functions';
+import { regEmail } from '../../utils/regExp';
+import auth from '@react-native-firebase/auth';
+import { getData, storeData } from '../../utils/functions';
 
 const EmailVerificationScreen = () => {
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
   const dispatch = useDispatch();
-  const {postEmailAuth} = useSelector(
-    (state) => ({
-      postEmailAuth: state.auths.postEmailAuth,
-    }),
-    shallowEqual,
-  );
-
+  // const {postEmailAuth} = useSelector(
+  //   (state) => ({
+  //     postEmailAuth: state.auths.postEmailAuth,
+  //   }),
+  //   shallowEqual,
+  // );
   const [email, setEmail] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(false);
+  const [postEmailAuth, setPostEmailAuth] = useState(false);
 
   useEffect(() => {
     if (postEmailAuth) {
@@ -29,6 +32,8 @@ const EmailVerificationScreen = () => {
       storeData('email', email.trim());
       Actions.emailSendingSuccessScreen();
     }
+
+    console.log(auth().currentUser);
   }, [postEmailAuth]);
 
   const OnChangeText = (text) => {
@@ -38,17 +43,18 @@ const EmailVerificationScreen = () => {
   };
 
   const onPressNext = async () => {
-    if (!isValidEmail) {
-      dispatch(modalActions.change_modal_message('Invalid email'));
-      return;
-    } else {
-      const param = {
-        email: email.trim(),
-        publicMnemonicHash: await getData('publicMnemonic'),
-      };
+    setPostEmailAuth(true);
+    // if (!isValidEmail) {
+    //   dispatch(modalActions.change_modal_message('Invalid email'));
+    //   return;
+    // } else {
+    //   const param = {
+    //     email: email.trim(),
+    //     publicMnemonicHash: await getData('publicMnemonic'),
+    //   };
 
-      dispatch(authsActions.post_email_auth(param));
-    }
+    //   dispatch(authsActions.post_email_auth(param));
+    // }
   };
 
   return (
@@ -72,7 +78,7 @@ const EmailVerificationScreen = () => {
           marginLeft={'auto'}
           marginRight={'auto'}
           label={'Enter e-mail address'}
-          labelColor={{ftLightWhite: true}}
+          labelColor={{ ftLightWhite: true }}
           placeholder={'Please enter your e-mail address.'}
           onChangeText={OnChangeText}
           value={email}
@@ -84,7 +90,7 @@ const EmailVerificationScreen = () => {
       </View>
       <View flex={1} justifyContent={'flex-end'}>
         <ButtonRadius
-          {...(isValidEmail ? {bgYellowTheme: true} : {bgBlueGray: true})}
+          {...(isValidEmail ? { bgYellowTheme: true } : { bgBlueGray: true })}
           width={'88%'}
           paddingTop={10}
           paddingBottom={10}
@@ -92,12 +98,14 @@ const EmailVerificationScreen = () => {
           marginBottom={20}
           marginLeft={'auto'}
           marginRight={'auto'}
-          onPress={onPressNext}>
+          onPress={onPressNext}
+        >
           <Text
-            {...(isValidEmail ? {bgYellowTheme: true} : {bgBlueGray: true})}
+            {...(isValidEmail ? { bgYellowTheme: true } : { bgBlueGray: true })}
             ftFontNavy
             bold
-            fontSize={16}>
+            fontSize={16}
+          >
             Send verification mail
           </Text>
         </ButtonRadius>
