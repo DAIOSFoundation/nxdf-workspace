@@ -113,16 +113,16 @@ const ScreenRouter = (props) => {
   return (
     <Router>
       <Stack hideNavBar key="root">
-        {/* <Scene key={'Index'}>
+        <Scene key={'Index'}>
           <Scene
             key="indexScreen"
             component={IndexScreen}
             hideTabBar
             hideNavBar
           />
-        </Scene> */}
+        </Scene>
 
-        {/* <Scene key={'GetMnemonic'}>
+        <Scene key={'GetMnemonic'}>
           <Scene
             key="mnemonicInputScreen"
             component={MnemonicInputScreen}
@@ -174,7 +174,7 @@ const ScreenRouter = (props) => {
             hideTabBar
             hideNavBar
           />
-        </Scene> */}
+        </Scene>
 
         <Scene
           key={'tabBar'}
